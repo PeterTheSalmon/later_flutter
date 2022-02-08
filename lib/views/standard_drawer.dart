@@ -28,7 +28,9 @@ class StandardDrawer extends StatelessWidget {
           title: const Text("Home"),
           leading: const Icon(Icons.home),
           onTap: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+            Navigator.pop(context);
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomePage()));
           },
         ),
         const ListTile(
@@ -39,9 +41,9 @@ class StandardDrawer extends StatelessWidget {
           title: Text("Settings"),
           leading: Icon(Icons.settings),
         ),
-        SizedBox(
+        const SizedBox(
           height: 60,
-          child: const ListTile(
+          child: ListTile(
             title: Text("Manage Folders"),
             leading: Icon(Icons.folder_open),
           ),
