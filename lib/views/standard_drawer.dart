@@ -14,7 +14,7 @@ class StandardDrawer extends StatelessWidget {
       children: [
         SizedBox(
             width: 310,
-            height: 150,
+            height: 130,
             child: DrawerHeader(
                 decoration: const BoxDecoration(color: Colors.orange),
                 child: Column(
@@ -24,32 +24,37 @@ class StandardDrawer extends StatelessWidget {
                     Text(FirebaseAuth.instance.currentUser!.email!)
                   ],
                 ))),
-        ListTile(
-          title: const Text("Home"),
-          leading: const Icon(Icons.home),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomePage()));
-          },
+        // TODO: Remove weird whitespace between list and header
+        Expanded(
+          child: ListView(padding: const EdgeInsets.only(top: 0), children: [
+            ListTile(
+              title: const Text("Home"),
+              leading: const Icon(Icons.home),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const HomePage()));
+              },
+            ),
+            const ListTile(
+              title: Text("Account"),
+              leading: Icon(Icons.person),
+            ),
+            const ListTile(
+              title: Text("Settings"),
+              leading: Icon(Icons.settings),
+            ),
+            const SizedBox(
+              height: 60,
+              child: ListTile(
+                title: Text("Manage Folders"),
+                leading: Icon(Icons.folder_open),
+              ),
+            ),
+            const Divider(),
+            const Expanded(child: FolderList())
+          ]),
         ),
-        const ListTile(
-          title: Text("Account"),
-          leading: Icon(Icons.person),
-        ),
-        const ListTile(
-          title: Text("Settings"),
-          leading: Icon(Icons.settings),
-        ),
-        const SizedBox(
-          height: 60,
-          child: ListTile(
-            title: Text("Manage Folders"),
-            leading: Icon(Icons.folder_open),
-          ),
-        ),
-        const Divider(),
-        const Expanded(child: FolderList())
       ],
     );
   }
