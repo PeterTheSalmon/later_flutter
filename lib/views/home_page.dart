@@ -12,10 +12,15 @@ class HomePage extends StatelessWidget {
       ),
       drawer: Drawer(
         child: Column(
-          children: const [
-            DrawerHeader(child: Text("Later")),
-            Expanded(child: FolderList())
-            ],
+          children: [
+            Container(
+                width: 310,
+                child: const DrawerHeader(
+                    decoration: BoxDecoration(color: Colors.orange),
+                    child: Text("Later",
+                        style: TextStyle(color: Colors.white, fontSize: 24)))),
+            const Expanded(child: FolderList())
+          ],
         ),
       ),
       body: const Text("Home"),
