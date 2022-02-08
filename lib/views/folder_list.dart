@@ -18,6 +18,7 @@ class FolderList extends StatelessWidget {
                 children: [
                   ListTile(
                     title: Text(document["name"]),
+                    leading: const Icon(Icons.folder),
                   ),
                 ],
               );
