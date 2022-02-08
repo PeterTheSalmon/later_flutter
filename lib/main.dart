@@ -11,26 +11,29 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const LaterApp());
 }
-//sUzP8K7^nkZ
+
 class LaterApp extends StatelessWidget {
   const LaterApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ListenableProvider<AuthenticationService>(
-          create: (_) => AuthenticationService(FirebaseAuth.instance, null)),
-      StreamProvider(
-        create: (context) =>
-            context.read<AuthenticationService>().authStateChanges,
-        initialData: null,
-      ),
-    ], child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Later",
-      theme: ThemeData(primarySwatch: Colors.orange),
-      darkTheme: ThemeData(primarySwatch: Colors.orange),
-      home: const AuthenticationWrapper(),
-    ));
+    return MultiProvider(
+        providers: [
+          ListenableProvider<AuthenticationService>(
+              create: (_) =>
+                  AuthenticationService(FirebaseAuth.instance, null)),
+          StreamProvider(
+            create: (context) =>
+                context.read<AuthenticationService>().authStateChanges,
+            initialData: null,
+          ),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: "Later",
+          theme: ThemeData(primarySwatch: Colors.orange),
+          darkTheme: ThemeData(primarySwatch: Colors.orange),
+          home: const AuthenticationWrapper(),
+        ));
   }
 }

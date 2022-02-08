@@ -24,10 +24,12 @@ class FolderList extends StatelessWidget {
                     title: Text(document["name"]),
                     leading: const Icon(Icons.folder),
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pop(context);
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FolderView(parentFolderId: document.id)));
+                              builder: (context) =>
+                                  FolderView(parentFolderId: document.id)));
                     },
                   ),
                 ],
