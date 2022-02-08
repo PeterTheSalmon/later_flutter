@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/authentication_service.dart';
-import 'package:later_flutter/views/folder_list.dart';
+import 'package:later_flutter/views/standard_drawer.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,38 +12,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Later"),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            SizedBox(
-                width: 310,
-                height: 90,
-                child: DrawerHeader(
-                    decoration: const BoxDecoration(color: Colors.orange),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("Later",
-                            style: TextStyle(fontSize: 24)),
-                        Text(FirebaseAuth.instance.currentUser!.email!)
-                      ],
-                    ))),
-            const ListTile(
-              title: Text("Account"),
-              leading: Icon(Icons.person),
-            ),
-            const ListTile(
-              title: Text("Settings"),
-              leading: Icon(Icons.settings),
-            ),
-            const ListTile(
-              title: Text("Manage Folders"),
-              leading: Icon(Icons.folder_open),
-            ),
-            const Divider(),
-            const Expanded(child: FolderList())
-          ],
-        ),
+      drawer: const Drawer(
+        child: StandardDrawer()
       ),
       body: Padding(
           padding: const EdgeInsets.all(50.0),
