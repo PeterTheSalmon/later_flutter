@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/authentication_service.dart';
-import 'package:later_flutter/services/folder_repository.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
 import 'package:provider/provider.dart';
 
