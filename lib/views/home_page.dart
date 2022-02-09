@@ -12,7 +12,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Later"),
       ),
-      drawer: const Drawer(child: StandardDrawer()),
+      drawer: const Drawer(
+        child: StandardDrawer()),
       body: Padding(
           padding: const EdgeInsets.all(50.0),
           child: Center(
