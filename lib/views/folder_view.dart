@@ -83,8 +83,6 @@ class _FolderViewState extends State<FolderView> {
                                 onPressed: () {
                                   setState(() {
                                     _backupDocument = document;
-                                    print(_backupDocument!);
-                                    print(_backupDocument!.data());
                                   });
                                   FirebaseFirestore.instance
                                       .collection("links")
