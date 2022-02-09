@@ -4,10 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:later_flutter/views/new_link_sheet.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
 
-class FolderView extends StatelessWidget {
-  const FolderView({Key? key, required this.parentFolderId}) : super(key: key);
+class FolderView extends StatefulWidget {
+  FolderView({Key? key, required this.parentFolderId}) : super(key: key);
 
   final String parentFolderId;
+
+  @override
+  State<FolderView> createState() => _FolderViewState();
+}
+
+class _FolderViewState extends State<FolderView> {
+  final editSnackBar = SnackBar(
+    content: const Text('Editing is currently unimplemented'),
+    action: SnackBarAction(label: "Close", onPressed: () {}),
+  );
+
+  DocumentSnapshot? _backupDocument;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +29,8 @@ class FolderView extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  showNewLinkSheet(context, parentFolderId: parentFolderId);
+                  showNewLinkSheet(context,
+                      parentFolderId: widget.parentFolderId);
                 },
                 icon: const Icon(Icons.add))
           ],
@@ -30,7 +43,7 @@ class FolderView extends StatelessWidget {
                 .collection("links")
                 .where("userId",
                     isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-                .where("parentFolderId", isEqualTo: parentFolderId)
+                .where("parentFolderId", isEqualTo: widget.parentFolderId)
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -61,9 +74,48 @@ class FolderView extends StatelessWidget {
                                     ? Colors.orange
                                     : null),
                             IconButton(
-                                onPressed: () {}, icon: const Icon(Icons.edit)),
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(editSnackBar);
+                                },
+                                icon: const Icon(Icons.edit)),
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    _backupDocument = document;
+                                    print(_backupDocument!);
+                                    print(_backupDocument!.data());
+                                  });
+                                  FirebaseFirestore.instance
+                                      .collection("links")
+                                      .doc(document.id)
+                                      .delete();
+                                  final deleteSnackBar = SnackBar(
+                                      content: const Text("Deleted"),
+                                      action: SnackBarAction(
+                                          label: "Undo",
+                                          onPressed: () {
+                                            FirebaseFirestore.instance
+                                                .collection("links")
+                                                .doc(_backupDocument!.id)
+                                                .set({
+                                              "dateCreated": _backupDocument![
+                                                  "dateCreated"]!,
+                                              "isFavourite": _backupDocument![
+                                                  "isFavourite"]!,
+                                              "parentFolderId":
+                                                  _backupDocument![
+                                                      "parentFolderId"]!,
+                                              "title":
+                                                  _backupDocument!["title"]!,
+                                              "url": _backupDocument!["url"]!,
+                                              "userId": FirebaseAuth
+                                                  .instance.currentUser!.uid
+                                            });
+                                          }));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(deleteSnackBar);
+                                },
                                 icon: const Icon(Icons.delete))
                           ],
                         ),
