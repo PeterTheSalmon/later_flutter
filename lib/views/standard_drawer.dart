@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:later_flutter/services/folder_repository.dart';
 import 'package:later_flutter/views/folder_list.dart';
 import 'package:later_flutter/views/home_page.dart';
 

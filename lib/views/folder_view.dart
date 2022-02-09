@@ -17,7 +17,6 @@ class FolderView extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  // ! PARENT FOLDER ID
                   showNewLinkSheet(context, parentFolderId: parentFolderId);
                 },
                 icon: const Icon(Icons.add))
@@ -69,7 +68,7 @@ class FolderView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Divider()
+                      const Divider()
                     ],
                   );
                 }).toList(),
