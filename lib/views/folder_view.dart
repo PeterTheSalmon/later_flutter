@@ -45,9 +45,31 @@ class FolderView extends StatelessWidget {
                       ListTile(
                         title: Text(document["title"]),
                         subtitle: Text(document["url"]),
-                        leading: const Icon(Icons.link),
-                        
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  FirebaseFirestore.instance
+                                      .collection("links")
+                                      .doc(document.id)
+                                      .update({
+                                    "isFavourite": !document["isFavourite"]
+                                  });
+                                },
+                                icon: const Icon(Icons.star),
+                                color: document["isFavourite"] == true
+                                    ? Colors.orange
+                                    : null),
+                            IconButton(
+                                onPressed: () {}, icon: const Icon(Icons.edit)),
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.delete))
+                          ],
+                        ),
                       ),
+                      Divider()
                     ],
                   );
                 }).toList(),
