@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/new_link_sheet.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
 
 class FolderView extends StatelessWidget {
@@ -13,6 +14,14 @@ class FolderView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Later"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  // ! PARENT FOLDER ID
+                  showNewLinkSheet(context, parentFolderId: parentFolderId);
+                },
+                icon: const Icon(Icons.add))
+          ],
         ),
         drawer: const Drawer(
           child: StandardDrawer(),
@@ -26,7 +35,9 @@ class FolderView extends StatelessWidget {
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
               return ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   return Column(
@@ -35,6 +46,7 @@ class FolderView extends StatelessWidget {
                         title: Text(document["title"]),
                         subtitle: Text(document["url"]),
                         leading: const Icon(Icons.link),
+                        
                       ),
                     ],
                   );
@@ -43,4 +55,3 @@ class FolderView extends StatelessWidget {
             }));
   }
 }
-

@@ -11,27 +11,34 @@ class FolderList extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("folders")
-            .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+            .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) return const Text("Loading...");
+          if (snapshot.hasError) {
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Something went wrong :("),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: CircularProgressIndicator(),
+            );
+          }
           return Column(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            return Column(
-              children: [
-                ListTile(
-                  title: Text(document["name"]),
-                  leading: const Icon(Icons.folder),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                FolderView(parentFolderId: document.id)));
-                  },
-                ),
-              ],
+            return ListTile(
+              title: Text(document["name"]),
+              leading: const Icon(Icons.folder),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            FolderView(parentFolderId: document.id)));
+              },
             );
           }).toList());
         });

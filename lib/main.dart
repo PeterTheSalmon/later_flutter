@@ -3,14 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/firebase_options.dart';
 import 'package:later_flutter/services/authentication_service.dart';
-import 'package:later_flutter/services/folder_repository.dart';
 import 'package:later_flutter/views/authentication_wrapper.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FolderRepository.get();
   runApp(const LaterApp());
 }
 
