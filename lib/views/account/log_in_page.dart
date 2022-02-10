@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:later_flutter/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/account/sign_up_page.dart';
