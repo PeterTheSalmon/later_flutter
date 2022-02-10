@@ -22,7 +22,9 @@ class StandardDrawer extends StatelessWidget {
                 children: [
                   const Text("Later", style: TextStyle(fontSize: 24)),
                   Text(FirebaseAuth.instance.currentUser!.email!),
-                  const Text("Very Alpha-Quality")
+                  const Divider(color: Color.fromARGB(255, 255, 255, 255)),
+                  const Text("ALPHA BUILD",
+                      style: TextStyle(color: Color.fromARGB(255, 117, 28, 22)))
                 ],
               ))),
       ListTile(
@@ -34,25 +36,24 @@ class StandardDrawer extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const HomePage()));
         },
       ),
-      const ListTile(
-        title: Text("Account"),
-        leading: Icon(Icons.person),
+      ListTile(
+        title: const Text("Account"),
+        leading: const Icon(Icons.person),
+        onTap: () {},
       ),
-      const ListTile(
-        title: Text("Settings"),
-        leading: Icon(Icons.settings),
+      ListTile(
+        title: const Text("Settings"),
+        leading: const Icon(Icons.settings),
+        onTap: () {},
       ),
-      SizedBox(
-        height: 60,
-        child: ListTile(
-          title: const Text("Manage Folders"),
-          leading: const Icon(Icons.folder_open),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const FolderManager()));
-          },
-        ),
+      ListTile(
+        title: const Text("Manage Folders"),
+        leading: const Icon(Icons.folder_open),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const FolderManager()));
+        },
       ),
       const Divider(),
       const FolderList()
