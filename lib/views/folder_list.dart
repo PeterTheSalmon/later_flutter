@@ -36,8 +36,10 @@ class FolderList extends StatelessWidget {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            FolderView(parentFolderId: document.id)));
+                        builder: (context) => FolderView(
+                              parentFolderId: document.id,
+                              parentFolderName: document["name"],
+                            )));
               },
             );
           }).toList());
