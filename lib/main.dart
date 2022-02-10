@@ -31,8 +31,10 @@ class LaterApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Later",
-          theme: ThemeData(primarySwatch: Colors.orange),
-          darkTheme: ThemeData(primarySwatch: Colors.orange),
+          theme: ThemeData(
+              primarySwatch: Colors.orange, brightness: Brightness.light),
+          darkTheme: ThemeData(
+              primarySwatch: Colors.orange, brightness: Brightness.dark),
           home: const AuthenticationWrapper(),
         ));
   }

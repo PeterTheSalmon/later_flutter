@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/folder_list.dart';
+import 'package:later_flutter/views/folder_manager.dart';
 import 'package:later_flutter/views/home_page.dart';
 
 class StandardDrawer extends StatelessWidget {
@@ -43,11 +44,18 @@ class StandardDrawer extends StatelessWidget {
               title: Text("Settings"),
               leading: Icon(Icons.settings),
             ),
-            const SizedBox(
+            SizedBox(
               height: 60,
               child: ListTile(
-                title: Text("Manage Folders"),
-                leading: Icon(Icons.folder_open),
+                title: const Text("Manage Folders"),
+                leading: const Icon(Icons.folder_open),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FolderManager()));
+                },
               ),
             ),
             const Divider(),
