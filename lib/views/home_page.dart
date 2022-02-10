@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:later_flutter/services/authentication_service.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var isDialOpen = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -12,24 +18,33 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Later"),
       ),
-      drawer: const Drawer(
-        child: StandardDrawer()),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        backgroundColor: Colors.orange,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.add_link),
+            label: "Save Link",
+            onTap: () {},
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.folder),
+            label: "Create Folder",
+            onTap: () {},
+          ),
+        ],
+      ),
+      drawer: const Drawer(child: StandardDrawer()),
       body: Padding(
           padding: const EdgeInsets.all(50.0),
           child: Center(
             child: Column(
-              children: [
-                const Text("Home", style: TextStyle(fontSize: 20)),
-                const Text("Currently Unimplemented"),
-                TextButton(
-                    onPressed: () {
-                      context.read<AuthenticationService>().signOut(context);
-                    },
-                    child: const Text("Sign Out")),
+              children: const [
+                Text("Home", style: TextStyle(fontSize: 20)),
+                Text("Currently Unimplemented"),
               ],
             ),
           )),
     );
   }
 }
-

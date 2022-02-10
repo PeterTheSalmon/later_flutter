@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/new_link_sheet.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FolderView extends StatefulWidget {
   const FolderView(
@@ -30,11 +31,13 @@ class _FolderViewState extends State<FolderView> {
         appBar: AppBar(
           title: Text(widget.parentFolderName),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             showNewLinkSheet(context, parentFolderId: widget.parentFolderId);
           },
-          child: const Icon(Icons.add),
+          isExtended: true,
+          label: const Text("New Link"),
+          icon: const Icon(Icons.add),
           backgroundColor: Colors.orange,
         ),
         drawer: const Drawer(
@@ -78,6 +81,24 @@ class _FolderViewState extends State<FolderView> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
+                              leading: IconButton(
+                                  icon: const Icon(Icons.open_in_new),
+                                  onPressed: () async {
+                                    if (await canLaunch(document["url"]!)) {
+                                      launch(document["url"],
+                                          enableJavaScript: true);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(
+                                            "Could not launch ${document["url"]}"),
+                                        action: SnackBarAction(
+                                          label: "Close",
+                                          onPressed: () {},
+                                        ),
+                                      ));
+                                    }
+                                  }),
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
