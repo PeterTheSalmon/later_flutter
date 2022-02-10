@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/services/check_url_conventions.dart';
 
 Future<void> showNewLinkSheet(BuildContext context,
     {required String parentFolderId}) {
@@ -58,7 +59,8 @@ Future<void> showNewLinkSheet(BuildContext context,
                               "isFavourite": false,
                               "parentFolderId": parentFolderId,
                               "title": titleController.text,
-                              "url": urlController.text,
+                              "url":
+                                  checkUrlConventions(url: urlController.text),
                               "userId": FirebaseAuth.instance.currentUser!.uid
                             });
                             Navigator.pop(context);

@@ -11,6 +11,15 @@ class AuthenticationService with ChangeNotifier {
 
   String? errorMessage;
 
+  Future<void> resetPassword(BuildContext context) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(
+          email: FirebaseAuth.instance.currentUser!.email!);
+    } catch (error) {
+      return;
+    }
+  }
+
   Future<void> signOut(BuildContext context) async {
     await _firebaseAuth.signOut();
     notifyListeners();

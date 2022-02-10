@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/account/account_settings.dart';
 import 'package:later_flutter/views/folder_list.dart';
 import 'package:later_flutter/views/folder_manager.dart';
 import 'package:later_flutter/views/home_page.dart';
@@ -14,7 +15,7 @@ class StandardDrawer extends StatelessWidget {
     return ListView(padding: const EdgeInsets.only(top: 0), children: [
       SizedBox(
           width: 310,
-          height: 130,
+          height: 150,
           child: DrawerHeader(
               decoration: const BoxDecoration(color: Colors.orange),
               child: Column(
@@ -39,7 +40,11 @@ class StandardDrawer extends StatelessWidget {
       ListTile(
         title: const Text("Account"),
         leading: const Icon(Icons.person),
-        onTap: () {},
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const AccountSettings()));
+        },
       ),
       ListTile(
         title: const Text("Settings"),

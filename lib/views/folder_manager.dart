@@ -19,11 +19,12 @@ class _FolderManagerState extends State<FolderManager> {
     return Scaffold(
         appBar: AppBar(title: const Text("Manage Folders")),
         drawer: const Drawer(child: StandardDrawer()),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             showNewFolderSheet(context);
           },
-          child: const Icon(Icons.add),
+          label: const Text("New Folder"),
+          icon: const Icon(Icons.add),
           backgroundColor: Colors.orange,
         ),
         body: SingleChildScrollView(
