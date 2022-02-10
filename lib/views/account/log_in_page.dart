@@ -64,7 +64,7 @@ class LogInPage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => SignUpPage()));
+                    MaterialPageRoute(builder: (context) => SignUpPage()));
               },
               child: const Text(
                 "NO ACCOUNT? SIGN UP INSTEAD",

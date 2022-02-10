@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/authentication_wrapper.dart';
 
 class AuthenticationService with ChangeNotifier {
-  final FirebaseAuth _firebaseAuth; 
+  final FirebaseAuth _firebaseAuth;
 
   AuthenticationService(this._firebaseAuth, this.errorMessage);
 
@@ -10,8 +11,11 @@ class AuthenticationService with ChangeNotifier {
 
   String? errorMessage;
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     await _firebaseAuth.signOut();
+    notifyListeners();
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const AuthenticationWrapper()));
   }
 
   Future<void> signIn(String email, String password) async {
@@ -26,12 +30,14 @@ class AuthenticationService with ChangeNotifier {
     }
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(
+      String email, String password, BuildContext context) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       errorMessage = null;
       notifyListeners();
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       errorMessage = e.message;
       notifyListeners();

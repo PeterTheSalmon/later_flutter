@@ -58,9 +58,10 @@ class SignUpPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
                 onPressed: () {
-                  context.read<AuthenticationService>().signIn(
+                  context.read<AuthenticationService>().signUp(
                         emailController.text.trim(),
                         passwordController.text.trim(),
+                        context,
                       );
                 },
                 icon: const Icon(Icons.arrow_forward),
@@ -71,7 +72,13 @@ class SignUpPage extends StatelessWidget {
                 builder: (context, authenticationService, child) => SizedBox(
                     height: 50,
                     child: Text(authenticationService.errorMessage ?? ""))),
-            const Text("By creating an acount you agree to the"),
+            Row(
+              children: const [
+                Spacer(),
+                Text("By creating an acount you agree to the"),
+                Spacer()
+              ],
+            ),
             const TermsPrivacyLinks(),
           ],
         ),

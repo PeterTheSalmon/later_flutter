@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
                 const Text("Currently Unimplemented"),
                 TextButton(
                     onPressed: () {
-                      context.read<AuthenticationService>().signOut();
+                      context.read<AuthenticationService>().signOut(context);
                     },
                     child: const Text("Sign Out")),
               ],
