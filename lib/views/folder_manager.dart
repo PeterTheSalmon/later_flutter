@@ -19,7 +19,7 @@ class _FolderManagerState extends State<FolderManager> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Manage Folder")),
+        appBar: AppBar(title: const Text("Manage Folders")),
         drawer: const Drawer(child: StandardDrawer()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

@@ -55,6 +55,13 @@ class _FolderViewState extends State<FolderView> {
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     }
+                    if (snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                          child: Text(
+                        "Click the + to add a link!",
+                        style: TextStyle(fontSize: 25),
+                      ));
+                    }
                     return ListView(
                       children:
                           snapshot.data!.docs.map((DocumentSnapshot document) {
