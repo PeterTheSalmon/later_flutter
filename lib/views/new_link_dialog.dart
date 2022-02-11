@@ -1,20 +1,25 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/check_url_conventions.dart';
 import 'package:later_flutter/views/folder_picker.dart';
 
 class NewLinkDialog extends StatefulWidget {
-  NewLinkDialog({Key? key}) : super(key: key);
+  NewLinkDialog({Key? key, this.initalUrl}) : super(key: key);
+
+  String? initalUrl;
 
   @override
-  State<NewLinkDialog> createState() => _NewLinkDialogState();
+  State<NewLinkDialog> createState() => _NewLinkDialogState(initalUrl);
 }
 
 class _NewLinkDialogState extends State<NewLinkDialog> {
+  String? initialUrl;
+  _NewLinkDialogState(this.initialUrl);
+
   TextEditingController titleController = TextEditingController();
-  TextEditingController urlController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    TextEditingController urlController =
+        TextEditingController(text: initialUrl ?? "");
     return SingleChildScrollView(
       child: Padding(
         padding: MediaQuery.of(context).viewInsets,
