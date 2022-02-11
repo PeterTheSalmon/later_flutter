@@ -30,6 +30,7 @@ class LaterApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          
           title: "Later",
           theme: ThemeData(
               primarySwatch: Colors.orange, brightness: Brightness.light),
