@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:later_flutter/views/folder_list.dart';
-import 'package:later_flutter/views/folder_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:later_flutter/views/new_folder_sheet.dart';
 import 'package:later_flutter/views/new_link_dialog.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
@@ -27,15 +26,27 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.orange,
         children: [
           SpeedDialChild(
+              child: const Icon(Icons.copy),
+              label: "Add from Clipboard",
+              onTap: () async {
+                ClipboardData? data =
+                    await Clipboard.getData(Clipboard.kTextPlain);
+                showDialog(
+                  context: context,
+                  builder: (context) => Dialog(
+                    child: NewLinkDialog(initalUrl: data?.text),
+                  ),
+                );
+              }),
+          SpeedDialChild(
             child: const Icon(Icons.add_link),
             label: "Save Link",
             onTap: () {
               showDialog(
                 context: context,
                 builder: (context) => Dialog(
-                  child: NewLinkDialog(),
+                  child: NewLinkDialog(initalUrl: null),
                 ),
-                // ! TODO: Remake folder list to be a modal
               );
             },
           ),

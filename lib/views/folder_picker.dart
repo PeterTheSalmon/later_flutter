@@ -65,6 +65,15 @@ class FolderPickerList extends StatelessWidget {
                   "userId": FirebaseAuth.instance.currentUser!.uid
                 });
                 Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text("Added!"),
+                    action: SnackBarAction(
+                      label: "Close",
+                      onPressed: () {},
+                    ),
+                  ),
+                );
               },
             );
           }).toList());
