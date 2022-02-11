@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/folder_list.dart';
+import 'package:later_flutter/views/folder_picker.dart';
+import 'package:later_flutter/views/new_folder_sheet.dart';
+import 'package:later_flutter/views/new_link_dialog.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -25,12 +29,22 @@ class _HomePageState extends State<HomePage> {
           SpeedDialChild(
             child: const Icon(Icons.add_link),
             label: "Save Link",
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => Dialog(
+                  child: NewLinkDialog(),
+                ),
+                // ! TODO: Remake folder list to be a modal
+              );
+            },
           ),
           SpeedDialChild(
             child: const Icon(Icons.folder),
             label: "Create Folder",
-            onTap: () {},
+            onTap: () {
+              showNewFolderSheet(context);
+            },
           ),
         ],
       ),
