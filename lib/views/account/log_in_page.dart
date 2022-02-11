@@ -12,11 +12,13 @@ class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const Spacer(),
+            const SizedBox(height: 50),
             const Text(
               "Sign in to Later",
               style: TextStyle(
@@ -55,7 +57,9 @@ class LogInPage extends StatelessWidget {
             Consumer<AuthenticationService>(
                 builder: (context, authenticationService, child) => SizedBox(
                     height: 50,
-                    child: Text(authenticationService.errorMessage ?? ""))),
+                    child: Container(
+                        child:
+                            Text(authenticationService.errorMessage ?? "")))),
             const Spacer(),
             const Divider(
               thickness: 2.0,
