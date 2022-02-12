@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:later_flutter/services/share_service.dart';
 import 'package:later_flutter/views/new_folder_sheet.dart';
 import 'package:later_flutter/views/new_link_dialog.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
@@ -13,7 +14,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var isDialOpen = ValueNotifier<bool>(false);
+  String? _sharedText;
+
+  @override
+  void initState() {
+    super.initState();
+    ShareService()
+      ..onDataReceived = _handleSharedData
+      ..getSharedData().then(_handleSharedData);
+  }
+
+  void _handleSharedData(String sharedData) async {
+    setState(() {
+      _sharedText = sharedData;
+    });
+    if (_sharedText != null && _sharedText?.isNotEmpty == true) {
+      await showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          child: NewLinkDialog(initalUrl: _sharedText),
+        ),
+      );
+      setState(() {
+        _sharedText = null;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +90,10 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(50.0),
           child: Center(
             child: Column(
-              children: const [
-                Text("Home", style: TextStyle(fontSize: 20)),
-                Text("Currently Unimplemented"),
+              children: [
+                const Text("Home", style: TextStyle(fontSize: 20)),
+                const Text("Currently Unimplemented"),
+                Text("Shared Text: ${_sharedText ?? 'Nothing shared'}"),
               ],
             ),
           )),
