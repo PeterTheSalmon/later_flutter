@@ -25,7 +25,6 @@ class MainActivity: FlutterActivity() {
                     handleIntent()
                     result.success(sharedData)
                     sharedData = ""
-                    handleIntent()
                 }
                 }
     }
