@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:later_flutter/firebase_options.dart';
 import 'package:later_flutter/services/authentication_service.dart';
 import 'package:later_flutter/views/authentication_wrapper.dart';
@@ -9,6 +10,9 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent));
   runApp(const LaterApp());
 }
 
@@ -30,7 +34,6 @@ class LaterApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          
           title: "Later",
           theme: ThemeData(
               primarySwatch: Colors.orange, brightness: Brightness.light),
