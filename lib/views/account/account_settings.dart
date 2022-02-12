@@ -27,7 +27,7 @@ class _AccountSettingsState extends State<AccountSettings> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const Text(
-              'Account Settings',
+              'Manage your account',
               style: TextStyle(fontSize: 24),
             ),
             Text(FirebaseAuth.instance.currentUser?.email ?? '',

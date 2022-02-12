@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:later_flutter/views/account/account_settings.dart';
 import 'package:later_flutter/views/folder_list.dart';
 import 'package:later_flutter/views/folder_manager.dart';
+import 'package:later_flutter/views/general_settings.dart';
 import 'package:later_flutter/views/home_page.dart';
 
 class StandardDrawer extends StatelessWidget {
@@ -49,7 +50,11 @@ class StandardDrawer extends StatelessWidget {
       ListTile(
         title: const Text("Settings"),
         leading: const Icon(Icons.settings),
-        onTap: () {},
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const GeneralSettings()));
+        },
       ),
       ListTile(
         title: const Text("Manage Folders"),

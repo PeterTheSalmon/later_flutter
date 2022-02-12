@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/services/share_service.dart';
 import 'package:later_flutter/views/new_folder_sheet.dart';
 import 'package:later_flutter/views/new_link_dialog.dart';
@@ -25,20 +26,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _handleSharedData(String sharedData) async {
-    setState(() {
-      _sharedText = sharedData;
-    });
-    if (_sharedText != null && _sharedText?.isNotEmpty == true) {
-      await showDialog(
-        context: context,
-        builder: (context) => Dialog(
-          child: NewLinkDialog(initalUrl: _sharedText),
-        ),
-      );
+    /// Due to the nature of sharing, the shared data is shown as though it is
+    /// new every time the homepage is loaded. As such, we need to confirm that
+    /// it truly is new before showing the new link dialog. 
+    if (Globals.sharedUrl != sharedData) {
+      Globals.sharedUrl = sharedData;
       setState(() {
-        _sharedText = null;
+        _sharedText = sharedData;
       });
+      if (_sharedText != null && _sharedText?.isNotEmpty == true) {
+        await showDialog(
+          context: context,
+          builder: (context) => Dialog(
+            child: NewLinkDialog(initalUrl: _sharedText),
+          ),
+        );
+        setState(() {
+          _sharedText = null;
+        });
+      }
     }
+    return;
   }
 
   @override
@@ -90,10 +98,9 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(50.0),
           child: Center(
             child: Column(
-              children: [
-                const Text("Home", style: TextStyle(fontSize: 20)),
-                const Text("Currently Unimplemented"),
-                Text("Shared Text: ${_sharedText ?? 'Nothing shared'}"),
+              children: const [
+                Text("Home", style: TextStyle(fontSize: 20)),
+                Text("Currently Unimplemented"),
               ],
             ),
           )),
