@@ -1,0 +1,39 @@
+dependencies: \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/crypto/evp/p_ed25519_asn1.c \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/Target\ Support\ Files/BoringSSL-GRPC/BoringSSL-GRPC-prefix.pch \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/evp.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/base.h \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/xcselect.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/kcdata.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/uuid.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/netinet6.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/machine.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/device.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/mach_debug.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/mach_machine.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/mach.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/bank.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/darwin_posix_sys_types.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/netinet.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/net.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/darwin_cdefs.modulemap \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/is_boringssl.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/opensslconf.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/thread.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/aead.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/base64.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/cipher.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/digest.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/nid.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/bytestring.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/span.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/curve25519.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/err.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/mem.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/crypto/evp/internal.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/rsa.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/engine.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/ex_data.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/stack.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/include/openssl/type_check.h \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/BoringSSL-GRPC/src/crypto/internal.h

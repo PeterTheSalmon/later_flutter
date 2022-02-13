@@ -1,0 +1,34 @@
+dependencies: \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus_macos-1.3.0/macos/Classes/FLTPackageInfoPlusPlugin.m \
+  /Users/petersalmon/Programming/Flutter/later_flutter/build/macos/Build/Intermediates.noindex/Pods.build/Debug/package_info_plus_macos.build/module.modulemap \
+  /Users/petersalmon/Programming/Flutter/later_flutter/macos/Pods/Target\ Support\ Files/package_info_plus_macos/package_info_plus_macos-prefix.pch \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/xcselect.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/kcdata.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/uuid.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/netinet6.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/machine.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/device.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/mach_debug.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/mach_machine.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/mach.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/bank.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/darwin_posix_sys_types.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/netinet.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/net.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/darwin_cdefs.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/mach-o/compact_unwind_encoding.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include/mach-o/dyld.modulemap \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus_macos-1.3.0/macos/Classes/FLTPackageInfoPlusPlugin.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Modules/module.modulemap \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterViewController.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterTexture.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterPluginMacOS.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterPluginRegistrarMacOS.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterEngine.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterDartProject.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterCodecs.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterChannels.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterBinaryMessenger.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterMacros.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterAppDelegate.h \
+  /System/Volumes/Data/Users/petersalmon/Programming/Flutter/flutter/bin/cache/artifacts/engine/darwin-x64/FlutterMacOS.framework/Headers/FlutterMacOS.h
