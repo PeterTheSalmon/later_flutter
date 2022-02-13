@@ -111,7 +111,11 @@ class _HomePageState extends State<HomePage> {
                   child: GestureDetector(
                     child: Container(
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 248, 174, 62),
+                          // Slightly darker in dark mode
+                          color: MediaQuery.of(context).platformBrightness ==
+                                  Brightness.dark
+                              ? const Color.fromARGB(255, 228, 145, 21)
+                              : const Color.fromARGB(255, 248, 174, 62),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
@@ -125,13 +129,18 @@ class _HomePageState extends State<HomePage> {
                         width: 200,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child:
-                              Center(child: Text(Globals.tipList[_tipIndex])),
+                          child: Center(
+                              child: Text(
+                            Globals.tipList[_tipIndex],
+                          )),
                         )),
                     onTap: () {
-                      setState(() {
-                        _tipIndex = Random().nextInt(Globals.tipList.length);
-                      });
+                      int previousIndex = _tipIndex;
+                      while (previousIndex == _tipIndex) {
+                        setState(() {
+                          _tipIndex = Random().nextInt(Globals.tipList.length);
+                        });
+                      }
                     },
                   ),
                 ),
