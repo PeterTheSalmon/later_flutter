@@ -1,3 +1,5 @@
+// ignore_for_file: no_logic_in_create_state, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/check_url_conventions.dart';
 import 'package:later_flutter/views/folder_picker.dart';
