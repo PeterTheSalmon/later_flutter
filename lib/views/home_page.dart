@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:later_flutter/services/global_variables.dart';
@@ -16,10 +18,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? _sharedText;
+  int _tipIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _tipIndex = Random().nextInt(Globals.tipList.length);
+    });
     ShareService()
       ..onDataReceived = _handleSharedData
       ..getSharedData().then(_handleSharedData);
@@ -28,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   void _handleSharedData(String sharedData) async {
     /// Due to the nature of sharing, the shared data is shown as though it is
     /// new every time the homepage is loaded. As such, we need to confirm that
-    /// it truly is new before showing the new link dialog. 
+    /// it truly is new before showing the new link dialog.
     if (Globals.sharedUrl != sharedData) {
       Globals.sharedUrl = sharedData;
       setState(() {
@@ -98,9 +104,37 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(50.0),
           child: Center(
             child: Column(
-              children: const [
-                Text("Home", style: TextStyle(fontSize: 20)),
-                Text("Currently Unimplemented"),
+              children: [
+                const Text("Home", style: TextStyle(fontSize: 20)),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: GestureDetector(
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 248, 174, 62),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(5, 5),
+                            ),
+                          ],
+                        ),
+                        height: 100,
+                        width: 200,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:
+                              Center(child: Text(Globals.tipList[_tipIndex])),
+                        )),
+                    onTap: () {
+                      setState(() {
+                        _tipIndex = Random().nextInt(Globals.tipList.length);
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           )),
