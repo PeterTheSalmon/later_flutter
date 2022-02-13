@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 /// This service is responsible for talking with the OS to see if anything was
@@ -8,23 +9,25 @@ class ShareService {
   void Function(String)? onDataReceived;
 
   ShareService() {
-    if (Platform.isAndroid || Platform.isIOS) {
-      // If sharing causes the app to be resumed, we'll check to see if we got any
-      // shared data
-      SystemChannels.lifecycle.setMessageHandler((msg) async {
-        if (msg?.contains("resumed") ?? false) {
-          getSharedData().then((String data) {
-            // Nothing was shared with us :(
-            if (data.isEmpty || data == "") {
-              return;
-            }
+    if (!kIsWeb) {
+      if (Platform.isAndroid || Platform.isIOS) {
+        // If sharing causes the app to be resumed, we'll check to see if we got any
+        // shared data
+        SystemChannels.lifecycle.setMessageHandler((msg) async {
+          if (msg?.contains("resumed") ?? false) {
+            getSharedData().then((String data) {
+              // Nothing was shared with us :(
+              if (data.isEmpty || data == "") {
+                return;
+              }
 
-            // We got something! Inform our listener.
-            onDataReceived?.call(data);
-          });
-        }
-        return;
-      });
+              // We got something! Inform our listener.
+              onDataReceived?.call(data);
+            });
+          }
+          return;
+        });
+      }
     }
   }
 
