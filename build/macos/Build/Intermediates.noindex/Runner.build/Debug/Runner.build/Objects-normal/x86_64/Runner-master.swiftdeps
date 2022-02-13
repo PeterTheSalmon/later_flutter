@@ -1,8 +1,0 @@
-version: "Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)"
-options: "299382dce1db3ca387fc7017f5feeaf3d9f231c8e4d619c87e99a103fe2d7b33"
-build_start_time: [1644706428, 480103969]
-build_end_time: [1644706438, 668823957]
-inputs:
-  "/Users/petersalmon/Programming/Flutter/later_flutter/macos/Flutter/GeneratedPluginRegistrant.swift": [1644706177, 191319227]
-  "/Users/petersalmon/Programming/Flutter/later_flutter/macos/Runner/AppDelegate.swift": [1639683103, 0]
-  "/Users/petersalmon/Programming/Flutter/later_flutter/macos/Runner/MainFlutterWindow.swift": [1639683103, 0]

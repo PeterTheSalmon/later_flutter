@@ -1,4 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-com/petersalmon/later_flutter/BuildConfig.java
- com.petersalmon.later_flutter.BuildConfig
