@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/link_detail_view.dart';
 import 'package:later_flutter/views/new_link_sheet.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -71,6 +72,13 @@ class _FolderViewState extends State<FolderView> {
                         return Column(
                           children: [
                             ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LinkDetailView(
+                                            document: document)));
+                              },
                               title: Text(
                                 document["title"],
                                 maxLines: 1,
@@ -116,12 +124,6 @@ class _FolderViewState extends State<FolderView> {
                                       color: document["isFavourite"] == true
                                           ? Colors.orange
                                           : null),
-                                  IconButton(
-                                      onPressed: () {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(editSnackBar);
-                                      },
-                                      icon: const Icon(Icons.edit)),
                                   IconButton(
                                       onPressed: () {
                                         setState(() {
