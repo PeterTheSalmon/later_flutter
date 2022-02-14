@@ -393,6 +393,9 @@ PODS:
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
   - FlutterMacOS (1.0.0)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - GoogleDataTransport (9.1.2):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
@@ -445,7 +448,12 @@ PODS:
   - nanopb/encode (2.30908.0)
   - package_info_plus_macos (0.0.1):
     - FlutterMacOS
+  - path_provider_macos (0.0.1):
+    - FlutterMacOS
   - PromisesObjC (2.0.0)
+  - sqflite (0.0.2):
+    - FlutterMacOS
+    - FMDB (>= 2.7.5)
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
 
@@ -455,6 +463,8 @@ DEPENDENCIES:
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - package_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus_macos/macos`)
+  - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
+  - sqflite (from `Flutter/ephemeral/.symlinks/plugins/sqflite/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
 SPEC REPOS:
@@ -466,6 +476,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
+    - FMDB
     - GoogleDataTransport
     - GoogleUtilities
     - "gRPC-C++"
@@ -486,6 +497,10 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral
   package_info_plus_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus_macos/macos
+  path_provider_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
+  sqflite:
+    :path: Flutter/ephemeral/.symlinks/plugins/sqflite/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
 
@@ -501,6 +516,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 64d9709d804a6c25bd77841371c1fcfd909d5601
   FirebaseFirestore: 3b2e4b532c68809b3df5f8d39d28b3398ffc196b
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
@@ -509,7 +525,9 @@ SPEC CHECKSUMS:
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   package_info_plus_macos: f010621b07802a241d96d01876d6705f15e77c1c
+  path_provider_macos: 160cab0d5461f0c0e02995469a98f24bdb9a3f1f
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  sqflite: a5789cceda41d54d23f31d6de539d65bb14100ea
   url_launcher_macos: 45af3d61de06997666568a7149c1be98b41c95d4
 
 PODFILE CHECKSUM: c7161fcf45d4fd9025dc0f48a76d6e64e52f8176
