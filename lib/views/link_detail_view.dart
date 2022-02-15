@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -42,7 +41,6 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                   ? Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: CachedNetworkImage(
-                        // ! This doesn't work on web; it should be replaced with something else
                         height: 80,
                         width: 80,
                         fit: BoxFit.fill,
@@ -60,42 +58,52 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                       fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: AnyLinkPreview(
-                  link: widget.document['url'],
-                  bodyMaxLines: 3,
-                  showMultimedia: true,
-                  backgroundColor: MediaQuery.of(context).platformBrightness ==
-                          Brightness.dark
-                      ? const Color.fromARGB(255, 71, 71, 71)
-                      : const Color.fromARGB(255, 243, 243, 243),
-                  titleStyle: TextStyle(
-                      color: MediaQuery.of(context).platformBrightness ==
-                              Brightness.dark
-                          ? Colors.white
-                          : Colors.black),
-                  placeholderWidget: Container(
-                      decoration: BoxDecoration(
-                        color: MediaQuery.of(context).platformBrightness ==
-                                Brightness.dark
-                            ? const Color.fromARGB(255, 71, 71, 71)
-                            : const Color.fromARGB(255, 243, 243, 243),
-                        borderRadius: BorderRadius.circular(12),
+              (!kIsWeb)
+                  ? SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: AnyLinkPreview(
+                        link: widget.document['url'],
+                        bodyMaxLines: 3,
+                        showMultimedia: true,
+                        backgroundColor:
+                            MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? const Color.fromARGB(255, 71, 71, 71)
+                                : const Color.fromARGB(255, 243, 243, 243),
+                        titleStyle: TextStyle(
+                            color: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? Colors.white
+                                : Colors.black),
+                        placeholderWidget: Container(
+                            decoration: BoxDecoration(
+                              color: MediaQuery.of(context)
+                                          .platformBrightness ==
+                                      Brightness.dark
+                                  ? const Color.fromARGB(255, 71, 71, 71)
+                                  : const Color.fromARGB(255, 243, 243, 243),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Center(
+                                child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(),
+                            ))),
+                        errorWidget: Container(
+                            decoration: BoxDecoration(
+                              color: MediaQuery.of(context)
+                                          .platformBrightness ==
+                                      Brightness.dark
+                                  ? const Color.fromARGB(255, 71, 71, 71)
+                                  : const Color.fromARGB(255, 243, 243, 243),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Center(
+                                child: Text("No Preview Available"))),
                       ),
-                      child: const Center(child: CircularProgressIndicator())),
-                  errorWidget: Container(
-                      decoration: BoxDecoration(
-                        color: MediaQuery.of(context).platformBrightness ==
-                                Brightness.dark
-                            ? const Color.fromARGB(255, 71, 71, 71)
-                            : const Color.fromARGB(255, 243, 243, 243),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Center(child: Text("No Preview Available"))),
-                ),
-              )
+                    )
+                  : Container(),
             ],
           ),
         ),
