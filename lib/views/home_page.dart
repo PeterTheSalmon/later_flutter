@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:later_flutter/services/global_variables.dart';
@@ -22,6 +24,23 @@ class _HomePageState extends State<HomePage> {
   double _containerHeight = 100;
   double _containerWidth = 200;
 
+  void countFolders() async {
+    QuerySnapshot _myDocs = await FirebaseFirestore.instance
+        .collection('folders')
+        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    List<DocumentSnapshot> _myDocCount = _myDocs.docs;
+    int folderCount = _myDocCount.length;
+    if (folderCount == 0) {
+      FirebaseFirestore.instance.collection("folders").add({
+        "name": "Uncategorized",
+        "userId": FirebaseAuth.instance.currentUser!.uid,
+        "dateCreated": DateTime.now(),
+        "iconName": "folder",
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +50,7 @@ class _HomePageState extends State<HomePage> {
     ShareService()
       ..onDataReceived = _handleSharedData
       ..getSharedData().then(_handleSharedData);
+    countFolders();
   }
 
   void _handleSharedData(String sharedData) async {
@@ -136,8 +156,11 @@ class _HomePageState extends State<HomePage> {
                               child: Column(
                             children: [
                               const Spacer(),
-                              Text(
-                                Globals.tipList[_tipIndex],
+                              SizedBox(
+                                width: 184,
+                                child: Text(
+                                  Globals.tipList[_tipIndex],
+                                ),
                               ),
                               const Spacer(),
                               const Text(
