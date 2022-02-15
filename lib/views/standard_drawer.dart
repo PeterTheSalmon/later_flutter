@@ -25,18 +25,22 @@ class StandardDrawer extends StatelessWidget {
         ],
       ),
       child: ListView(padding: const EdgeInsets.only(top: 0), children: [
-        SizedBox(
-            width: 310,
-            height: 150,
-            child: DrawerHeader(
-                decoration: const BoxDecoration(color: Colors.orange),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Later", style: TextStyle(fontSize: 24)),
-                    Text(FirebaseAuth.instance.currentUser!.email!),
-                  ],
-                ))),
+        displayMobileLayout
+            ? SizedBox(
+                width: 310,
+                height: 150,
+                child: DrawerHeader(
+                    decoration: const BoxDecoration(color: Colors.orange),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Spacer(),
+                        const Text("Later", style: TextStyle(fontSize: 24)),
+                        Text(FirebaseAuth.instance.currentUser!.email!),
+                        Spacer()
+                      ],
+                    )))
+            : SizedBox(height: 30),
         ListTile(
           title: const Text("Home"),
           leading: const Icon(Icons.home),
