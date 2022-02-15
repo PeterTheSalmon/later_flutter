@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GeneralSettings extends StatefulWidget {
   const GeneralSettings({Key? key}) : super(key: key);
@@ -31,6 +32,8 @@ class _GeneralSettingsState extends State<GeneralSettings> {
     });
   }
 
+  bool _switchValue = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,18 +45,58 @@ class _GeneralSettingsState extends State<GeneralSettings> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              TextButton(
-                  onPressed: () {
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    const Text("Setting"),
+                    const Spacer(),
+                    Switch(
+                        value: _switchValue,
+                        onChanged: (value) {
+                          setState(() {
+                            _switchValue = value;
+                          });
+                        }),
+                  ],
+                ),
+              ),
+              const Divider(),
+              ListTile(
+                  leading: const Icon(Icons.info),
+                  onTap: () {
                     showAboutDialog(
                       context: context,
-                      children: [const Text("Thank you for using Later!")],
                       applicationName: 'Later',
+                      applicationIcon: const Image(
+                        image: AssetImage('assets/Icon256x256@2x.png'),
+                        height: 100,
+                      ),
                       applicationVersion: _packageInfo.version,
                     );
                   },
-                  child: const Text("About"))
+                  title: const Text("About")),
+              ListTile(
+                leading: const Icon(Icons.web),
+                title: const Text("Visit My Website"),
+                onTap: () {
+                  launch("https://petersalmon.dev");
+                },
+              ),
+              ListTile(
+                  leading: const Icon(Icons.code),
+                  title: const Text("View Source"),
+                  onTap: () {
+                    launch("https://github.com/peterthesalmon/later_flutter");
+                  }),
+              ListTile(
+                  leading: const Icon(Icons.computer),
+                  title: const Text("Download the macOS app"),
+                  onTap: () {
+                    launch("https://github.com/peterthesalmon/later/releases");
+                  })
             ],
           ),
         ),
