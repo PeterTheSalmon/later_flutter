@@ -19,6 +19,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String? _sharedText;
   int _tipIndex = 0;
+  double _containerHeight = 100;
+  double _containerWidth = 200;
 
   @override
   void initState() {
@@ -109,7 +111,8 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: GestureDetector(
-                    child: Container(
+                    child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 100),
                         decoration: BoxDecoration(
                           // Slightly darker in dark mode
                           color: MediaQuery.of(context).platformBrightness ==
@@ -125,13 +128,24 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        height: 100,
-                        width: 200,
+                        height: _containerHeight,
+                        width: _containerWidth,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
-                              child: Text(
-                            Globals.tipList[_tipIndex],
+                              child: Column(
+                            children: [
+                              const Spacer(),
+                              Text(
+                                Globals.tipList[_tipIndex],
+                              ),
+                              const Spacer(),
+                              const Text(
+                                "Tap for next tip",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 94, 94, 94)),
+                              )
+                            ],
                           )),
                         )),
                     onTap: () {
@@ -141,6 +155,16 @@ class _HomePageState extends State<HomePage> {
                           _tipIndex = Random().nextInt(Globals.tipList.length);
                         });
                       }
+                      setState(() {
+                        _containerHeight += 10;
+                        _containerWidth += 10;
+                      });
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        setState(() {
+                          _containerHeight -= 10;
+                          _containerWidth -= 10;
+                        });
+                      });
                     },
                   ),
                 ),
