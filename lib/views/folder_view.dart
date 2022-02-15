@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/views/link_detail_view.dart';
 import 'package:later_flutter/views/new_link_sheet.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
@@ -32,14 +33,23 @@ class _FolderViewState extends State<FolderView> {
         appBar: AppBar(
           title: Text(widget.parentFolderName),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            showNewLinkSheet(context, parentFolderId: widget.parentFolderId);
-          },
-          isExtended: true,
-          label: const Text("New Link"),
-          icon: const Icon(Icons.add),
+        floatingActionButton: SpeedDial(
+          animatedIcon: AnimatedIcons.add_event,
           backgroundColor: Colors.orange,
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.copy),
+              label: 'Add from Clipboard',
+              onTap: () => showNewLinkSheet(context,
+                  parentFolderId: widget.parentFolderId, fromClipboard: true),
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.add_link),
+              label: 'Save Link',
+              onTap: () => showNewLinkSheet(context,
+                  parentFolderId: widget.parentFolderId),
+            ),
+          ],
         ),
         drawer: const Drawer(
           child: StandardDrawer(),
