@@ -13,6 +13,8 @@ class StandardDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
+
     return ListView(padding: const EdgeInsets.only(top: 0), children: [
       SizedBox(
           width: 310,
@@ -30,16 +32,14 @@ class StandardDrawer extends StatelessWidget {
         title: const Text("Home"),
         leading: const Icon(Icons.home),
         onTap: () {
-          Navigator.pop(context);
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const HomePage()));
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
         },
       ),
       ListTile(
         title: const Text("Account"),
         leading: const Icon(Icons.person),
         onTap: () {
-          Navigator.pop(context);
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const AccountSettings()));
         },
@@ -48,7 +48,6 @@ class StandardDrawer extends StatelessWidget {
         title: const Text("Settings"),
         leading: const Icon(Icons.settings),
         onTap: () {
-          Navigator.pop(context);
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const GeneralSettings()));
         },
@@ -57,7 +56,6 @@ class StandardDrawer extends StatelessWidget {
         title: const Text("Manage Folders"),
         leading: const Icon(Icons.folder_open),
         onTap: () {
-          Navigator.pop(context);
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const FolderManager()));
         },
