@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:later_flutter/services/check_url_conventions.dart';
 
 Future<void> showNewLinkSheet(BuildContext context,
-    {required String parentFolderId}) {
+    {required String parentFolderId, fromClipboard = false}) async {
   TextEditingController titleController = TextEditingController();
-  TextEditingController urlController = TextEditingController();
+  TextEditingController urlController = TextEditingController(
+      text: fromClipboard
+          ? await Clipboard.getData('text/plain').then((value) => value?.text)
+          : '');
 
   return showModalBottomSheet<void>(
     context: context,
