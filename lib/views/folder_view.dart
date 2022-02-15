@@ -30,7 +30,6 @@ class _FolderViewState extends State<FolderView> {
   @override
   Widget build(BuildContext context) {
     final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
-
     return Row(
       children: [
         if (!displayMobileLayout)
@@ -61,9 +60,9 @@ class _FolderViewState extends State<FolderView> {
                   ),
                 ],
               ),
-              drawer: const Drawer(
-                child: StandardDrawer(),
-              ),
+              drawer: displayMobileLayout
+                  ? const Drawer(child: StandardDrawer())
+                  : null,
               body: Column(
                 children: [
                   Expanded(

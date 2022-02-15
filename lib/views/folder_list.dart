@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/folder_view.dart';
+import 'package:later_flutter/views/standard_drawer.dart';
 
 class FolderList extends StatelessWidget {
   const FolderList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
+
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("folders")
@@ -34,11 +37,17 @@ class FolderList extends StatelessWidget {
               onTap: () {
                 Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => FolderView(
-                              parentFolderId: document.id,
-                              parentFolderName: document["name"],
-                            )));
+                    displayMobileLayout
+                        ? MaterialPageRoute(
+                            builder: (context) => FolderView(
+                                  parentFolderId: document.id,
+                                  parentFolderName: document["name"],
+                                ))
+                        : FadeRoute(
+                            page: FolderView(
+                            parentFolderId: document.id,
+                            parentFolderName: document["name"],
+                          )));
               },
             );
           }).toList());
