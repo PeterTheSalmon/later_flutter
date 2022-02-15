@@ -24,9 +24,6 @@ class StandardDrawer extends StatelessWidget {
                 children: [
                   const Text("Later", style: TextStyle(fontSize: 24)),
                   Text(FirebaseAuth.instance.currentUser!.email!),
-                  const Divider(color: Color.fromARGB(255, 255, 255, 255)),
-                  const Text("ALPHA BUILD",
-                      style: TextStyle(color: Color.fromARGB(255, 117, 28, 22)))
                 ],
               ))),
       ListTile(
