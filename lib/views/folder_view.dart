@@ -34,7 +34,7 @@ class _FolderViewState extends State<FolderView> {
           title: Text(widget.parentFolderName),
         ),
         floatingActionButton: SpeedDial(
-          animatedIcon: AnimatedIcons.add_event,
+          animatedIcon: AnimatedIcons.menu_close,
           backgroundColor: Colors.orange,
           children: [
             SpeedDialChild(
