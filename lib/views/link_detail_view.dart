@@ -1,3 +1,4 @@
+// ignore_for_file: must_be_immutable
 
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +10,6 @@ import 'package:later_flutter/services/get_favicon.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-// ignore: must_be_immutable
 class LinkDetailView extends StatefulWidget {
   LinkDetailView({Key? key, required this.document}) : super(key: key);
 
@@ -136,7 +136,6 @@ class _LinkDetailViewState extends State<LinkDetailView> {
             onPressed: () {
               // show edit dialog
               showDialog(
-                  // TODO: make a real edit dialog
                   context: context,
                   builder: (context) =>
                       Dialog(child: EditLinkDialog(document: document)));
