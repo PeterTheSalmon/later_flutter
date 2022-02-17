@@ -10,6 +10,7 @@ import 'package:later_flutter/services/share_service.dart';
 import 'package:later_flutter/views/new_folder_sheet.dart';
 import 'package:later_flutter/views/new_link_dialog.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   int _tipIndex = 0;
   double _containerHeight = 100;
   double _containerWidth = 200;
+  List<DocumentSnapshot> _links = [];
 
   void countFolders() async {
     QuerySnapshot _myDocs = await FirebaseFirestore.instance
@@ -41,6 +43,16 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void getLinks() async {
+    QuerySnapshot _myDocs = await FirebaseFirestore.instance
+        .collection('links')
+        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    setState(() {
+      _links = _myDocs.docs;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -51,6 +63,7 @@ class _HomePageState extends State<HomePage> {
       ..onDataReceived = _handleSharedData
       ..getSharedData().then(_handleSharedData);
     countFolders();
+    getLinks();
   }
 
   void _handleSharedData(String sharedData) async {
@@ -200,10 +213,61 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                   ),
+                  const Spacer(),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Random Link:"),
+                  ),
+                  _randomLink(),
+                  const Spacer(),
                 ],
               ),
             )),
       )),
     ]);
+  }
+
+  Widget _randomLink() {
+    if (_links.isEmpty) {
+      return const Text("No links saved");
+    }
+    final document = (_links..shuffle()).first;
+
+    return Container(
+      width: 250,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Center(
+        child: ListTile(
+          title: Text(
+            document["title"],
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Text(
+            document["url"],
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          leading: IconButton(
+              icon: const Icon(Icons.open_in_new),
+              onPressed: () async {
+                if (await canLaunch(document["url"]!)) {
+                  launch(document["url"], enableJavaScript: true);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Could not launch ${document["url"]}"),
+                    action: SnackBarAction(
+                      label: "Close",
+                      onPressed: () {},
+                    ),
+                  ));
+                }
+              }),
+        ),
+      ),
+    );
   }
 }
