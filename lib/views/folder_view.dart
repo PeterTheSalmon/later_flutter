@@ -20,11 +20,6 @@ class FolderView extends StatefulWidget {
 }
 
 class _FolderViewState extends State<FolderView> {
-  final editSnackBar = SnackBar(
-    content: const Text('Editing is currently unimplemented'),
-    action: SnackBarAction(label: "Close", onPressed: () {}),
-  );
-
   DocumentSnapshot? _backupDocument;
 
   @override
