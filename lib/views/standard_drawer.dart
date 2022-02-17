@@ -34,13 +34,13 @@ class StandardDrawer extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         const Text("Later", style: TextStyle(fontSize: 24)),
                         Text(FirebaseAuth.instance.currentUser!.email!),
-                        Spacer()
+                        const Spacer()
                       ],
                     )))
-            : SizedBox(height: 30),
+            : const SizedBox(height: 30),
         ListTile(
           title: const Text("Home"),
           leading: const Icon(Icons.home),

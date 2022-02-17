@@ -21,6 +21,20 @@ class LaterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map<int, Color> colorMap = {
+      50: const Color.fromRGBO(255, 167, 38, .1),
+      100: const Color.fromRGBO(255, 167, 38, .2),
+      200: const Color.fromRGBO(255, 167, 38, .3),
+      300: const Color.fromRGBO(255, 167, 38, .4),
+      400: const Color.fromRGBO(255, 167, 38, .5),
+      500: const Color.fromRGBO(255, 167, 38, .6),
+      600: const Color.fromRGBO(255, 167, 38, .7),
+      700: const Color.fromRGBO(255, 167, 38, .8),
+      800: const Color.fromRGBO(255, 167, 38, .9),
+      900: const Color.fromRGBO(255, 167, 38, 1),
+    };
+    MaterialColor primaryColor = MaterialColor(0xFFFFA726, colorMap);
+
     return MultiProvider(
         providers: [
           ListenableProvider<AuthenticationService>(

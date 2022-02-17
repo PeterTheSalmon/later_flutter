@@ -67,38 +67,43 @@ class _FolderManagerState extends State<FolderManager> {
                         return ListTile(
                           title: Text(document["name"]),
                           leading: const Icon(Icons.folder),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              setState(() {
-                                _backupDocument = document;
-                              });
-                              FirebaseFirestore.instance
-                                  .collection("folders")
-                                  .doc(document.id)
-                                  .delete();
-                              final deleteSnackBar = SnackBar(
-                                content: const Text("Deleted"),
-                                action: SnackBarAction(
-                                  label: "Undo",
-                                  onPressed: () {
-                                    FirebaseFirestore.instance
-                                        .collection("folders")
-                                        .doc(_backupDocument!.id)
-                                        .set({
-                                      "dateCreated":
-                                          _backupDocument!["dateCreated"]!,
-                                      "iconName": _backupDocument!["iconName"]!,
-                                      "name": _backupDocument!["name"]!,
-                                      "userId":
-                                          FirebaseAuth.instance.currentUser!.uid
-                                    });
-                                  },
-                                ),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(deleteSnackBar);
-                            },
+                          trailing: Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  setState(() {
+                                    _backupDocument = document;
+                                  });
+                                  FirebaseFirestore.instance
+                                      .collection("folders")
+                                      .doc(document.id)
+                                      .delete();
+                                  final deleteSnackBar = SnackBar(
+                                    content: const Text("Deleted"),
+                                    action: SnackBarAction(
+                                      label: "Undo",
+                                      onPressed: () {
+                                        FirebaseFirestore.instance
+                                            .collection("folders")
+                                            .doc(_backupDocument!.id)
+                                            .set({
+                                          "dateCreated":
+                                              _backupDocument!["dateCreated"]!,
+                                          "iconName": _backupDocument!["iconName"]!,
+                                          "name": _backupDocument!["name"]!,
+                                          "userId":
+                                              FirebaseAuth.instance.currentUser!.uid
+                                        });
+                                      },
+                                    ),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(deleteSnackBar);
+                                },
+                              ),
+                              IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                            ],
                           ),
                         );
                       }).toList());
