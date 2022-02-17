@@ -68,6 +68,7 @@ class _FolderManagerState extends State<FolderManager> {
                           title: Text(document["name"]),
                           leading: const Icon(Icons.folder),
                           trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.delete),
@@ -90,10 +91,11 @@ class _FolderManagerState extends State<FolderManager> {
                                             .set({
                                           "dateCreated":
                                               _backupDocument!["dateCreated"]!,
-                                          "iconName": _backupDocument!["iconName"]!,
+                                          "iconName":
+                                              _backupDocument!["iconName"]!,
                                           "name": _backupDocument!["name"]!,
-                                          "userId":
-                                              FirebaseAuth.instance.currentUser!.uid
+                                          "userId": FirebaseAuth
+                                              .instance.currentUser!.uid
                                         });
                                       },
                                     ),
@@ -102,7 +104,6 @@ class _FolderManagerState extends State<FolderManager> {
                                       .showSnackBar(deleteSnackBar);
                                 },
                               ),
-                              IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
                             ],
                           ),
                         );
