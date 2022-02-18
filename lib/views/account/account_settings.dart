@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/authentication_service.dart';
+import 'package:later_flutter/views/account/delete_account_view.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                         context.read<AuthenticationService>().signOut(context);
                       },
                       child: const Text("Sign Out")),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 5),
                   OutlinedButton(
                       onPressed: () {
                         context
@@ -63,6 +64,16 @@ class _AccountSettingsState extends State<AccountSettings> {
                         style: TextStyle(
                             color: _passwordResetSent ? Colors.green : null),
                       )),
+                  const SizedBox(height: 5),
+                  OutlinedButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return DeleteAccountView();
+                            });
+                      },
+                      child: const Text("Delete Account")),
                 ],
               ),
             ),
