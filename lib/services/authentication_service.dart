@@ -52,4 +52,27 @@ class AuthenticationService with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> reauthenticate(String password) async {
+    try {
+      await _firebaseAuth.currentUser!.reauthenticateWithCredential(
+          EmailAuthProvider.credential(
+              email: _firebaseAuth.currentUser!.email!, password: password));
+      errorMessage = null;
+      notifyListeners();
+    } on FirebaseAuthException catch (e) {
+      errorMessage = e.message;
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    try {
+      await _firebaseAuth.currentUser!.delete();
+      errorMessage = null;
+    } on FirebaseAuthException catch (e) {
+      errorMessage = e.message;
+      notifyListeners();
+    }
+  }
 }
