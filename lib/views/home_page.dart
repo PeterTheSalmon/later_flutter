@@ -143,86 +143,96 @@ class _HomePageState extends State<HomePage> {
         ),
         drawer:
             displayMobileLayout ? const Drawer(child: StandardDrawer()) : null,
-        body: Padding(
-            padding: const EdgeInsets.all(50.0),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
             child: Center(
-              child: Column(
-                children: [
-                  const Text("Home", style: TextStyle(fontSize: 20)),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: GestureDetector(
-                      child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 100),
-                          decoration: BoxDecoration(
-                            // Slightly darker in dark mode
-                            color: MediaQuery.of(context).platformBrightness ==
-                                    Brightness.dark
-                                ? const Color.fromARGB(255, 228, 145, 21)
-                                : const Color.fromARGB(255, 248, 174, 62),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 10,
-                                offset: const Offset(5, 5),
-                              ),
-                            ],
-                          ),
-                          height: _containerHeight,
-                          width: _containerWidth,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                                child: Column(
-                              children: [
-                                const Spacer(),
-                                SizedBox(
-                                  width: 184,
-                                  child: Text(
-                                    Globals.tipList[_tipIndex],
-                                  ),
+              child: SizedBox(
+                height:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? 500
+                        : 270,
+                child: Column(
+                  children: [
+                    const Text("Home", style: TextStyle(fontSize: 20)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: GestureDetector(
+                        child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 100),
+                            decoration: BoxDecoration(
+                              // Slightly darker in dark mode
+                              color:
+                                  MediaQuery.of(context).platformBrightness ==
+                                          Brightness.dark
+                                      ? const Color.fromARGB(255, 228, 145, 21)
+                                      : const Color.fromARGB(255, 248, 174, 62),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(5, 5),
                                 ),
-                                const Spacer(),
-                                const Text(
-                                  "Tap for next tip",
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 94, 94, 94)),
-                                )
                               ],
+                            ),
+                            height: _containerHeight,
+                            width: _containerWidth,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                  child: Column(
+                                children: [
+                                  const Spacer(),
+                                  SizedBox(
+                                    width: 184,
+                                    child: Text(
+                                      Globals.tipList[_tipIndex],
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  const Text(
+                                    "Tap for next tip",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 94, 94, 94)),
+                                  )
+                                ],
+                              )),
                             )),
-                          )),
-                      onTap: () {
-                        int previousIndex = _tipIndex;
-                        while (previousIndex == _tipIndex) {
+                        onTap: () {
+                          int previousIndex = _tipIndex;
+                          while (previousIndex == _tipIndex) {
+                            setState(() {
+                              _tipIndex =
+                                  Random().nextInt(Globals.tipList.length);
+                            });
+                          }
                           setState(() {
-                            _tipIndex =
-                                Random().nextInt(Globals.tipList.length);
+                            _containerHeight += 10;
+                            _containerWidth += 10;
                           });
-                        }
-                        setState(() {
-                          _containerHeight += 10;
-                          _containerWidth += 10;
-                        });
-                        Future.delayed(const Duration(milliseconds: 100), () {
-                          setState(() {
-                            _containerHeight -= 10;
-                            _containerWidth -= 10;
+                          Future.delayed(const Duration(milliseconds: 100), () {
+                            setState(() {
+                              _containerHeight -= 10;
+                              _containerWidth -= 10;
+                            });
                           });
-                        });
-                      },
+                        },
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("Random Link:"),
-                  ),
-                  _randomLink(),
-                  const Spacer(),
-                ],
+                    const Spacer(),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Random Link:"),
+                    ),
+                    _randomLink(),
+                    const Spacer(),
+                  ],
+                ),
               ),
-            )),
+            ),
+          ),
+        ),
       )),
     ]);
   }

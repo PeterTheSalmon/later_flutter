@@ -51,70 +51,72 @@ class _GeneralSettingsState extends State<GeneralSettings> {
             drawer: displayMobileLayout
                 ? const Drawer(child: StandardDrawer())
                 : null,
-            body: Center(
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 550),
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              const Text(
-                                  "Very Real Toggle Definitely Does Stuff"),
-                              const Spacer(),
-                              Switch(
-                                  value: _switchValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _switchValue = value;
-                                    });
-                                  }),
-                            ],
+            body: SingleChildScrollView(
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 550),
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                const Text(
+                                    "Very Real Toggle Definitely Does Stuff"),
+                                const Spacer(),
+                                Switch(
+                                    value: _switchValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _switchValue = value;
+                                      });
+                                    }),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Divider(),
-                        ListTile(
-                            leading: const Icon(Icons.info),
+                          const Divider(),
+                          ListTile(
+                              leading: const Icon(Icons.info),
+                              onTap: () {
+                                showAboutDialog(
+                                  context: context,
+                                  applicationName: 'Later',
+                                  applicationIcon: const Image(
+                                    image:
+                                        AssetImage('assets/Icon256x256@2x.png'),
+                                    height: 100,
+                                  ),
+                                  applicationVersion: _packageInfo.version,
+                                );
+                              },
+                              title: const Text("About")),
+                          ListTile(
+                            leading: const Icon(Icons.web),
+                            title: const Text("Visit My Website"),
                             onTap: () {
-                              showAboutDialog(
-                                context: context,
-                                applicationName: 'Later',
-                                applicationIcon: const Image(
-                                  image:
-                                      AssetImage('assets/Icon256x256@2x.png'),
-                                  height: 100,
-                                ),
-                                applicationVersion: _packageInfo.version,
-                              );
+                              launch("https://petersalmon.dev");
                             },
-                            title: const Text("About")),
-                        ListTile(
-                          leading: const Icon(Icons.web),
-                          title: const Text("Visit My Website"),
-                          onTap: () {
-                            launch("https://petersalmon.dev");
-                          },
-                        ),
-                        ListTile(
-                            leading: const Icon(Icons.code),
-                            title: const Text("View Source"),
-                            onTap: () {
-                              launch(
-                                  "https://github.com/peterthesalmon/later_flutter");
-                            }),
-                        ListTile(
-                            leading: const Icon(Icons.computer),
-                            title: const Text("Download the macOS app"),
-                            onTap: () {
-                              launch(
-                                  "https://github.com/peterthesalmon/later/releases");
-                            })
-                      ],
+                          ),
+                          ListTile(
+                              leading: const Icon(Icons.code),
+                              title: const Text("View Source"),
+                              onTap: () {
+                                launch(
+                                    "https://github.com/peterthesalmon/later_flutter");
+                              }),
+                          ListTile(
+                              leading: const Icon(Icons.computer),
+                              title: const Text("Download the macOS app"),
+                              onTap: () {
+                                launch(
+                                    "https://github.com/peterthesalmon/later/releases");
+                              })
+                        ],
+                      ),
                     ),
                   ),
                 ),

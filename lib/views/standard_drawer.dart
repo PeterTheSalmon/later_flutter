@@ -5,6 +5,7 @@ import 'package:later_flutter/views/folder_list.dart';
 import 'package:later_flutter/views/folder_manager.dart';
 import 'package:later_flutter/views/general_settings.dart';
 import 'package:later_flutter/views/home_page.dart';
+import 'package:later_flutter/views/styles/fade_route.dart';
 
 class StandardDrawer extends StatelessWidget {
   const StandardDrawer({
@@ -95,25 +96,4 @@ class StandardDrawer extends StatelessWidget {
   }
 }
 
-class FadeRoute extends PageRouteBuilder {
-  final Widget page;
-  FadeRoute({required this.page})
-      : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-        );
-}
+
