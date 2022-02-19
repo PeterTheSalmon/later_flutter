@@ -77,11 +77,29 @@ class _FolderViewState extends State<FolderView> {
                                 child: CircularProgressIndicator());
                           }
                           if (snapshot.data!.docs.isEmpty) {
-                            return const Center(
-                                child: Text(
-                              "Click the + to add a link!",
-                              style: TextStyle(fontSize: 25),
-                            ));
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                  child: RichText(
+                                text: const TextSpan(
+                                  children: [
+                                    TextSpan(
+                                        text: 'Click the ',
+                                        style: TextStyle(fontSize: 20)),
+                                    WidgetSpan(
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(left: 2, right: 2),
+                                        child: Icon(Icons.menu),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                        text: ' to add a link',
+                                        style: TextStyle(fontSize: 20)),
+                                  ],
+                                ),
+                              )),
+                            );
                           }
                           return ListView(
                             children: snapshot.data!.docs
