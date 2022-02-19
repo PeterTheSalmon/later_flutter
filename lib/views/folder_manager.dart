@@ -13,6 +13,7 @@ class FolderManager extends StatefulWidget {
 
 class _FolderManagerState extends State<FolderManager> {
   DocumentSnapshot? _backupDocument;
+  List<QueryDocumentSnapshot> _backupLinks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +73,26 @@ class _FolderManagerState extends State<FolderManager> {
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.delete),
-                                onPressed: () {
+                                onPressed: () async {
                                   setState(() {
                                     _backupDocument = document;
                                   });
+
+                                  var links = FirebaseFirestore.instance
+                                      .collection('links')
+                                      .where("userId",
+                                          isEqualTo: FirebaseAuth
+                                              .instance.currentUser!.uid);
+                                  await links.get().then(
+                                      (value) => value.docs.forEach((element) {
+                                            _backupLinks.add(element);
+                                            print(element["title"]);
+                                            FirebaseFirestore.instance
+                                                .collection('links')
+                                                .doc(element.id)
+                                                .delete();
+                                          }));
+
                                   FirebaseFirestore.instance
                                       .collection("folders")
                                       .doc(document.id)
@@ -96,6 +113,25 @@ class _FolderManagerState extends State<FolderManager> {
                                           "name": _backupDocument!["name"]!,
                                           "userId": FirebaseAuth
                                               .instance.currentUser!.uid
+                                        });
+                                        print(_backupLinks);
+                                        _backupLinks.forEach((element) {
+                                          print(element["title"]);
+                                          FirebaseFirestore.instance
+                                              .collection('links')
+                                              .doc(element.id)
+                                              .set({
+                                            "dateCreated":
+                                                element["dateCreated"]!,
+                                            "parentFolderId":
+                                                element["parentFolderId"]!,
+                                            "title": element["title"]!,
+                                            "url": element["url"]!,
+                                            "userId": FirebaseAuth
+                                                .instance.currentUser!.uid,
+                                            "isFavourite":
+                                                element["isFavourite"]
+                                          });
                                         });
                                       },
                                     ),
