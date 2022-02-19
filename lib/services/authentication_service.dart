@@ -1,3 +1,6 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/authentication_wrapper.dart';
@@ -67,6 +70,28 @@ class AuthenticationService with ChangeNotifier {
   }
 
   Future<void> deleteAccount() async {
+    // first we delete the users folders and links from the database
+
+    var folders = FirebaseFirestore.instance
+        .collection('folders')
+        .where("userId", isEqualTo: _firebaseAuth.currentUser!.uid);
+    await folders.get().then((value) => value.docs.forEach((element) {
+          FirebaseFirestore.instance
+              .collection('folders')
+              .doc(element.id)
+              .delete();
+        }));
+
+    var links = FirebaseFirestore.instance
+        .collection('links')
+        .where("userId", isEqualTo: _firebaseAuth.currentUser!.uid);
+    await links.get().then((value) => value.docs.forEach((element) {
+          FirebaseFirestore.instance
+              .collection('links')
+              .doc(element.id)
+              .delete();
+        }));
+
     try {
       await _firebaseAuth.currentUser!.delete();
       errorMessage = null;

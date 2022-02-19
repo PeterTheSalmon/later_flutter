@@ -70,7 +70,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return DeleteAccountView();
+                              return const DeleteAccountView();
                             });
                       },
                       child: const Text("Delete Account")),
