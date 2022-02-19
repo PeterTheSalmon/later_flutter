@@ -1,6 +1,9 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/folder_view.dart';
 import 'package:later_flutter/views/new_folder_sheet.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
 
@@ -13,7 +16,7 @@ class FolderManager extends StatefulWidget {
 
 class _FolderManagerState extends State<FolderManager> {
   DocumentSnapshot? _backupDocument;
-  List<QueryDocumentSnapshot> _backupLinks = [];
+  final List<QueryDocumentSnapshot> _backupLinks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +71,22 @@ class _FolderManagerState extends State<FolderManager> {
                         return ListTile(
                           title: Text(document["name"]),
                           leading: const Icon(Icons.folder),
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                displayMobileLayout
+                                    ? MaterialPageRoute(
+                                        builder: (context) => FolderView(
+                                              parentFolderId: document.id,
+                                              parentFolderName:
+                                                  document["name"],
+                                            ))
+                                    : FadeRoute(
+                                        page: FolderView(
+                                        parentFolderId: document.id,
+                                        parentFolderName: document["name"],
+                                      )));
+                          },
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -86,7 +105,6 @@ class _FolderManagerState extends State<FolderManager> {
                                   await links.get().then(
                                       (value) => value.docs.forEach((element) {
                                             _backupLinks.add(element);
-                                            print(element["title"]);
                                             FirebaseFirestore.instance
                                                 .collection('links')
                                                 .doc(element.id)
@@ -114,9 +132,7 @@ class _FolderManagerState extends State<FolderManager> {
                                           "userId": FirebaseAuth
                                               .instance.currentUser!.uid
                                         });
-                                        print(_backupLinks);
                                         _backupLinks.forEach((element) {
-                                          print(element["title"]);
                                           FirebaseFirestore.instance
                                               .collection('links')
                                               .doc(element.id)
