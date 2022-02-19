@@ -11,7 +11,7 @@ class DeleteAccountView extends StatefulWidget {
 }
 
 class _DeleteAccountViewState extends State<DeleteAccountView> {
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +26,18 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
             children: <Widget>[
               Container(
                 constraints: const BoxConstraints(maxWidth: 300),
-                child: Text(
+                child: const Text(
                   'Enter your password to delete your account',
                   style: TextStyle(fontSize: 24),
                   textAlign: TextAlign.center,
                 ),
               ),
               Container(
-                constraints: BoxConstraints(maxWidth: 300),
+                constraints: const BoxConstraints(maxWidth: 300),
                 child: TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                   ),
                 ),
@@ -72,22 +72,22 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                             showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                      title: Text("Are you sure?"),
+                                      title: const Text("Are you sure?"),
                                       content: Container(
                                         constraints:
-                                            BoxConstraints(maxWidth: 300),
-                                        child: Text(
+                                            const BoxConstraints(maxWidth: 300),
+                                        child: const Text(
                                             "All account data will be lost. This action cannot be undone. Are you sure you want to delete your account?"),
                                       ),
                                       actions: [
                                         TextButton(
-                                          child: Text("Cancel"),
+                                          child: const Text("Cancel"),
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
                                         ),
                                         ElevatedButton(
-                                          child: Text("Delete"),
+                                          child: const Text("Delete"),
                                           onPressed: () async {
                                             await context
                                                 .read<AuthenticationService>()
@@ -110,13 +110,13 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                             showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                      title: Text("Error"),
+                                      title: const Text("Error"),
                                       content: Text(context
                                           .read<AuthenticationService>()
                                           .errorMessage!),
                                       actions: [
                                         TextButton(
-                                          child: Text("OK"),
+                                          child: const Text("OK"),
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
