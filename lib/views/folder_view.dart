@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/views/link_detail_view.dart';
@@ -107,14 +108,20 @@ class _FolderViewState extends State<FolderView> {
                               return Column(
                                 children: [
                                   ListTile(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LinkDetailView(
-                                                      document: document)));
-                                    },
+                                    /// The detail view is disabled on the web
+                                    /// because it doesn't work properly
+                                    /// and serves little purpose.
+                                    onTap: !kIsWeb
+                                        ? () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LinkDetailView(
+                                                            document:
+                                                                document)));
+                                          }
+                                        : null,
                                     title: Text(
                                       document["title"],
                                       maxLines: 1,

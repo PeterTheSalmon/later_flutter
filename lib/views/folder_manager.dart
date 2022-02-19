@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:later_flutter/views/folder_view.dart';
 import 'package:later_flutter/views/new_folder_sheet.dart';
 import 'package:later_flutter/views/standard_drawer.dart';
+import 'package:later_flutter/views/styles/fade_route.dart';
 
 class FolderManager extends StatefulWidget {
   const FolderManager({Key? key}) : super(key: key);

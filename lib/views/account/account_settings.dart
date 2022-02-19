@@ -31,50 +31,54 @@ class _AccountSettingsState extends State<AccountSettings> {
           drawer: displayMobileLayout
               ? const Drawer(child: StandardDrawer())
               : null,
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'Manage your account',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  Text(FirebaseAuth.instance.currentUser?.email ?? '',
-                      style: const TextStyle(fontSize: 14)),
-                  const Divider(),
-                  OutlinedButton(
-                      onPressed: () {
-                        context.read<AuthenticationService>().signOut(context);
-                      },
-                      child: const Text("Sign Out")),
-                  const SizedBox(height: 5),
-                  OutlinedButton(
-                      onPressed: () {
-                        context
-                            .read<AuthenticationService>()
-                            .resetPassword(context);
-                        setState(() {
-                          _passwordResetSent = true;
-                        });
-                      },
-                      child: Text(
-                        _passwordResetSent ? "Email Sent!" : "Reset Password",
-                        style: TextStyle(
-                            color: _passwordResetSent ? Colors.green : null),
-                      )),
-                  const SizedBox(height: 5),
-                  OutlinedButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const DeleteAccountView();
-                            });
-                      },
-                      child: const Text("Delete Account")),
-                ],
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      'Manage your account',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    Text(FirebaseAuth.instance.currentUser?.email ?? '',
+                        style: const TextStyle(fontSize: 14)),
+                    const Divider(),
+                    OutlinedButton(
+                        onPressed: () {
+                          context
+                              .read<AuthenticationService>()
+                              .signOut(context);
+                        },
+                        child: const Text("Sign Out")),
+                    const SizedBox(height: 5),
+                    OutlinedButton(
+                        onPressed: () {
+                          context
+                              .read<AuthenticationService>()
+                              .resetPassword(context);
+                          setState(() {
+                            _passwordResetSent = true;
+                          });
+                        },
+                        child: Text(
+                          _passwordResetSent ? "Email Sent!" : "Reset Password",
+                          style: TextStyle(
+                              color: _passwordResetSent ? Colors.green : null),
+                        )),
+                    const SizedBox(height: 5),
+                    OutlinedButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const DeleteAccountView();
+                              });
+                        },
+                        child: const Text("Delete Account")),
+                  ],
+                ),
               ),
             ),
           ),
