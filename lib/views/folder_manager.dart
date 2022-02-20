@@ -92,6 +92,9 @@ class _FolderManagerState extends State<FolderManager> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.edit)),
+                              IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () async {
                                   setState(() {
@@ -102,7 +105,9 @@ class _FolderManagerState extends State<FolderManager> {
                                       .collection('links')
                                       .where("userId",
                                           isEqualTo: FirebaseAuth
-                                              .instance.currentUser!.uid);
+                                              .instance.currentUser!.uid)
+                                      .where("parentFolderId",
+                                          isEqualTo: document.id);
                                   await links.get().then(
                                       (value) => value.docs.forEach((element) {
                                             _backupLinks.add(element);
