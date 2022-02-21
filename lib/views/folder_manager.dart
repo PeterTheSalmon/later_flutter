@@ -97,6 +97,8 @@ class _FolderManagerState extends State<FolderManager> {
                               IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () async {
+                                  /// * First, we create a backup of the folder
+                                  /// * And all links it contains
                                   setState(() {
                                     _backupDocument = document;
                                   });

@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -93,148 +95,191 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
-    return Row(children: [
-      if (!displayMobileLayout)
-        const Drawer(
-          child: StandardDrawer(),
-        ),
-      Expanded(
-          child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Later"),
-        ),
-        floatingActionButton: SpeedDial(
-          animatedIcon: AnimatedIcons.menu_close,
-          backgroundColor: Colors.orange,
-          children: [
-            SpeedDialChild(
-                child: const Icon(Icons.copy),
-                label: "Add from Clipboard",
-                onTap: () async {
-                  ClipboardData? data =
-                      await Clipboard.getData(Clipboard.kTextPlain);
-                  showDialog(
-                    context: context,
-                    builder: (context) => Dialog(
-                      child: NewLinkDialog(initalUrl: data?.text),
-                    ),
-                  );
-                }),
-            SpeedDialChild(
-              child: const Icon(Icons.add_link),
-              label: "Save Link",
-              onTap: () {
+    return CallbackShortcuts(
+      bindings: kIsWeb
+          ? {} // * No bindings for web as it is impossible (?) to determine platform
+          : {
+              SingleActivator(LogicalKeyboardKey.keyN,
+                  meta: Platform.isMacOS ? true : false,
+                  control: Platform.isMacOS ? false : true,
+                  alt: true): () async {
+                ClipboardData? data =
+                    await Clipboard.getData(Clipboard.kTextPlain);
                 showDialog(
                   context: context,
                   builder: (context) => Dialog(
-                    child: NewLinkDialog(initalUrl: null),
+                    child: NewLinkDialog(initalUrl: data?.text),
                   ),
                 );
               },
-            ),
-            SpeedDialChild(
-              child: const Icon(Icons.folder),
-              label: "Create Folder",
-              onTap: () {
-                showNewFolderSheet(context);
+              SingleActivator(
+                LogicalKeyboardKey.keyN,
+                meta: Platform.isMacOS ? true : false,
+                control: Platform.isMacOS ? false : true,
+              ): () {
+                showDialog(
+                  context: context,
+                  builder: (context) => Dialog(
+                    child: NewLinkDialog(),
+                  ),
+                );
               },
+              SingleActivator(LogicalKeyboardKey.keyN,
+                  meta: Platform.isMacOS ? true : false,
+                  control: Platform.isMacOS ? false : true,
+                  shift: true): () {
+                showNewFolderSheet(context, useDialog: true);
+              },
+            },
+      child: Focus(
+        autofocus: true,
+        child: Row(children: [
+          if (!displayMobileLayout)
+            const Drawer(
+              child: StandardDrawer(),
             ),
-          ],
-        ),
-        drawer:
-            displayMobileLayout ? const Drawer(child: StandardDrawer()) : null,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: SizedBox(
-                height:
-                    MediaQuery.of(context).orientation == Orientation.portrait
+          Expanded(
+              child: Scaffold(
+            appBar: AppBar(
+              title: const Text("Later"),
+            ),
+            floatingActionButton: SpeedDial(
+              animatedIcon: AnimatedIcons.menu_close,
+              backgroundColor: Colors.orange,
+              children: [
+                SpeedDialChild(
+                    child: const Icon(Icons.copy),
+                    label: "Add from Clipboard",
+                    onTap: () async {
+                      ClipboardData? data =
+                          await Clipboard.getData(Clipboard.kTextPlain);
+                      showDialog(
+                        context: context,
+                        builder: (context) => Dialog(
+                          child: NewLinkDialog(initalUrl: data?.text),
+                        ),
+                      );
+                    }),
+                SpeedDialChild(
+                  child: const Icon(Icons.add_link),
+                  label: "Save Link",
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        child: NewLinkDialog(initalUrl: null),
+                      ),
+                    );
+                  },
+                ),
+                SpeedDialChild(
+                  child: const Icon(Icons.folder),
+                  label: "Create Folder",
+                  onTap: () {
+                    showNewFolderSheet(context, useDialog: true);
+                  },
+                ),
+              ],
+            ),
+            drawer: displayMobileLayout
+                ? const Drawer(child: StandardDrawer())
+                : null,
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).orientation ==
+                            Orientation.portrait
                         ? 500
                         : 270,
-                child: Column(
-                  children: [
-                    const Text("Home", style: TextStyle(fontSize: 20)),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: GestureDetector(
-                        child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 100),
-                            decoration: BoxDecoration(
-                              // Slightly darker in dark mode
-                              color:
-                                  MediaQuery.of(context).platformBrightness ==
+                    child: Column(
+                      children: [
+                        const Text("Home", style: TextStyle(fontSize: 20)),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: GestureDetector(
+                            child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 100),
+                                decoration: BoxDecoration(
+                                  // Slightly darker in dark mode
+                                  color: MediaQuery.of(context)
+                                              .platformBrightness ==
                                           Brightness.dark
                                       ? const Color.fromARGB(255, 228, 145, 21)
                                       : const Color.fromARGB(255, 248, 174, 62),
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(5, 5),
-                                ),
-                              ],
-                            ),
-                            height: _containerHeight,
-                            width: _containerWidth,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                  child: Column(
-                                children: [
-                                  const Spacer(),
-                                  SizedBox(
-                                    width: 184,
-                                    child: Text(
-                                      Globals.tipList[_tipIndex],
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 10,
+                                      offset: const Offset(5, 5),
                                     ),
-                                  ),
-                                  const Spacer(),
-                                  const Text(
-                                    "Tap for next tip",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 94, 94, 94)),
-                                  )
-                                ],
-                              )),
-                            )),
-                        onTap: () {
-                          int previousIndex = _tipIndex;
-                          while (previousIndex == _tipIndex) {
-                            setState(() {
-                              _tipIndex =
-                                  Random().nextInt(Globals.tipList.length);
-                            });
-                          }
-                          setState(() {
-                            _containerHeight += 10;
-                            _containerWidth += 10;
-                          });
-                          Future.delayed(const Duration(milliseconds: 100), () {
-                            setState(() {
-                              _containerHeight -= 10;
-                              _containerWidth -= 10;
-                            });
-                          });
-                        },
-                      ),
+                                  ],
+                                ),
+                                height: _containerHeight,
+                                width: _containerWidth,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: Column(
+                                    children: [
+                                      const Spacer(),
+                                      SizedBox(
+                                        width: 184,
+                                        child: Text(
+                                          Globals.tipList[_tipIndex],
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      const Text(
+                                        "Tap for next tip",
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 94, 94, 94)),
+                                      )
+                                    ],
+                                  )),
+                                )),
+                            onTap: () {
+                              int previousIndex = _tipIndex;
+                              while (previousIndex == _tipIndex) {
+                                setState(() {
+                                  _tipIndex =
+                                      Random().nextInt(Globals.tipList.length);
+                                });
+                              }
+                              setState(() {
+                                _containerHeight += 10;
+                                _containerWidth += 10;
+                              });
+                              Future.delayed(const Duration(milliseconds: 100),
+                                  () {
+                                setState(() {
+                                  _containerHeight -= 10;
+                                  _containerWidth -= 10;
+                                });
+                              });
+                            },
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Random Link:"),
+                        ),
+                        _randomLink(),
+                        const Spacer(),
+                      ],
                     ),
-                    const Spacer(),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Random Link:"),
-                    ),
-                    _randomLink(),
-                    const Spacer(),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      )),
-    ]);
+          )),
+        ]),
+      ),
+    );
   }
 
   Widget _randomLink() {

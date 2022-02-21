@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/folder_view.dart';
-import 'package:later_flutter/views/standard_drawer.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 
 class FolderList extends StatelessWidget {
