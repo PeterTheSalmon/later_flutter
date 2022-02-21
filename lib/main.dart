@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:later_flutter/firebase_options.dart';
 import 'package:later_flutter/services/authentication_service.dart';
-import 'package:later_flutter/views/authentication_wrapper.dart';
+import 'package:later_flutter/services/authentication_wrapper.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:later_flutter/views/authentication_wrapper.dart';
+import 'package:later_flutter/services/authentication_wrapper.dart';
 
 class AuthenticationService with ChangeNotifier {
   final FirebaseAuth _firebaseAuth;

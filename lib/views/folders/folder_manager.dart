@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/folders/edit_folder_dialog.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/folders/new_folder_sheet.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
@@ -92,7 +93,12 @@ class _FolderManagerState extends State<FolderManager> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => EditFolderDialog(
+                                            document: document));
+                                  },
                                   icon: const Icon(Icons.edit)),
                               IconButton(
                                 icon: const Icon(Icons.delete),
