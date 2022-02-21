@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/account/account_settings.dart';
-import 'package:later_flutter/views/folder_list.dart';
-import 'package:later_flutter/views/folder_manager.dart';
-import 'package:later_flutter/views/general_settings.dart';
+import 'package:later_flutter/views/folders/folder_list.dart';
+import 'package:later_flutter/views/folders/folder_manager.dart';
+import 'package:later_flutter/views/settings/general_settings.dart';
 import 'package:later_flutter/views/home_page.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 

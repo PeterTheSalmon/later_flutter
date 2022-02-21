@@ -36,9 +36,14 @@ class LaterApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: "Later",
           theme: ThemeData(
-              primarySwatch: Colors.orange, brightness: Brightness.light),
+              primarySwatch: Colors.orange,
+              brightness: Brightness.light,
+              ),
           darkTheme: ThemeData(
-              primarySwatch: Colors.orange, brightness: Brightness.dark),
+              primarySwatch: Colors.orange,
+              brightness: Brightness.dark,
+              
+              ),
           home: const AuthenticationWrapper(),
         ));
   }

@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:later_flutter/views/link_detail_view.dart';
-import 'package:later_flutter/views/new_link_sheet.dart';
-import 'package:later_flutter/views/standard_drawer.dart';
+import 'package:later_flutter/views/links/link_detail_view.dart';
+import 'package:later_flutter/views/links/new_link_sheet.dart';
+import 'package:later_flutter/views/components/standard_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FolderView extends StatefulWidget {
