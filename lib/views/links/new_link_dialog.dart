@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/check_url_conventions.dart';
-import 'package:later_flutter/views/folder_picker.dart';
+import 'package:later_flutter/views/folders/folder_picker.dart';
 
 class NewLinkDialog extends StatefulWidget {
   NewLinkDialog({Key? key, this.initalUrl}) : super(key: key);

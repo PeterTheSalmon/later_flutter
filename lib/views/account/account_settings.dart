@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/authentication_service.dart';
 import 'package:later_flutter/views/account/delete_account_view.dart';
-import 'package:later_flutter/views/standard_drawer.dart';
+import 'package:later_flutter/views/components/standard_drawer.dart';
 import 'package:provider/provider.dart';
 
 class AccountSettings extends StatefulWidget {
