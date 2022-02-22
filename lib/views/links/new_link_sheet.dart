@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:later_flutter/services/check_url_conventions.dart';
 
+/// Shows a new link sheet
+/// 
+/// This sheet allows the user to create a new link, and not much else.
+/// 
+/// It can accept values from the clipboard when `fromClipboard` is true.
 Future<void> showNewLinkSheet(BuildContext context,
     {required String parentFolderId, fromClipboard = false}) async {
   TextEditingController titleController = TextEditingController();
