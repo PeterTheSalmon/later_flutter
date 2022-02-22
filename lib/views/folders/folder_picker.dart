@@ -51,46 +51,49 @@ class FolderPickerList extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return Column(children: [
-            TextButton(
-                onPressed: () {
-                  showNewFolderSheet(context,
-                      useDialog: true,
-                      prefillLinkName: title,
-                      prefillLinkUrl: url);
-                },
-                child: const Text("New folder")),
-            Expanded(
-              child: ListView(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
-                return ListTile(
-                  title: Text(document["name"]),
-                  leading: const Icon(Icons.folder),
-                  onTap: () {
-                    FirebaseFirestore.instance.collection("links").add({
-                      "dateCreated": Timestamp.now(),
-                      "isFavourite": false,
-                      "parentFolderId": document.id,
-                      "title": title,
-                      "url": url,
-                      "userId": FirebaseAuth.instance.currentUser!.uid
-                    });
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text("Added!"),
-                        action: SnackBarAction(
-                          label: "Close",
-                          onPressed: () {},
-                        ),
-                      ),
-                    );
+          return Container(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: Column(children: [
+              TextButton(
+                  onPressed: () {
+                    showNewFolderSheet(context,
+                        useDialog: true,
+                        prefillLinkName: title,
+                        prefillLinkUrl: url);
                   },
-                );
-              }).toList()),
-            ),
-          ]);
+                  child: const Text("New folder")),
+              Expanded(
+                child: ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                  return ListTile(
+                    title: Text(document["name"]),
+                    leading: const Icon(Icons.folder),
+                    onTap: () {
+                      FirebaseFirestore.instance.collection("links").add({
+                        "dateCreated": Timestamp.now(),
+                        "isFavourite": false,
+                        "parentFolderId": document.id,
+                        "title": title,
+                        "url": url,
+                        "userId": FirebaseAuth.instance.currentUser!.uid
+                      });
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text("Added!"),
+                          action: SnackBarAction(
+                            label: "Close",
+                            onPressed: () {},
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList()),
+              ),
+            ]),
+          );
         });
   }
 }
