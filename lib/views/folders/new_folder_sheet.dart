@@ -66,7 +66,7 @@ Future<void> showNewFolderSheet(BuildContext context,
                                   /// As we need to use this id to set the link
                                   /// `parentFolderId` value, we need to generate
                                   /// it instead of letting it be random
-                                  Uuid uuid = Uuid();
+                                  Uuid uuid = const Uuid();
                                   String id = uuid.v4();
                                   FirebaseFirestore.instance
                                       .collection("folders")
@@ -106,7 +106,7 @@ Future<void> showNewFolderSheet(BuildContext context,
         });
   } else {
     return showModalBottomSheet(
-        constraints: BoxConstraints(maxWidth: 500),
+        constraints: const BoxConstraints(maxWidth: 500),
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {

@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:later_flutter/services/check_url_conventions.dart';
 import 'package:later_flutter/services/get_favicon.dart';
 import 'package:later_flutter/views/links/edit_link_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
