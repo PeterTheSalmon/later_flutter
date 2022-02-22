@@ -1,4 +1,5 @@
 # Later: Flutter Edition
+![Lines of Code](https://img.shields.io/tokei/lines/github/peterthesalmon/later_flutter)
 
 Later: Flutter Edition offers a cross-platform, somewhat-complete version of Later to use on Android, iOS, Windows, and the Web.
 
