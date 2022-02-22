@@ -22,7 +22,8 @@ class _NewLinkDialogState extends State<NewLinkDialog> {
   Widget build(BuildContext context) {
     TextEditingController urlController =
         TextEditingController(text: initialUrl ?? "");
-    return SingleChildScrollView(
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 400),
       child: Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: Padding(
