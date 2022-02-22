@@ -12,7 +12,8 @@ class EditFolderDialog extends StatelessWidget {
         TextEditingController(text: document["name"]);
 
     return Dialog(
-      child: SingleChildScrollView(
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 400),
         child: Padding(
           padding: MediaQuery.of(context).viewInsets,
           child: Padding(
