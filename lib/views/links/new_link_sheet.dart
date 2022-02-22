@@ -13,7 +13,7 @@ Future<void> showNewLinkSheet(BuildContext context,
           : '');
 
   return showModalBottomSheet<void>(
-    constraints: BoxConstraints(maxWidth: 500),
+    constraints: const BoxConstraints(maxWidth: 500),
     context: context,
     isScrollControlled: true,
     builder: (BuildContext context) {
