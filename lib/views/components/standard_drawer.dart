@@ -18,17 +18,20 @@ class StandardDrawer extends StatefulWidget {
 
 class _StandardDrawerState extends State<StandardDrawer> {
   late Image headerImage;
+  late Image headerImageLight;
 
   @override
   void initState() {
     super.initState();
     headerImage = Image.asset('assets/HeaderImage.jpg');
+    headerImageLight = Image.asset('assets/HeaderImageLight.jpg');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     precacheImage(headerImage.image, context);
+    precacheImage(headerImageLight.image, context);
   }
 
   @override
@@ -52,8 +55,15 @@ class _StandardDrawerState extends State<StandardDrawer> {
                 child: DrawerHeader(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: headerImage.image, fit: BoxFit.cover),
-                        color: Color.fromARGB(255, 196, 173, 138)),
+                            image: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? headerImage.image
+                                : headerImageLight.image,
+                            fit: BoxFit.cover),
+                        color: MediaQuery.of(context).platformBrightness ==
+                                Brightness.dark
+                            ? Colors.black
+                            : Colors.white),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
