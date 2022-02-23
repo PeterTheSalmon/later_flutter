@@ -3,7 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/services/folder_icon_getter.dart';
 import 'package:later_flutter/views/folders/edit_folder_dialog.dart';
+import 'package:later_flutter/views/folders/folder_icon_chooser.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/folders/new_folder_sheet.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
@@ -71,8 +73,12 @@ class _FolderManagerState extends State<FolderManager> {
                           children: snapshot.data!.docs
                               .map((DocumentSnapshot document) {
                         return ListTile(
-                          title: Text(document["name"]),
-                          leading: const Icon(Icons.folder),
+                          title: Text(
+                            document["name"],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          leading: getFolderIcon(document["iconName"]),
                           onTap: () {
                             Navigator.pushReplacement(
                                 context,
@@ -93,14 +99,26 @@ class _FolderManagerState extends State<FolderManager> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
+                                tooltip: "Choose Icon",
+                                icon: const Icon(Icons.dashboard_customize),
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          FolderIconChooser(folder: document));
+                                },
+                              ),
+                              IconButton(
+                                  tooltip: "Edit Folder",
+                                  icon: const Icon(Icons.edit),
                                   onPressed: () {
                                     showDialog(
                                         context: context,
                                         builder: (context) => EditFolderDialog(
                                             document: document));
-                                  },
-                                  icon: const Icon(Icons.edit)),
+                                  }),
                               IconButton(
+                                tooltip: "Delete Folder",
                                 icon: const Icon(Icons.delete),
                                 onPressed: () async {
                                   /// * First, we create a backup of the folder
