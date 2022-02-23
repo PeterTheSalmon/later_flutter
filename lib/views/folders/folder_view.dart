@@ -82,12 +82,18 @@ class _FolderViewState extends State<FolderView> {
                               padding: const EdgeInsets.all(8.0),
                               child: Center(
                                   child: RichText(
-                                text: const TextSpan(
+                                text: TextSpan(
                                   children: [
                                     TextSpan(
                                         text: 'Click the ',
-                                        style: TextStyle(fontSize: 20)),
-                                    WidgetSpan(
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: MediaQuery.of(context)
+                                                        .platformBrightness ==
+                                                    Brightness.dark
+                                                ? Colors.white
+                                                : Colors.black)),
+                                    const WidgetSpan(
                                       child: Padding(
                                         padding:
                                             EdgeInsets.only(left: 2, right: 2),
@@ -96,7 +102,13 @@ class _FolderViewState extends State<FolderView> {
                                     ),
                                     TextSpan(
                                         text: ' to add a link',
-                                        style: TextStyle(fontSize: 20)),
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: MediaQuery.of(context)
+                                                        .platformBrightness ==
+                                                    Brightness.dark
+                                                ? Colors.white
+                                                : Colors.black)),
                                   ],
                                 ),
                               )),
