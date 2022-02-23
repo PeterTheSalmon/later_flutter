@@ -31,7 +31,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
         title: Text(widget.document['title']),
       ),
       bottomNavigationBar:
-          BottomAppBar(child: _buildBottomNavBar(document: widget.document)),
+          BottomAppBar(child: _bottomNavigationBar(document: widget.document)),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Align(
@@ -39,7 +39,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildFavicon(context),
+              _faviconPreview(context),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
@@ -48,7 +48,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                       fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               ),
-              _buildWebsitePreview(context),
+              _websitePreview(context),
             ],
           ),
         ),
@@ -56,7 +56,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
     );
   }
 
-  Widget _buildFavicon(BuildContext context) {
+  Widget _faviconPreview(BuildContext context) {
     return (!kIsWeb)
         ? Padding(
             padding: const EdgeInsets.all(18.0),
@@ -71,7 +71,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
         : Container();
   }
 
-  Widget _buildWebsitePreview(BuildContext context) {
+  Widget _websitePreview(BuildContext context) {
     return (!kIsWeb)
         ? SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
@@ -116,7 +116,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
         : Container();
   }
 
-  Row _buildBottomNavBar({required DocumentSnapshot document}) {
+  Row _bottomNavigationBar({required DocumentSnapshot document}) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
