@@ -34,7 +34,7 @@ class FolderIconChooser extends StatelessWidget {
           ),
         ),
         Container(
-          constraints: BoxConstraints(maxWidth: 400, maxHeight: 200),
+          constraints: const BoxConstraints(maxWidth: 400, maxHeight: 200),
           child: GridView.count(
             crossAxisCount: 4,
             mainAxisSpacing: 0.1,

@@ -10,8 +10,8 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/services/share_service.dart';
 import 'package:later_flutter/views/folders/new_folder_sheet.dart';
-import 'package:later_flutter/views/links/new_link_dialog.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
+import 'package:later_flutter/views/links/new_link_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -78,12 +78,8 @@ class _HomePageState extends State<HomePage> {
         _sharedText = sharedData;
       });
       if (_sharedText != null && _sharedText?.isNotEmpty == true) {
-        await showDialog(
-          context: context,
-          builder: (context) => Dialog(
-            child: NewLinkDialog(initalUrl: _sharedText),
-          ),
-        );
+        await showNewLinkSheet(context,
+            useDialog: true, sharedText: _sharedText, parentFolderId: "");
         setState(() {
           _sharedText = null;
         });
@@ -102,27 +98,16 @@ class _HomePageState extends State<HomePage> {
               SingleActivator(LogicalKeyboardKey.keyN,
                   meta: Platform.isMacOS ? true : false,
                   control: Platform.isMacOS ? false : true,
-                  alt: true): () async {
-                ClipboardData? data =
-                    await Clipboard.getData(Clipboard.kTextPlain);
-                showDialog(
-                  context: context,
-                  builder: (context) => Dialog(
-                    child: NewLinkDialog(initalUrl: data?.text),
-                  ),
-                );
+                  alt: true): () {
+                showNewLinkSheet(context,
+                    parentFolderId: "", fromClipboard: true, useDialog: true);
               },
               SingleActivator(
                 LogicalKeyboardKey.keyN,
                 meta: Platform.isMacOS ? true : false,
                 control: Platform.isMacOS ? false : true,
               ): () {
-                showDialog(
-                  context: context,
-                  builder: (context) => Dialog(
-                    child: NewLinkDialog(),
-                  ),
-                );
+                showNewLinkSheet(context, parentFolderId: "", useDialog: true);
               },
               SingleActivator(LogicalKeyboardKey.keyN,
                   meta: Platform.isMacOS ? true : false,
@@ -151,25 +136,17 @@ class _HomePageState extends State<HomePage> {
                     child: const Icon(Icons.copy),
                     label: "Add from Clipboard",
                     onTap: () async {
-                      ClipboardData? data =
-                          await Clipboard.getData(Clipboard.kTextPlain);
-                      showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                          child: NewLinkDialog(initalUrl: data?.text),
-                        ),
-                      );
+                      showNewLinkSheet(context,
+                          parentFolderId: "",
+                          fromClipboard: true,
+                          useDialog: true);
                     }),
                 SpeedDialChild(
                   child: const Icon(Icons.add_link),
                   label: "Save Link",
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                        child: NewLinkDialog(initalUrl: null),
-                      ),
-                    );
+                    showNewLinkSheet(context,
+                        useDialog: true, parentFolderId: "");
                   },
                 ),
                 SpeedDialChild(

@@ -21,7 +21,7 @@ class FolderList extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: SelectableText(
                   "Something went wrong:\n\n${snapshot.error!.toString()}"),
             );
