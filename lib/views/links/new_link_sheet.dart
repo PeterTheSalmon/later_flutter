@@ -32,62 +32,59 @@ Future<void> showNewLinkSheet(BuildContext context,
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 400),
                 child: Padding(
-                  padding: MediaQuery.of(context).viewInsets,
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            const Text(
-                              "Add New Link",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            const Spacer(),
-                            IconButton(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          const Text(
+                            "Add New Link",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(Icons.close))
+                        ],
+                      ),
+                      TextField(
+                        controller: titleController,
+                        decoration: const InputDecoration(
+                            suffixIcon: Icon(Icons.title),
+                            labelText: "Title",
+                            enabledBorder: UnderlineInputBorder()),
+                      ),
+                      TextField(
+                          controller: urlController,
+                          decoration: const InputDecoration(
+                              suffixIcon: Icon(Icons.link),
+                              labelText: "URL",
+                              enabledBorder: UnderlineInputBorder())),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Center(
+                            child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    barrierLabel: "Choose a Folder",
+                                    builder: (context) => Dialog(
+                                      child: FolderPicker(
+                                          title: titleController.text,
+                                          url: checkUrlConventions(
+                                              url: urlController.text)),
+                                    ),
+                                  );
                                 },
-                                icon: const Icon(Icons.close))
-                          ],
-                        ),
-                        TextField(
-                          controller: titleController,
-                          decoration: const InputDecoration(
-                              suffixIcon: Icon(Icons.title),
-                              labelText: "Title",
-                              enabledBorder: UnderlineInputBorder()),
-                        ),
-                        TextField(
-                            controller: urlController,
-                            decoration: const InputDecoration(
-                                suffixIcon: Icon(Icons.link),
-                                labelText: "URL",
-                                enabledBorder: UnderlineInputBorder())),
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Center(
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    showDialog(
-                                      context: context,
-                                      barrierLabel: "Choose a Folder",
-                                      builder: (context) => Dialog(
-                                        child: FolderPicker(
-                                            title: titleController.text,
-                                            url: checkUrlConventions(
-                                                url: urlController.text)),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text("NEXT"))),
-                        )
-                      ],
-                    ),
+                                child: const Text("NEXT"))),
+                      )
+                    ],
                   ),
                 ),
               ),
