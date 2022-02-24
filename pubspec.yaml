@@ -47,6 +47,7 @@ dependencies:
   any_link_preview: 2.0.4
   uuid: 3.0.6
   progressive_image: ^2.0.0
+  metadata_fetch: ^0.4.1
 
 dev_dependencies:
   flutter_test:

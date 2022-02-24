@@ -98,6 +98,7 @@ class _FolderManagerState extends State<FolderManager> {
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              // * It may be worth combining these two icons into one
                               IconButton(
                                 tooltip: "Choose Icon",
                                 icon: const Icon(Icons.dashboard_customize),
