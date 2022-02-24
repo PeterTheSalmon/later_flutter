@@ -176,48 +176,53 @@ class _HomePageState extends State<HomePage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: GestureDetector(
-                            child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 100),
-                                decoration: BoxDecoration(
-                                  // Slightly darker in dark mode
-                                  color: MediaQuery.of(context)
-                                              .platformBrightness ==
-                                          Brightness.dark
-                                      ? const Color.fromARGB(255, 228, 145, 21)
-                                      : const Color.fromARGB(255, 248, 174, 62),
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      blurRadius: 10,
-                                      offset: const Offset(5, 5),
-                                    ),
-                                  ],
-                                ),
-                                height: _containerHeight,
-                                width: _containerWidth,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(
-                                      child: Column(
-                                    children: [
-                                      const Spacer(),
-                                      SizedBox(
-                                        width: 184,
-                                        child: Text(
-                                          Globals.tipList[_tipIndex],
-                                        ),
+                            child: Container(
+                              height: 120,
+                              child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 100),
+                                  decoration: BoxDecoration(
+                                    // Slightly darker in dark mode
+                                    color: MediaQuery.of(context)
+                                                .platformBrightness ==
+                                            Brightness.dark
+                                        ? const Color.fromARGB(
+                                            255, 228, 145, 21)
+                                        : const Color.fromARGB(
+                                            255, 248, 174, 62),
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        blurRadius: 10,
+                                        offset: const Offset(5, 5),
                                       ),
-                                      const Spacer(),
-                                      const Text(
-                                        "Tap for next tip",
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 94, 94, 94)),
-                                      )
                                     ],
+                                  ),
+                                  height: _containerHeight,
+                                  width: _containerWidth,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                        child: Column(
+                                      children: [
+                                        const Spacer(),
+                                        SizedBox(
+                                          width: 184,
+                                          child: Text(
+                                            Globals.tipList[_tipIndex],
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        const Text(
+                                          "Tap for next tip",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 94, 94, 94)),
+                                        )
+                                      ],
+                                    )),
                                   )),
-                                )),
+                            ),
                             onTap: () {
                               int previousIndex = _tipIndex;
                               while (previousIndex == _tipIndex) {
