@@ -65,6 +65,7 @@ class _FolderViewState extends State<FolderView> {
                     child: StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection("links")
+                            .orderBy("title")
                             .where("userId",
                                 isEqualTo:
                                     FirebaseAuth.instance.currentUser?.uid)
