@@ -14,10 +14,9 @@ import 'package:metadata_fetch/metadata_fetch.dart';
 Future<void> showNewLinkSheet(BuildContext context,
     {required String parentFolderId,
     fromClipboard = false,
-    useDialog = false,
-    String? sharedText}) async {
+    useDialog = false}) async {
   TextEditingController urlController = TextEditingController(
-      text: sharedText ?? fromClipboard
+      text: fromClipboard
           ? await Clipboard.getData('text/plain').then((value) => value?.text)
           : '');
 

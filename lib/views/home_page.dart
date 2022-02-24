@@ -78,8 +78,9 @@ class _HomePageState extends State<HomePage> {
         _sharedText = sharedData;
       });
       if (_sharedText != null && _sharedText?.isNotEmpty == true) {
+        await Clipboard.setData(ClipboardData(text: _sharedText));
         await showNewLinkSheet(context,
-            useDialog: true, sharedText: _sharedText, parentFolderId: "");
+            fromClipboard: true, useDialog: true, parentFolderId: "");
         setState(() {
           _sharedText = null;
         });
