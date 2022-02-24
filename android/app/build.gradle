@@ -46,7 +46,8 @@ android {
         applicationId "com.petersalmon.later_flutter"
         //minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
         minSdkVersion 21
-        targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
+        // targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
+        targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
