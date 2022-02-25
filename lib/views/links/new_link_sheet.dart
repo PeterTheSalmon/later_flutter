@@ -6,15 +6,27 @@ import 'package:later_flutter/services/check_url_conventions.dart';
 import 'package:later_flutter/views/folders/folder_picker.dart';
 import 'package:metadata_fetch/metadata_fetch.dart';
 
-/// Shows a new link sheet
+/// Shows a new link sheet or dialog
 ///
-/// This sheet allows the user to create a new link, and not much else.
-///
-/// It can accept values from the clipboard when `fromClipboard` is true.
+/// Arguments:
+/// - `fromClipboard`: whether the sheet should accept values from the clipboard
+/// - `parentFolderId`: the folder to add the link to. If using the dialog, no parent folder is needed.
+/// - `useDialog`: whether the sheet should be shown as a dialog. Used exclusively on the home page
 Future<void> showNewLinkSheet(BuildContext context,
     {required String parentFolderId,
     fromClipboard = false,
     useDialog = false}) async {
+  
+  /// When copying from the clipboard, it takes a signifigant amount of time
+  /// to fetch the page title from the metadata. As such, we add a loading 
+  /// overlay to indicate that something is actually happening.
+  if (fromClipboard) {
+    showDialog(
+        context: context,
+        builder: (context) => Center(child: CircularProgressIndicator()));
+  }
+
+  // Get the clipboard
   TextEditingController urlController = TextEditingController(
       text: fromClipboard
           ? await Clipboard.getData('text/plain').then((value) => value?.text)
@@ -23,6 +35,11 @@ Future<void> showNewLinkSheet(BuildContext context,
   var data = await MetadataFetch.extract(urlController.text);
   TextEditingController titleController =
       TextEditingController(text: data?.title ?? '');
+
+  /// Remove the loading overlay
+  if (fromClipboard) {
+    Navigator.pop(context);
+  }
 
   if (useDialog) {
     showDialog(
