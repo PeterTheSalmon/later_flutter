@@ -14,5 +14,6 @@ class Globals {
     "Later supports keyboard shortcuts! Try ctrl/cmd + n to save a link.",
     "Later supports keyboard shortcuts! Try ctrl/cmd + shift + n to create a folder.",
     "Later supports keyboard shortcuts! Try ctrl/cmd + alt + n to save a link on your clipboard.",
+    "When sharing a link or adding from your clipboard, Later will automatically add the title of the page!"
   ];
 }

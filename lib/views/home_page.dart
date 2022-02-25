@@ -11,6 +11,7 @@ import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/services/share_service.dart';
 import 'package:later_flutter/views/folders/new_folder_sheet.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
+import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/links/new_link_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -203,11 +204,10 @@ class _HomePageState extends State<HomePage> {
           child: AnimatedContainer(
               duration: const Duration(milliseconds: 100),
               decoration: BoxDecoration(
-                // Slightly darker in dark mode
                 color:
                     MediaQuery.of(context).platformBrightness == Brightness.dark
-                        ? const Color.fromARGB(255, 228, 145, 21)
-                        : const Color.fromARGB(255, 248, 174, 62),
+                        ? const Color.fromARGB(255, 90, 90, 90)
+                        : const Color.fromARGB(255, 233, 233, 233),
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
@@ -286,6 +286,12 @@ class _HomePageState extends State<HomePage> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LinkDetailView(document: document)));
+          },
           leading: IconButton(
               icon: const Icon(Icons.open_in_new),
               onPressed: () async {
