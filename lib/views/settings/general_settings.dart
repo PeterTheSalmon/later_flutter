@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -65,10 +66,10 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                const Text(
-                                    "Very Real Toggle Definitely Does Stuff"),
+                                const Text("Very Real Toggle"),
                                 const Spacer(),
                                 Switch(
+                                    activeColor: Globals.appColour,
                                     value: _switchValue,
                                     onChanged: (value) {
                                       setState(() {

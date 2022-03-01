@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
             ),
             floatingActionButton: SpeedDial(
               animatedIcon: AnimatedIcons.menu_close,
-              backgroundColor: Colors.orange,
+              backgroundColor: Globals.appColour,
               children: [
                 SpeedDialChild(
                     child: const Icon(Icons.copy),
@@ -232,9 +232,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const Spacer(),
-                    const Text(
+                    Text(
                       "Tap for next tip",
-                      style: TextStyle(color: Color.fromARGB(255, 94, 94, 94)),
+                      style: TextStyle(
+                          color: MediaQuery.of(context).platformBrightness ==
+                                  Brightness.dark
+                              ? const Color.fromARGB(255, 182, 181, 181)
+                              : const Color.fromARGB(255, 88, 88, 88)),
                     )
                   ],
                 )),

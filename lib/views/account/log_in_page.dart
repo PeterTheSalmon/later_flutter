@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:later_flutter/services/authentication_service.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/account/sign_up_page.dart';
 import 'package:provider/provider.dart';
 
@@ -42,10 +43,10 @@ class LogInPage extends StatelessWidget {
                               : Platform.isAndroid
                                   ? 50
                                   : MediaQuery.of(context).size.height * 0.3),
-                  const Text(
+                  Text(
                     "Sign in to Later",
                     style: TextStyle(
-                        color: Colors.orange,
+                        color: Globals.appColour,
                         fontSize: 30,
                         fontWeight: FontWeight.w800),
                   ),
