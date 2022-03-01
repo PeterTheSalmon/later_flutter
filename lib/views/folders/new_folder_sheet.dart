@@ -31,7 +31,7 @@ Future<void> showNewFolderSheet(BuildContext context,
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Padding(
-                  padding: const EdgeInsets.all(14),
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +59,7 @@ Future<void> showNewFolderSheet(BuildContext context,
                             enabledBorder: UnderlineInputBorder()),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(25.0),
+                        padding: const EdgeInsets.only(top: 10.0),
                         child: Center(
                             child: ElevatedButton(
                                 onPressed: () {

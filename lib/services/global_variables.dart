@@ -1,6 +1,24 @@
+import 'package:flutter/material.dart';
+
 /// Convenience class for values that rarely change and are used throughout the app
 class Globals {
   static String? sharedUrl;
+
+  Map<int, Color> customColour = {
+    50: const Color.fromRGBO(243, 168, 59, .1),
+    100: const Color.fromRGBO(243, 168, 59, .2),
+    200: const Color.fromRGBO(243, 168, 59, .3),
+    300: const Color.fromRGBO(243, 168, 59, .4),
+    400: const Color.fromRGBO(243, 168, 59, .5),
+    500: const Color.fromRGBO(243, 168, 59, .6),
+    600: const Color.fromRGBO(243, 168, 59, .7),
+    700: const Color.fromRGBO(243, 168, 59, .8),
+    800: const Color.fromRGBO(243, 168, 59, .9),
+    900: const Color.fromRGBO(243, 168, 59, 1),
+  };
+
+  MaterialColor appSwatch() => MaterialColor(0xFFF3A839, customColour);
+  static Color appColour = const Color.fromARGB(255, 243, 168, 59);
 
   /// A list of tips for use on the home page.
   /// The tips are displayed in a random order.

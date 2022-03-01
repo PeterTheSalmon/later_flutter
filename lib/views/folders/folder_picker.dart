@@ -14,7 +14,7 @@ class FolderPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.only(top: 18),
         child: Text(
           "Choose a Folder",
           style: TextStyle(fontSize: 20),
@@ -54,20 +54,29 @@ class FolderPickerList extends StatelessWidget {
           return Container(
             constraints: const BoxConstraints(maxWidth: 400),
             child: Column(children: [
-              TextButton(
+              TextButton.icon(
+                  icon: const Icon(Icons.add),
                   onPressed: () {
                     showNewFolderSheet(context,
                         useDialog: true,
                         prefillLinkName: title,
                         prefillLinkUrl: url);
                   },
-                  child: const Text("New folder")),
+                  label: const Text(
+                    "New folder",
+                    style: TextStyle(fontSize: 16),
+                  )),
+              const Divider(),
               Expanded(
                 child: ListView(
                     children:
                         snapshot.data!.docs.map((DocumentSnapshot document) {
                   return ListTile(
-                    title: Text(document["name"]),
+                    title: Text(
+                      document["name"],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     leading: const Icon(Icons.folder),
                     onTap: () {
                       FirebaseFirestore.instance.collection("links").add({

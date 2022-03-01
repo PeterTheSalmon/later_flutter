@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:later_flutter/firebase_options.dart';
 import 'package:later_flutter/services/authentication_service.dart';
 import 'package:later_flutter/services/authentication_wrapper.dart';
+import 'package:later_flutter/services/global_variables.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -36,14 +37,17 @@ class LaterApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: "Later",
           theme: ThemeData(
-              primarySwatch: Colors.orange,
-              brightness: Brightness.light,
-              ),
+            appBarTheme: AppBarTheme(
+              color: Globals.appColour,
+            ),
+            primarySwatch: Globals().appSwatch(),
+            brightness: Brightness.light,
+            primaryColor: Globals.appColour,
+          ),
           darkTheme: ThemeData(
-              primarySwatch: Colors.orange,
+              primarySwatch: Globals().appSwatch(),
               brightness: Brightness.dark,
-              
-              ),
+              primaryColor: Globals.appColour),
           home: const AuthenticationWrapper(),
         ));
   }

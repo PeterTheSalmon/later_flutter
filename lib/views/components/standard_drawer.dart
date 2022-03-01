@@ -17,20 +17,20 @@ class StandardDrawer extends StatefulWidget {
 }
 
 class _StandardDrawerState extends State<StandardDrawer> {
-  late Image headerImage;
+  late Image headerImageDark;
   late Image headerImageLight;
 
   @override
   void initState() {
     super.initState();
-    headerImage = Image.asset('assets/HeaderImage.jpg');
+    headerImageDark = Image.asset('assets/HeaderImage.jpg');
     headerImageLight = Image.asset('assets/HeaderImageLight.jpg');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    precacheImage(headerImage.image, context);
+    precacheImage(headerImageDark.image, context);
     precacheImage(headerImageLight.image, context);
   }
 
@@ -48,31 +48,30 @@ class _StandardDrawerState extends State<StandardDrawer> {
         ],
       ),
       child: ListView(padding: const EdgeInsets.only(top: 0), children: [
-        displayMobileLayout
-            ? SizedBox(
-                width: 310,
-                height: 150,
-                child: DrawerHeader(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: MediaQuery.of(context).platformBrightness ==
-                                    Brightness.dark
-                                ? headerImage.image
-                                : headerImageLight.image,
-                            fit: BoxFit.cover),
-                        color: MediaQuery.of(context).platformBrightness ==
-                                Brightness.dark
-                            ? Colors.black
-                            : Colors.white),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Spacer(),
-                        const Text("Later", style: TextStyle(fontSize: 24)),
-                        Text(FirebaseAuth.instance.currentUser!.email!),
-                      ],
-                    )))
-            : const SizedBox(height: 30),
+        // displayMobileLayout ?
+        SizedBox(
+            width: 310,
+            height: 150,
+            child: DrawerHeader(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: MediaQuery.of(context).platformBrightness ==
+                              Brightness.dark
+                          ? headerImageDark.image
+                          : headerImageLight.image,
+                      fit: BoxFit.cover),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(),
+                    const Text("Later",
+                        style: TextStyle(fontSize: 24, color: Colors.white)),
+                    Text(FirebaseAuth.instance.currentUser!.email!,
+                        style: const TextStyle(color: Colors.white)),
+                  ],
+                ))),
+        // : const SizedBox(height: 30),
         ListTile(
           title: const Text("Home"),
           leading: const Icon(Icons.home),

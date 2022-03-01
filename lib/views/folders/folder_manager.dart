@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/folder_icon_getter.dart';
+import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/folders/edit_folder_dialog.dart';
 import 'package:later_flutter/views/folders/folder_icon_chooser.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
@@ -44,7 +45,7 @@ class _FolderManagerState extends State<FolderManager> {
                 },
                 label: const Text("New Folder"),
                 icon: const Icon(Icons.add),
-                backgroundColor: Colors.orange,
+                backgroundColor: Globals.appColour,
               ),
               body: SingleChildScrollView(
                 child: StreamBuilder<QuerySnapshot>(

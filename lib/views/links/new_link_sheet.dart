@@ -16,14 +16,13 @@ Future<void> showNewLinkSheet(BuildContext context,
     {required String parentFolderId,
     fromClipboard = false,
     useDialog = false}) async {
-  
   /// When copying from the clipboard, it takes a signifigant amount of time
-  /// to fetch the page title from the metadata. As such, we add a loading 
+  /// to fetch the page title from the metadata. As such, we add a loading
   /// overlay to indicate that something is actually happening.
   if (fromClipboard) {
     showDialog(
         context: context,
-        builder: (context) => Center(child: CircularProgressIndicator()));
+        builder: (context) => const Center(child: CircularProgressIndicator()));
   }
 
   // Get the clipboard
@@ -36,7 +35,7 @@ Future<void> showNewLinkSheet(BuildContext context,
   TextEditingController titleController =
       TextEditingController(text: data?.title ?? '');
 
-  /// Remove the loading overlay
+  /// Remove the loading overlay k
   if (fromClipboard) {
     Navigator.pop(context);
   }
@@ -48,7 +47,7 @@ Future<void> showNewLinkSheet(BuildContext context,
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 400),
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -82,7 +81,7 @@ Future<void> showNewLinkSheet(BuildContext context,
                               labelText: "URL",
                               enabledBorder: UnderlineInputBorder())),
                       Padding(
-                        padding: const EdgeInsets.all(25.0),
+                        padding: const EdgeInsets.only(top: 10.0),
                         child: Center(
                             child: ElevatedButton(
                                 onPressed: () {
