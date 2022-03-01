@@ -48,6 +48,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                       fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               ),
+              // TODO: Add a shadow on the loading container
               _websitePreview(context),
             ],
           ),
