@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/folders/new_folder_sheet.dart';
 
+/// A list of folders used to select a destination for new links
 class FolderPicker extends StatelessWidget {
   const FolderPicker({Key? key, required this.title, required this.url})
       : super(key: key);
