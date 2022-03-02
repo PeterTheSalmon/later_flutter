@@ -29,76 +29,73 @@ Future<void> showNewFolderSheet(BuildContext context,
             child: Container(
               constraints: const BoxConstraints(maxWidth: 400),
               child: Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Text(
-                            "New Folder",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          const Spacer(),
-                          IconButton(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          "New Folder",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.close))
+                      ],
+                    ),
+                    TextField(
+                      controller: titleController,
+                      decoration: const InputDecoration(
+                          suffixIcon: Icon(Icons.title),
+                          labelText: "Name",
+                          enabledBorder: UnderlineInputBorder()),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Center(
+                          child: ElevatedButton(
                               onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.close))
-                        ],
-                      ),
-                      TextField(
-                        controller: titleController,
-                        decoration: const InputDecoration(
-                            suffixIcon: Icon(Icons.title),
-                            labelText: "Name",
-                            enabledBorder: UnderlineInputBorder()),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Center(
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  /// As we need to use this id to set the link
-                                  /// `parentFolderId` value, we need to generate
-                                  /// it instead of letting it be random
-                                  Uuid uuid = const Uuid();
-                                  String id = uuid.v4();
+                                /// As we need to use this id to set the link
+                                /// `parentFolderId` value, we need to generate
+                                /// it instead of letting it be random
+                                Uuid uuid = const Uuid();
+                                String id = uuid.v4();
+                                FirebaseFirestore.instance
+                                    .collection("folders")
+                                    .doc(id)
+                                    .set({
+                                  "dateCreated": DateTime.now(),
+                                  "iconName": "folder",
+                                  "name": titleController.text,
+                                  "userId":
+                                      FirebaseAuth.instance.currentUser!.uid
+                                });
+                                if (prefillLinkName != null &&
+                                    prefillLinkUrl != null) {
                                   FirebaseFirestore.instance
-                                      .collection("folders")
-                                      .doc(id)
-                                      .set({
+                                      .collection("links")
+                                      .add({
                                     "dateCreated": DateTime.now(),
-                                    "iconName": "folder",
-                                    "name": titleController.text,
+                                    "isFavourite": false,
+                                    "parentFolderId": id,
+                                    "title": prefillLinkName,
+                                    "url": prefillLinkUrl,
                                     "userId":
                                         FirebaseAuth.instance.currentUser!.uid
                                   });
-                                  if (prefillLinkName != null &&
-                                      prefillLinkUrl != null) {
-                                    FirebaseFirestore.instance
-                                        .collection("links")
-                                        .add({
-                                      "dateCreated": DateTime.now(),
-                                      "isFavourite": false,
-                                      "parentFolderId": id,
-                                      "title": prefillLinkName,
-                                      "url": prefillLinkUrl,
-                                      "userId":
-                                          FirebaseAuth.instance.currentUser!.uid
-                                    });
-                                    Navigator.pop(context);
-                                  }
                                   Navigator.pop(context);
-                                },
-                                child: const Text("SAVE"))),
-                      )
-                    ],
-                  ),
+                                }
+                                Navigator.pop(context);
+                              },
+                              child: const Text("SAVE"))),
+                    )
+                  ],
                 ),
               ),
             ),
