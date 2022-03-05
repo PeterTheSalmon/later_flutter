@@ -13,7 +13,8 @@ import 'package:uuid/uuid.dart';
 ///
 ///   `prefillLinkName` and `prefillLinkUrl`: prefill the link name and url
 ///     and add them to the folder instantly. If null, skip this step.
-///     * ONLY enabled when using the dialog *
+///     
+///   __ONLY enabled when using the dialog__
 
 Future<void> showNewFolderSheet(BuildContext context,
     {bool useDialog = false,
