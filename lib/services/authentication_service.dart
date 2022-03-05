@@ -42,17 +42,19 @@ class AuthenticationService with ChangeNotifier {
     }
   }
 
-  Future<void> signUp(
-      String email, String password, BuildContext context) async {
+  Future<void> signUp(String email, String password, BuildContext context,
+      String displayName) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+      await _firebaseAuth.currentUser?.updateDisplayName(displayName);
       errorMessage = null;
       notifyListeners();
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       errorMessage = e.message;
       notifyListeners();
+      return;
     }
   }
 
