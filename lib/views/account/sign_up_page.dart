@@ -12,6 +12,7 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
   SignUpPage({Key? key}) : super(key: key);
 
@@ -25,6 +26,13 @@ class SignUpPage extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: ListView(
           children: [
+            TextFormField(
+              decoration: const InputDecoration(
+                  suffixIcon: Icon(Icons.person),
+                  labelText: "Display Name",
+                  enabledBorder: UnderlineInputBorder()),
+              controller: nameController,
+            ),
             TextFormField(
               decoration: const InputDecoration(
                   suffixIcon: Icon(Icons.email),
@@ -63,6 +71,7 @@ class SignUpPage extends StatelessWidget {
                         emailController.text.trim(),
                         passwordController.text.trim(),
                         context,
+                        nameController.text.trim(),
                       );
                 },
                 icon: const Icon(Icons.arrow_forward),

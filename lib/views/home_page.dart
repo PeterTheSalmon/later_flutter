@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   double _containerHeight = 100;
   double _containerWidth = 200;
   List<DocumentSnapshot> _links = [];
+  final int currentTime = DateTime.now().hour;
 
   void countFolders() async {
     QuerySnapshot _myDocs = await FirebaseFirestore.instance
@@ -174,7 +175,13 @@ class _HomePageState extends State<HomePage> {
                         : 270,
                     child: Column(
                       children: [
-                        const Text("Home", style: TextStyle(fontSize: 20)),
+                        Text(
+                            currentTime < 10
+                                ? "Good morning, ${FirebaseAuth.instance.currentUser?.displayName ?? ""}!"
+                                : currentTime < 16
+                                    ? "Good afternoon, ${FirebaseAuth.instance.currentUser?.displayName ?? ""}."
+                                    : "Evening, ${FirebaseAuth.instance.currentUser?.displayName ?? ""}.",
+                            style: TextStyle(fontSize: 20)),
                         _tipsBox(context),
                         const Spacer(),
                         const Padding(
