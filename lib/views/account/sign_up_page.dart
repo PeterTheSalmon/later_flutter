@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:later_flutter/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,75 +25,90 @@ class SignUpPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Create an Account"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: ListView(
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.person),
-                  labelText: "Display Name",
-                  enabledBorder: UnderlineInputBorder()),
-              controller: nameController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.email),
-                  labelText: "Email",
-                  enabledBorder: UnderlineInputBorder()),
-              controller: emailController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.email),
-                  labelText: "Confirm Email",
-                  enabledBorder: UnderlineInputBorder()),
-              controller: confirmEmailController,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.lock),
-                  labelText: "Password",
-                  enabledBorder: UnderlineInputBorder()),
-              controller: passwordController,
-              obscureText: true,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.lock),
-                  labelText: "Confirm Password",
-                  enabledBorder: UnderlineInputBorder()),
-              controller: confirmPasswordController,
-              obscureText: true,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  context.read<AuthenticationService>().signUp(
-                        emailController.text.trim(),
-                        passwordController.text.trim(),
-                        context,
-                        nameController.text.trim(),
-                      );
-                },
-                icon: const Icon(Icons.arrow_forward),
-                label: const Text("START"),
-              ),
-            ),
-            Consumer<AuthenticationService>(
-                builder: (context, authenticationService, child) => SizedBox(
-                    height: 50,
-                    child: Text(authenticationService.errorMessage ?? ""))),
-            Row(
-              children: const [
-                Spacer(),
-                Text("By creating an acount you agree to the"),
-                Spacer()
+      body: Center(
+        child: SizedBox(
+          width: kIsWeb
+              ? 300
+              : Platform.isMacOS
+                  ? 300
+                  : Platform.isWindows
+                      ? 300
+                      : MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: ListView(
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                      suffixIcon: Icon(Icons.person),
+                      labelText: "Display Name",
+                      enabledBorder: UnderlineInputBorder()),
+                  controller: nameController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                      suffixIcon: Icon(Icons.email),
+                      labelText: "Email",
+                      enabledBorder: UnderlineInputBorder()),
+                  controller: emailController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                      suffixIcon: Icon(Icons.email),
+                      labelText: "Confirm Email",
+                      enabledBorder: UnderlineInputBorder()),
+                  controller: confirmEmailController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                      suffixIcon: Icon(Icons.lock),
+                      labelText: "Password",
+                      enabledBorder: UnderlineInputBorder()),
+                  controller: passwordController,
+                  obscureText: true,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                      suffixIcon: Icon(Icons.lock),
+                      labelText: "Confirm Password",
+                      enabledBorder: UnderlineInputBorder()),
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      context.read<AuthenticationService>().signUp(
+                            emailController.text.trim(),
+                            confirmEmailController.text.trim(),
+                            passwordController.text.trim(),
+                            confirmPasswordController.text.trim(),
+                            nameController.text.trim(),
+                            context,
+                          );
+                    },
+                    icon: const Icon(Icons.arrow_forward),
+                    label: const Text("START"),
+                  ),
+                ),
+                Consumer<AuthenticationService>(
+                    builder: (context, authenticationService, child) =>
+                        SizedBox(
+                            height: 50,
+                            child: Text(
+                                authenticationService.errorMessage ?? ""))),
+                Row(
+                  children: const [
+                    Spacer(),
+                    Text("By creating an acount you agree to the"),
+                    Spacer()
+                  ],
+                ),
+                const TermsPrivacyLinks(),
               ],
             ),
-            const TermsPrivacyLinks(),
-          ],
+          ),
         ),
       ),
     );

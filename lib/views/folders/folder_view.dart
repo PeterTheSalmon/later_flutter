@@ -79,7 +79,7 @@ class _FolderViewState extends State<FolderView> {
                   return Column(
                     children: [
                       _favouritesToggle(),
-                      Divider(),
+                      const Divider(),
                       Expanded(
                         child: ListView(
                           children: snapshot.data!.docs
