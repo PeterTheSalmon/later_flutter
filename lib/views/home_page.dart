@@ -172,16 +172,16 @@ class _HomePageState extends State<HomePage> {
                     height: MediaQuery.of(context).orientation ==
                             Orientation.portrait
                         ? 500
-                        : 270,
+                        : 370,
                     child: Column(
                       children: [
                         Text(
                             currentTime < 10
-                                ? "Good morning, ${FirebaseAuth.instance.currentUser?.displayName ?? ""}!"
+                                ? "Good morning, ${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}!"
                                 : currentTime < 16
-                                    ? "Good afternoon, ${FirebaseAuth.instance.currentUser?.displayName ?? ""}."
-                                    : "Evening, ${FirebaseAuth.instance.currentUser?.displayName ?? ""}.",
-                            style: TextStyle(fontSize: 20)),
+                                    ? "Good afternoon, ${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}."
+                                    : "Evening, ${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}.",
+                            style: const TextStyle(fontSize: 20)),
                         _tipsBox(context),
                         const Spacer(),
                         const Padding(

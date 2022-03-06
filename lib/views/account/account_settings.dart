@@ -61,31 +61,49 @@ class _AccountSettingsState extends State<AccountSettings> {
                               context: context,
                               builder: (context) {
                                 return Dialog(
-                                    child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Text("Change Display Name",
-                                          style: TextStyle(fontSize: 20)),
-                                      const SizedBox(height: 10),
-                                      TextField(
-                                        decoration: const InputDecoration(
-                                          hintText: "New Display Name",
+                                    child: Container(
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 300),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text("Change Display Name",
+                                            style: TextStyle(fontSize: 20)),
+                                        const SizedBox(height: 10),
+                                        TextField(
+                                          decoration: const InputDecoration(
+                                            hintText: "New Display Name",
+                                          ),
+                                          controller: nameController,
                                         ),
-                                        controller: nameController,
-                                      ),
-                                      const SizedBox(height: 10),
-                                      OutlinedButton(
-                                        onPressed: () {
-                                          FirebaseAuth.instance.currentUser
-                                              ?.updateDisplayName(
-                                                  nameController.text);
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("Change"),
-                                      ),
-                                    ],
+                                        const SizedBox(height: 20),
+                                        OutlinedButton(
+                                          onPressed: () {
+                                            if (FirebaseAuth
+                                                    .instance.currentUser ==
+                                                null) {
+                                              Navigator.pop(context);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                          "Error: no user found!")));
+                                              return;
+                                            }
+                                            FirebaseAuth.instance.currentUser
+                                                ?.updateDisplayName(
+                                                    nameController.text);
+                                            Navigator.pop(context);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "Display Name Changed!")));
+                                          },
+                                          child: const Text("Change"),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ));
                               });

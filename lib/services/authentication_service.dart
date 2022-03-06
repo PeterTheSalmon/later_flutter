@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/authentication_wrapper.dart';
+import 'package:later_flutter/views/styles/fade_route.dart';
 
 class AuthenticationService with ChangeNotifier {
   final FirebaseAuth _firebaseAuth;
@@ -42,8 +43,20 @@ class AuthenticationService with ChangeNotifier {
     }
   }
 
-  Future<void> signUp(String email, String password, BuildContext context,
-      String displayName) async {
+  Future<void> signUp(String email, String confirmEmail, String password,
+      String confirmPassword, String displayName, BuildContext context) async {
+    if (email != confirmEmail) {
+      errorMessage = 'Emails do not match';
+      notifyListeners();
+      return;
+    }
+
+    if (password != confirmPassword) {
+      errorMessage = 'Passwords do not match';
+      notifyListeners();
+      return;
+    }
+
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -51,6 +64,7 @@ class AuthenticationService with ChangeNotifier {
       errorMessage = null;
       notifyListeners();
       Navigator.pop(context);
+      Navigator.push(context, FadeRoute(page: AuthenticationWrapper()));
     } on FirebaseAuthException catch (e) {
       errorMessage = e.message;
       notifyListeners();
