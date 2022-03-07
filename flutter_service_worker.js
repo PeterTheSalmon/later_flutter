@@ -13,11 +13,10 @@ const RESOURCES = {
 "splash/img/dark-1x.png": "f7d0d74353b5006581d93b0fe1644a12",
 "splash/img/light-1x.png": "f7d0d74353b5006581d93b0fe1644a12",
 "splash/style.css": "1b753c0b0be981e88026f85765c92568",
-"favicon.ico": "c155661945bdc94d9a765d77031370b8",
-"index.html": "c68a11484d82c2480e56462a0fcd71da",
-"/": "c68a11484d82c2480e56462a0fcd71da",
-"main.dart.js": "255f87f7b4b1ad33644ad3e9b844c4aa",
-"favicon.png": "68cafcb106f3d1f7b8fa5c0877c096ca",
+"favicon.ico": "2ce33d3617aa61acd82143c568193d31",
+"index.html": "6859eda25f0f3f120adf78e4cc9d9863",
+"/": "6859eda25f0f3f120adf78e4cc9d9863",
+"main.dart.js": "67bd767d6121736b3b5ce0dd5dcbdd88",
 "icons/favicon-16x16.png": "aac8f2524284b820acc81c95baa5e324",
 "icons/favicon.ico": "c155661945bdc94d9a765d77031370b8",
 "icons/apple-icon.png": "93b71a92aab0a3272bb03d4a1ade94d6",
@@ -53,11 +52,7 @@ const RESOURCES = {
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
 "assets/assets/Icon256x256@2x.png": "180e7a963a983856d9f34c8872057b3d",
 "assets/assets/HeaderImage.jpg": "eae1e45ed0d7b12fef7c44f5aecc2d18",
-"assets/assets/HeaderImageLight.jpg": "126deaf4c727ea02ce32604c0d21a525",
-"canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
-"canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
-"canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
-"canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba"
+"assets/assets/HeaderImageLight.jpg": "126deaf4c727ea02ce32604c0d21a525"
 };
 
 // The application shell files that are downloaded before a service worker can
