@@ -32,25 +32,27 @@ class _LinkDetailViewState extends State<LinkDetailView> {
       ),
       bottomNavigationBar:
           BottomAppBar(child: _bottomNavigationBar(document: widget.document)),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _faviconPreview(context),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  widget.document['title'],
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 30),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _faviconPreview(context),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    widget.document['title'],
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
                 ),
-              ),
-              // TODO: Add a shadow on the loading container
-              _websitePreview(context),
-            ],
+                _websitePreview(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -97,6 +99,12 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                         ? const Color.fromARGB(255, 71, 71, 71)
                         : const Color.fromARGB(255, 243, 243, 243),
                     borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 3,
+                      ),
+                    ],
                   ),
                   child: const Center(
                       child: Padding(
