@@ -66,7 +66,6 @@ class _HomePageState extends State<HomePage> {
         .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
     List<DocumentSnapshot> _links = _myDocs.docs;
-    print("working");
     setState(() {
       randomLink = _links[Random().nextInt(_links.length)];
     });
@@ -277,11 +276,22 @@ class _HomePageState extends State<HomePage> {
 
   Widget _randomLink() {
     if (randomLink == null) {
-      return const Text("No links found");
+      return Container(
+        width: 250,
+        height: 70,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.black),
+        ),
+        child: const Center(
+          child: Text("No links found"),
+        ),
+      );
     }
 
     return Container(
       width: 250,
+      height: 70,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black),
         borderRadius: BorderRadius.circular(10),
