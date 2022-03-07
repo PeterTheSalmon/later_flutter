@@ -27,8 +27,21 @@ class _HomePageState extends State<HomePage> {
   int _tipIndex = 0;
   double _containerHeight = 100;
   double _containerWidth = 200;
-  List<DocumentSnapshot> _links = [];
+  DocumentSnapshot? randomLink;
   final int currentTime = DateTime.now().hour;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _tipIndex = Random().nextInt(Globals.tipList.length);
+    });
+    ShareService()
+      ..onDataReceived = _handleSharedData
+      ..getSharedData().then(_handleSharedData);
+    countFolders();
+    getLinks();
+  }
 
   void countFolders() async {
     QuerySnapshot _myDocs = await FirebaseFirestore.instance
@@ -52,22 +65,11 @@ class _HomePageState extends State<HomePage> {
         .collection('links')
         .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
+    List<DocumentSnapshot> _links = _myDocs.docs;
+    print("working");
     setState(() {
-      _links = _myDocs.docs;
+      randomLink = _links[Random().nextInt(_links.length)];
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      _tipIndex = Random().nextInt(Globals.tipList.length);
-    });
-    ShareService()
-      ..onDataReceived = _handleSharedData
-      ..getSharedData().then(_handleSharedData);
-    countFolders();
-    getLinks();
   }
 
   void _handleSharedData(String sharedData) async {
@@ -274,10 +276,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _randomLink() {
-    if (_links.isEmpty) {
-      return const Text("No links saved");
+    if (randomLink == null) {
+      return const Text("No links found");
     }
-    final document = (_links..shuffle()).first;
 
     return Container(
       width: 250,
@@ -288,12 +289,12 @@ class _HomePageState extends State<HomePage> {
       child: Center(
         child: ListTile(
           title: Text(
-            document["title"],
+            randomLink!["title"],
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           subtitle: Text(
-            document["url"],
+            randomLink!["url"],
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -304,16 +305,16 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            LinkDetailView(document: document)));
+                            LinkDetailView(document: randomLink!)));
           },
           leading: IconButton(
               icon: const Icon(Icons.open_in_new),
               onPressed: () async {
-                if (await canLaunch(document["url"]!)) {
-                  launch(document["url"], enableJavaScript: true);
+                if (await canLaunch(randomLink!["url"]!)) {
+                  launch(randomLink!["url"], enableJavaScript: true);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Could not launch ${document["url"]}"),
+                    content: Text("Could not launch ${randomLink!["url"]}"),
                     action: SnackBarAction(
                       label: "Close",
                       onPressed: () {},
