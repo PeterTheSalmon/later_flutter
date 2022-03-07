@@ -47,10 +47,11 @@ class _StandardDrawerState extends State<StandardDrawer> {
           ),
         ],
       ),
-      child: ListView(padding: const EdgeInsets.only(top: 0), children: [
+      child: Column(children: [
+        // flex: 1,
         SizedBox(
             width: 310,
-            height: 150,
+            height: 170,
             child: DrawerHeader(
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -65,61 +66,78 @@ class _StandardDrawerState extends State<StandardDrawer> {
                   children: [
                     const Spacer(),
                     const Text("Later",
-                        style: TextStyle(fontSize: 24, color: Colors.white)),
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black,
+                                offset: Offset(1, 1),
+                                blurRadius: 2,
+                              ),
+                            ])),
                     Text(FirebaseAuth.instance.currentUser!.email!,
                         style: const TextStyle(color: Colors.white)),
                   ],
                 ))),
-        // : const SizedBox(height: 30),
-        ListTile(
-          title: const Text("Home"),
-          leading: const Icon(Icons.home),
-          onTap: () {
-            Navigator.pushReplacement(
-                context,
-                displayMobileLayout
-                    ? MaterialPageRoute(builder: (context) => const HomePage())
-                    : FadeRoute(page: const HomePage()));
-          },
+
+        // Scrollable List Section
+
+        Expanded(
+          // flex: 2,
+          child: ListView(children: [
+            ListTile(
+              title: const Text("Home"),
+              leading: const Icon(Icons.home),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    displayMobileLayout
+                        ? MaterialPageRoute(
+                            builder: (context) => const HomePage())
+                        : FadeRoute(page: const HomePage()));
+              },
+            ),
+            ListTile(
+              title: const Text("Account"),
+              leading: const Icon(Icons.person),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    displayMobileLayout
+                        ? MaterialPageRoute(
+                            builder: (context) => const AccountSettings())
+                        : FadeRoute(page: const AccountSettings()));
+              },
+            ),
+            ListTile(
+              title: const Text("Settings"),
+              leading: const Icon(Icons.settings),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    displayMobileLayout
+                        ? MaterialPageRoute(
+                            builder: (context) => const GeneralSettings())
+                        : FadeRoute(page: const GeneralSettings()));
+              },
+            ),
+            ListTile(
+              title: const Text("Manage Folders"),
+              leading: const Icon(Icons.folder_open),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    displayMobileLayout
+                        ? MaterialPageRoute(
+                            builder: (context) => const FolderManager())
+                        : FadeRoute(page: const FolderManager()));
+              },
+            ),
+            const Divider(),
+            const FolderList()
+          ]),
         ),
-        ListTile(
-          title: const Text("Account"),
-          leading: const Icon(Icons.person),
-          onTap: () {
-            Navigator.pushReplacement(
-                context,
-                displayMobileLayout
-                    ? MaterialPageRoute(
-                        builder: (context) => const AccountSettings())
-                    : FadeRoute(page: const AccountSettings()));
-          },
-        ),
-        ListTile(
-          title: const Text("Settings"),
-          leading: const Icon(Icons.settings),
-          onTap: () {
-            Navigator.pushReplacement(
-                context,
-                displayMobileLayout
-                    ? MaterialPageRoute(
-                        builder: (context) => const GeneralSettings())
-                    : FadeRoute(page: const GeneralSettings()));
-          },
-        ),
-        ListTile(
-          title: const Text("Manage Folders"),
-          leading: const Icon(Icons.folder_open),
-          onTap: () {
-            Navigator.pushReplacement(
-                context,
-                displayMobileLayout
-                    ? MaterialPageRoute(
-                        builder: (context) => const FolderManager())
-                    : FadeRoute(page: const FolderManager()));
-          },
-        ),
-        const Divider(),
-        const FolderList()
       ]),
     );
   }
