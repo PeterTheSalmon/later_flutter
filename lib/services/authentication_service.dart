@@ -64,7 +64,7 @@ class AuthenticationService with ChangeNotifier {
       errorMessage = null;
       notifyListeners();
       Navigator.pop(context);
-      Navigator.push(context, FadeRoute(page: AuthenticationWrapper()));
+      Navigator.push(context, FadeRoute(page: const AuthenticationWrapper()));
     } on FirebaseAuthException catch (e) {
       errorMessage = e.message;
       notifyListeners();
