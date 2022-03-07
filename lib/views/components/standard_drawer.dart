@@ -48,7 +48,6 @@ class _StandardDrawerState extends State<StandardDrawer> {
         ],
       ),
       child: Column(children: [
-        // flex: 1,
         SizedBox(
             width: 310,
             height: 170,
@@ -76,7 +75,9 @@ class _StandardDrawerState extends State<StandardDrawer> {
                                 blurRadius: 2,
                               ),
                             ])),
-                    Text(FirebaseAuth.instance.currentUser!.email!,
+                    Text(
+                        FirebaseAuth.instance.currentUser!.displayName ??
+                            "Set a display name in Account Settings",
                         style: const TextStyle(color: Colors.white)),
                   ],
                 ))),
@@ -84,7 +85,6 @@ class _StandardDrawerState extends State<StandardDrawer> {
         // Scrollable List Section
 
         Expanded(
-          // flex: 2,
           child: ListView(children: [
             ListTile(
               title: const Text("Home"),
