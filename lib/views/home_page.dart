@@ -298,10 +298,13 @@ class _HomePageState extends State<HomePage> {
             overflow: TextOverflow.ellipsis,
           ),
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => LinkDetailView(document: document)));
+            kIsWeb
+                ? null
+                : Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LinkDetailView(document: document)));
           },
           leading: IconButton(
               icon: const Icon(Icons.open_in_new),
