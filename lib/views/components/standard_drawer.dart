@@ -48,7 +48,6 @@ class _StandardDrawerState extends State<StandardDrawer> {
         ],
       ),
       child: ListView(padding: const EdgeInsets.only(top: 0), children: [
-        // displayMobileLayout ?
         SizedBox(
             width: 310,
             height: 150,

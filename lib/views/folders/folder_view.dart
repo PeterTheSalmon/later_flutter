@@ -146,6 +146,7 @@ class _FolderViewState extends State<FolderView> {
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
+              tooltip: "Mark as Favourite",
               onPressed: () {
                 FirebaseFirestore.instance
                     .collection("links")
@@ -155,6 +156,7 @@ class _FolderViewState extends State<FolderView> {
               icon: const Icon(Icons.star),
               color: document["isFavourite"] == true ? Colors.orange : null),
           IconButton(
+              tooltip: "Delete",
               onPressed: () {
                 setState(() {
                   _backupDocument = document;
