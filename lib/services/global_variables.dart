@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 
 /// Convenience class for values that rarely change and are used throughout the app
 class Globals {
+
+  static const List<String> morningGreetings = [
+    "Good morning, ",
+    "Morning, ",
+    
+
+
+  ];
+
   static String? sharedUrl;
 
   Map<int, Color> customColour = {
