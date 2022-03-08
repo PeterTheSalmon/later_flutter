@@ -15,43 +15,43 @@ class EditLinkDialog extends StatelessWidget {
     TextEditingController urlController =
         TextEditingController(text: document['url']);
     return Material(
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: [
-                const Text(
-                  "Edit Link",
-                  style: TextStyle(fontSize: 18),
-                ),
-                const Spacer(),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.close))
-              ],
-            ),
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.title),
-                  labelText: "Title",
-                  enabledBorder: UnderlineInputBorder()),
-            ),
-            TextField(
-                controller: urlController,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: [
+                  const Text(
+                    "Edit Link",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.close))
+                ],
+              ),
+              TextField(
+                controller: titleController,
                 decoration: const InputDecoration(
-                    suffixIcon: Icon(Icons.link),
-                    labelText: "URL",
-                    enabledBorder: UnderlineInputBorder())),
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Center(
+                    suffixIcon: Icon(Icons.title),
+                    labelText: "Title",
+                    enabledBorder: UnderlineInputBorder()),
+              ),
+              TextField(
+                  controller: urlController,
+                  decoration: const InputDecoration(
+                      suffixIcon: Icon(Icons.link),
+                      labelText: "URL",
+                      enabledBorder: UnderlineInputBorder())),
+              SizedBox(height: 10),
+              Center(
                   child: ElevatedButton(
                       onPressed: () {
                         FirebaseFirestore.instance
@@ -65,8 +65,8 @@ class EditLinkDialog extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: const Text("SAVE AND CLOSE"))),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

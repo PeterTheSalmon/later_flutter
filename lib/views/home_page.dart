@@ -182,7 +182,8 @@ class _HomePageState extends State<HomePage> {
                                 : currentTime < 16
                                     ? "Good afternoon, ${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}."
                                     : "Evening, ${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}.",
-                            style: const TextStyle(fontSize: 20)),
+                            style: const TextStyle(fontSize: 20),
+                            textAlign: TextAlign.center),
                         _tipsBox(context),
                         const Spacer(),
                         const Padding(
