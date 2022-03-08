@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -102,7 +104,7 @@ class _FolderViewState extends State<FolderView> {
     );
   }
 
-  ListTile _linkListTile(
+  Widget _linkListTile(
       BuildContext context, DocumentSnapshot<Object?> document) {
     return ListTile(
       /// The detail view is disabled on the web
@@ -127,24 +129,25 @@ class _FolderViewState extends State<FolderView> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      leading: IconButton(
-          icon: const Icon(Icons.open_in_new),
-          onPressed: () async {
-            if (await canLaunch(document["url"]!)) {
-              launch(document["url"], enableJavaScript: true);
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Could not launch ${document["url"]}"),
-                action: SnackBarAction(
-                  label: "Close",
-                  onPressed: () {},
-                ),
-              ));
-            }
-          }),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          if (kIsWeb || !(Platform.isAndroid || Platform.isIOS))
+            IconButton(
+                icon: const Icon(Icons.open_in_new),
+                onPressed: () async {
+                  if (await canLaunch(document["url"]!)) {
+                    launch(document["url"], enableJavaScript: true);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Could not launch ${document["url"]}"),
+                      action: SnackBarAction(
+                        label: "Close",
+                        onPressed: () {},
+                      ),
+                    ));
+                  }
+                }),
           IconButton(
               tooltip: "Mark as Favourite",
               onPressed: () {

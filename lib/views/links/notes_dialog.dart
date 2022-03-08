@@ -26,7 +26,7 @@ class NotesDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 decoration: const InputDecoration(border: OutlineInputBorder()),
                 controller: notesController,
@@ -50,9 +50,7 @@ class NotesDialog extends StatelessWidget {
                           FirebaseFirestore.instance
                               .collection('links')
                               .doc(document.id)
-                              .update({
-                            'notes': FieldValue.delete()
-                          }).whenComplete(() => print("done"));
+                              .update({'notes': FieldValue.delete()});
                         } else {
                           FirebaseFirestore.instance
                               .collection("links")

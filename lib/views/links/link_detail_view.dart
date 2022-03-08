@@ -6,13 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:later_flutter/services/get_favicon.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/links/edit_link_dialog.dart';
 import 'package:later_flutter/views/links/notes_dialog.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class LinkDetailView extends StatefulWidget {
   LinkDetailView({Key? key, required this.document}) : super(key: key);
@@ -36,6 +34,12 @@ class _LinkDetailViewState extends State<LinkDetailView> {
             icon: const Icon(Icons.copy),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: widget.document['url']));
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Copied to clipboard'),
+                  action: SnackBarAction(label: 'Close', onPressed: () {}),
+                ),
+              );
             },
             tooltip: "Copy URL",
           )
@@ -92,29 +96,32 @@ class _LinkDetailViewState extends State<LinkDetailView> {
         }
 
         if (documentMap.containsKey('notes')) {
-          return Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Divider(
-                  thickness: 2,
+          return Container(
+            constraints: const BoxConstraints(maxWidth: 300),
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Divider(
+                    thickness: 2,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(snapshot.data!['notes']),
-              ),
-              TextButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => NotesDialog(
-                              document: widget.document,
-                              initalText: documentMap['notes'],
-                            ));
-                  },
-                  child: const Text("Edit Note")),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(snapshot.data!['notes']),
+                ),
+                TextButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => NotesDialog(
+                                document: widget.document,
+                                initalText: documentMap['notes'],
+                              ));
+                    },
+                    child: const Text("Edit Note")),
+              ],
+            ),
           );
         } else {
           return Padding(
