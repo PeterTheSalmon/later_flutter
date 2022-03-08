@@ -46,10 +46,19 @@ class NotesDialog extends StatelessWidget {
                   // save button
                   ElevatedButton(
                       onPressed: () async {
-                        FirebaseFirestore.instance
-                            .collection("links")
-                            .doc(document.id)
-                            .update({'notes': notesController.text});
+                        if (notesController.text.isEmpty) {
+                          FirebaseFirestore.instance
+                              .collection('links')
+                              .doc(document.id)
+                              .update({
+                            'notes': FieldValue.delete()
+                          }).whenComplete(() => print("done"));
+                        } else {
+                          FirebaseFirestore.instance
+                              .collection("links")
+                              .doc(document.id)
+                              .update({'notes': notesController.text});
+                        }
                         Navigator.pop(context);
                       },
                       child: const Text("Save"))
