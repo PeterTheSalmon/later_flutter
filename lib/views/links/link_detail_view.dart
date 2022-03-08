@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:later_flutter/services/get_favicon.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/links/edit_link_dialog.dart';
+import 'package:later_flutter/views/links/notes_dialog.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -32,7 +33,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
         title: Text(widget.document['title']),
         actions: [
           IconButton(
-            icon: Icon(Icons.copy),
+            icon: const Icon(Icons.copy),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: widget.document['url']));
             },
@@ -60,7 +61,6 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                   ),
                 ),
                 _websitePreview(context),
-                SizedBox(height: 20),
                 _notes(context)
               ],
             ),
@@ -71,16 +71,69 @@ class _LinkDetailViewState extends State<LinkDetailView> {
   }
 
   Widget _notes(BuildContext context) {
-    final Map<String, dynamic> documentMap =
-        widget.document.data() as Map<String, dynamic>;
-    if (documentMap.containsKey('notes')) {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(documentMap['notes']),
-      );
-    } else {
-      return TextButton(onPressed: () {}, child: Text("Add a note"));
-    }
+    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance
+          .collection('links')
+          .doc(widget.document.id)
+          .snapshots(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        final Map<String, dynamic> documentMap = snapshot.data?.data() == null
+            ? {}
+            : snapshot.data?.data() as Map<String, dynamic>;
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (documentMap.containsKey('notes')) {
+          return Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Divider(
+                  thickness: 2,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(snapshot.data!['notes']),
+              ),
+              TextButton(
+                  onPressed: () {
+                    TextEditingController notesController =
+                        TextEditingController();
+                    showDialog(
+                        context: context,
+                        builder: (context) => NotesDialog(
+                              document: widget.document,
+                              initalText: documentMap['notes'],
+                            ));
+                  },
+                  child: const Text("Edit Note")),
+            ],
+          );
+        } else {
+          return TextButton(
+            child: const Text("Add a note"),
+            onPressed: () {
+              TextEditingController notesController = TextEditingController();
+              showDialog(
+                  context: context,
+                  builder: (context) => NotesDialog(
+                        document: widget.document,
+                        initalText: "",
+                      ));
+            },
+          );
+        }
+      },
+    );
   }
 
   Widget _websitePreview(BuildContext context) {
@@ -108,8 +161,8 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                         ? const Color.fromARGB(255, 71, 71, 71)
                         : const Color.fromARGB(255, 243, 243, 243),
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  const BoxShadow(
+                boxShadow: const [
+                  BoxShadow(
                     color: Colors.grey,
                     blurRadius: 3,
                   ),
@@ -178,8 +231,12 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                       child: ListView(
                         shrinkWrap: true,
                         children: [
-                          const Text("Move to folder",
-                              style: TextStyle(fontSize: 20)),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("Move to folder",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 20)),
+                          ),
                           StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection("folders")
