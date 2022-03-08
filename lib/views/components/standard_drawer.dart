@@ -85,7 +85,7 @@ class _StandardDrawerState extends State<StandardDrawer> {
         // Scrollable List Section
 
         Expanded(
-          child: ListView(children: [
+          child: ListView(padding: const EdgeInsets.only(top: 0), children: [
             ListTile(
               title: const Text("Home"),
               leading: const Icon(Icons.home),
@@ -98,29 +98,39 @@ class _StandardDrawerState extends State<StandardDrawer> {
                         : FadeRoute(page: const HomePage()));
               },
             ),
-            ListTile(
-              title: const Text("Account"),
-              leading: const Icon(Icons.person),
-              onTap: () {
-                Navigator.pushReplacement(
-                    context,
-                    displayMobileLayout
-                        ? MaterialPageRoute(
-                            builder: (context) => const AccountSettings())
-                        : FadeRoute(page: const AccountSettings()));
-              },
-            ),
-            ListTile(
+            ExpansionTile(
+              leading: Icon(Icons.settings,
+                  color: MediaQuery.of(context).platformBrightness ==
+                          Brightness.dark
+                      ? Colors.white
+                      : Colors.black),
               title: const Text("Settings"),
-              leading: const Icon(Icons.settings),
-              onTap: () {
-                Navigator.pushReplacement(
-                    context,
-                    displayMobileLayout
-                        ? MaterialPageRoute(
-                            builder: (context) => const GeneralSettings())
-                        : FadeRoute(page: const GeneralSettings()));
-              },
+              children: [
+                ListTile(
+                  title: const Text("General"),
+                  leading: const Icon(Icons.tune),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        displayMobileLayout
+                            ? MaterialPageRoute(
+                                builder: (context) => const GeneralSettings())
+                            : FadeRoute(page: const GeneralSettings()));
+                  },
+                ),
+                ListTile(
+                  title: const Text("Account"),
+                  leading: const Icon(Icons.person),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        displayMobileLayout
+                            ? MaterialPageRoute(
+                                builder: (context) => const AccountSettings())
+                            : FadeRoute(page: const AccountSettings()));
+                  },
+                ),
+              ],
             ),
             ListTile(
               title: const Text("Manage Folders"),

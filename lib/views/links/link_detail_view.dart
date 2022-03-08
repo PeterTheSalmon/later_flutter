@@ -36,7 +36,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
               Clipboard.setData(ClipboardData(text: widget.document['url']));
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: const Text('Copied to clipboard'),
+                  content: const Text('Copied to Clipboard'),
                   action: SnackBarAction(label: 'Close', onPressed: () {}),
                 ),
               );
@@ -108,7 +108,8 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(snapshot.data!['notes']),
+                  child:
+                      Text(snapshot.data!['notes'], textAlign: TextAlign.start),
                 ),
                 TextButton(
                     onPressed: () {
