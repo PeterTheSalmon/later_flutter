@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/account/account_settings.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -61,23 +62,6 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                const Text("Very Real Toggle"),
-                                const Spacer(),
-                                Switch(
-                                    value: _switchValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _switchValue = value;
-                                      });
-                                    }),
-                              ],
-                            ),
-                          ),
-                          const Divider(),
                           ListTile(
                               leading: const Icon(Icons.info),
                               onTap: () {
