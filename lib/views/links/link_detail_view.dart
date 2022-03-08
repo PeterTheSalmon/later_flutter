@@ -106,8 +106,6 @@ class _LinkDetailViewState extends State<LinkDetailView> {
               ),
               TextButton(
                   onPressed: () {
-                    TextEditingController notesController =
-                        TextEditingController();
                     showDialog(
                         context: context,
                         builder: (context) => NotesDialog(
@@ -119,17 +117,19 @@ class _LinkDetailViewState extends State<LinkDetailView> {
             ],
           );
         } else {
-          return TextButton(
-            child: const Text("Add a note"),
-            onPressed: () {
-              TextEditingController notesController = TextEditingController();
-              showDialog(
-                  context: context,
-                  builder: (context) => NotesDialog(
-                        document: widget.document,
-                        initalText: "",
-                      ));
-            },
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              child: const Text("Add a note"),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => NotesDialog(
+                          document: widget.document,
+                          initalText: "",
+                        ));
+              },
+            ),
           );
         }
       },
@@ -180,6 +180,12 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                         ? const Color.fromARGB(255, 71, 71, 71)
                         : const Color.fromARGB(255, 243, 243, 243),
                 borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 3,
+                  ),
+                ],
               ),
               child: const Center(child: Text("No Preview Available"))),
         ),
