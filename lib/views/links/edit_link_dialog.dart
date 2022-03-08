@@ -50,7 +50,7 @@ class EditLinkDialog extends StatelessWidget {
                       suffixIcon: Icon(Icons.link),
                       labelText: "URL",
                       enabledBorder: UnderlineInputBorder())),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Center(
                   child: ElevatedButton(
                       onPressed: () {
