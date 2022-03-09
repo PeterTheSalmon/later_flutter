@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/authentication_service.dart';
+import 'package:later_flutter/services/authentication_wrapper.dart';
 import 'package:later_flutter/views/account/log_in_page.dart';
 import 'package:provider/provider.dart';
 
@@ -98,7 +99,7 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    LogInPage(),
+                                                    AuthenticationWrapper(),
                                               ),
                                             );
                                           },

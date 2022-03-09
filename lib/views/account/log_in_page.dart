@@ -7,11 +7,17 @@ import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/account/sign_up_page.dart';
 import 'package:provider/provider.dart';
 
-class LogInPage extends StatelessWidget {
+class LogInPage extends StatefulWidget {
+  const LogInPage({Key? key}) : super(key: key);
+
+  @override
+  State<LogInPage> createState() => _LogInPageState();
+}
+
+class _LogInPageState extends State<LogInPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  LogInPage({Key? key}) : super(key: key);
+  bool passwordObscured = true;
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +64,20 @@ class LogInPage extends StatelessWidget {
                     controller: emailController,
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(
-                        suffixIcon: Icon(Icons.lock),
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: passwordObscured
+                                ? Icon(Icons.visibility_off)
+                                : Icon(Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                passwordObscured = !passwordObscured;
+                              });
+                            }),
                         labelText: "Password",
                         enabledBorder: UnderlineInputBorder()),
                     controller: passwordController,
-                    obscureText: true,
+                    obscureText: passwordObscured,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -90,7 +104,7 @@ class LogInPage extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => SignUpPage()));
