@@ -97,12 +97,23 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                                     "https://github.com/peterthesalmon/later/releases");
                               }),
                           ListTile(
+                            leading: const Icon(Icons.web),
+                            title: const Text("Open Web App"),
+                            onTap: () {
+                              launch("https://later.petersalmon.dev");
+                            },
+                          ),
+                          ListTile(
                             leading: const Icon(Icons.replay),
                             title: const Text("Replay Intro"),
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => AppIntroScreen(isAReplay: true,),
-                              ));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AppIntroScreen(
+                                      isAReplay: true,
+                                    ),
+                                  ));
                             },
                           )
                         ],
