@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:later_flutter/views/account/account_settings.dart';
+import 'package:later_flutter/intro_screen/intro_screen.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,8 +32,6 @@ class _GeneralSettingsState extends State<GeneralSettings> {
       _packageInfo = info;
     });
   }
-
-  bool _switchValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +95,16 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                               onTap: () {
                                 launch(
                                     "https://github.com/peterthesalmon/later/releases");
-                              })
+                              }),
+                          ListTile(
+                            leading: const Icon(Icons.replay),
+                            title: const Text("Replay Intro"),
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => AppIntroScreen(isAReplay: true,),
+                              ));
+                            },
+                          )
                         ],
                       ),
                     ),

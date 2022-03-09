@@ -30,6 +30,10 @@ class _HomePageState extends State<HomePage> {
   DocumentSnapshot? randomLink;
   final int currentTime = DateTime.now().hour;
 
+  final morningIndex = Random().nextInt(Globals.morningGreetings.length);
+  final afternoonIndex = Random().nextInt(Globals.afternoonGreetings.length);
+  final eveningIndex = Random().nextInt(Globals.eveningGreetings.length);
+
   @override
   void initState() {
     super.initState();
@@ -177,11 +181,13 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         Text(
-                            currentTime < 10
-                                ? "Good morning, ${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}!"
-                                : currentTime < 16
-                                    ? "Good afternoon, ${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}."
-                                    : "Evening, ${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}.",
+                            currentTime > 22
+                                ? "Don't stay up too later!"
+                                : currentTime < 10
+                                    ? "${Globals.morningGreetings[morningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}!"
+                                    : currentTime < 16
+                                        ? "${Globals.afternoonGreetings[afternoonIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}."
+                                        : "${Globals.eveningGreetings[eveningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}.",
                             style: const TextStyle(fontSize: 20),
                             textAlign: TextAlign.center),
                         _tipsBox(context),

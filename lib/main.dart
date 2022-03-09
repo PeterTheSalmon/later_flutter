@@ -7,13 +7,28 @@ import 'package:later_flutter/services/authentication_service.dart';
 import 'package:later_flutter/services/authentication_wrapper.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // initialize firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // set android nav and status bar to be transparent
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       systemNavigationBarColor: Colors.transparent));
+
+  // initialize shared prefences
+  final prefs = await SharedPreferences.getInstance();
+  final bool? hasSeenIntro = prefs.getBool('hasSeenIntro');
+  if (hasSeenIntro == null || hasSeenIntro == false) {
+    Globals.hasSeenIntro = false;
+  } else {
+    Globals.hasSeenIntro = true;
+  }
+
   runApp(const LaterApp());
 }
 
