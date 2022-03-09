@@ -47,26 +47,32 @@ class _LinkDetailViewState extends State<LinkDetailView> {
       ),
       bottomNavigationBar:
           BottomAppBar(child: _bottomNavigationBar(document: widget.document)),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text(
-                    widget.document['title'],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 400),
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        widget.document['title'],
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                    _websitePreview(context),
+                    _notes(context)
+                  ],
                 ),
-                _websitePreview(context),
-                _notes(context)
-              ],
+              ),
             ),
           ),
         ),

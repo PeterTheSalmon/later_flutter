@@ -103,7 +103,7 @@ class _StandardDrawerState extends State<StandardDrawer> {
                   color: MediaQuery.of(context).platformBrightness ==
                           Brightness.dark
                       ? Colors.white
-                      : Colors.black),
+                      : const Color.fromARGB(255, 126, 126, 126)),
               title: const Text("Settings"),
               children: [
                 ListTile(
