@@ -67,15 +67,15 @@ class _LogInPageState extends State<LogInPage> {
                     decoration: InputDecoration(
                         suffixIcon: IconButton(
                             icon: passwordObscured
-                                ? Icon(Icons.visibility_off)
-                                : Icon(Icons.visibility),
+                                ? const Icon(Icons.visibility_off)
+                                : const Icon(Icons.visibility),
                             onPressed: () {
                               setState(() {
                                 passwordObscured = !passwordObscured;
                               });
                             }),
                         labelText: "Password",
-                        enabledBorder: UnderlineInputBorder()),
+                        enabledBorder: const UnderlineInputBorder()),
                     controller: passwordController,
                     obscureText: passwordObscured,
                   ),

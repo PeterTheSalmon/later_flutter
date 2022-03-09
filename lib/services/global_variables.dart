@@ -3,12 +3,23 @@ import 'package:flutter/material.dart';
 /// Convenience class for values that rarely change and are used throughout the app
 class Globals {
 
+  static bool hasSeenIntro = false;
+
   static const List<String> morningGreetings = [
     "Good morning, ",
     "Morning, ",
-    
+    "Goodmorrow, ",
+  ];
 
+  static const List<String> afternoonGreetings = [
+    "Good afternoon, ",
+    "Afternoon, ",
+    "Howdy, ",
+  ];
 
+  static const List<String> eveningGreetings = [
+    "Good evening, ",
+    "Evening, ",
   ];
 
   static String? sharedUrl;
