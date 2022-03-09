@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/links/new_link_sheet.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
@@ -278,8 +279,11 @@ class _FolderViewState extends State<FolderView> {
 
   SpeedDial _speedDialButtons(BuildContext context) {
     return SpeedDial(
+      backgroundColor: Globals.appColour,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       animatedIcon: AnimatedIcons.menu_close,
-      backgroundColor: Colors.orange,
       children: [
         SpeedDialChild(
           child: const Icon(Icons.copy),

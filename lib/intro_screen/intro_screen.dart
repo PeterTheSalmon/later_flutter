@@ -62,8 +62,12 @@ List<PageViewModel> introPages = [
               fontSize: 18.0,
             ),
           ),
-          SizedBox(height: 50.0),
-          Image.asset("assets/folder_preview.png")
+          const SizedBox(height: 50.0),
+          Container(
+              constraints: BoxConstraints(
+                maxWidth: 300.0,
+              ),
+              child: Image.asset("assets/folder_preview.png"))
         ],
       ),
       decoration: const PageDecoration(

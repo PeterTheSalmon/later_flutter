@@ -5,7 +5,7 @@ import 'package:later_flutter/views/account/account_settings.dart';
 import 'package:later_flutter/views/folders/folder_list.dart';
 import 'package:later_flutter/views/folders/folder_manager.dart';
 import 'package:later_flutter/views/settings/general_settings.dart';
-import 'package:later_flutter/views/home_page.dart';
+import 'package:later_flutter/views/home%20page/home_page.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 
 class StandardDrawer extends StatefulWidget {

@@ -137,6 +137,9 @@ class _HomePageState extends State<HomePage> {
               title: const Text("Later"),
             ),
             floatingActionButton: SpeedDial(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               animatedIcon: AnimatedIcons.menu_close,
               backgroundColor: Globals.appColour,
               children: [
