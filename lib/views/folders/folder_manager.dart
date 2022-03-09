@@ -40,6 +40,9 @@ class _FolderManagerState extends State<FolderManager> {
                   ? const Drawer(child: StandardDrawer())
                   : null,
               floatingActionButton: FloatingActionButton.extended(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 onPressed: () {
                   showNewFolderSheet(context);
                 },
