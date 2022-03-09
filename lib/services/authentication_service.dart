@@ -27,7 +27,7 @@ class AuthenticationService with ChangeNotifier {
   Future<void> signOut(BuildContext context) async {
     await _firebaseAuth.signOut();
     notifyListeners();
-    Navigator.push(context,
+    Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => const AuthenticationWrapper()));
   }
 
