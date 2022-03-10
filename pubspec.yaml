@@ -44,6 +44,7 @@ dependencies:
   progressive_image: ^2.0.0
   provider: 6.0.2
   receive_sharing_intent: 1.4.5
+  share_plus: ^3.1.0
   shared_preferences: ^2.0.13
   url_launcher: 6.0.18
   uuid: 3.0.6

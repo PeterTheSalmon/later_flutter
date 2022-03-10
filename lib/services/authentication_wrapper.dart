@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:later_flutter/intro_screen/intro_screen.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/account/log_in_page.dart';

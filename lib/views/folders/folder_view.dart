@@ -10,6 +10,7 @@ import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/links/new_link_sheet.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class FolderView extends StatefulWidget {
   const FolderView(
@@ -107,90 +108,129 @@ class _FolderViewState extends State<FolderView> {
 
   Widget _linkListTile(
       BuildContext context, DocumentSnapshot<Object?> document) {
-    return ListTile(
-      /// The detail view is disabled on the web
-      /// because it doesn't work properly
-      /// and serves little purpose.
-      onTap: !kIsWeb
-          ? () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LinkDetailView(document: document)));
-            }
-          : null,
-      title: Text(
-        document["title"],
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+    return Dismissible(
+      key: Key(document.id),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          if (await canLaunch(document["url"]!)) {
+            launch(document["url"], enableJavaScript: true);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Could not launch ${document["url"]}"),
+              action: SnackBarAction(
+                label: "Close",
+                onPressed: () {},
+              ),
+            ));
+          }
+        } else {
+          await Share.share(document["url"]!, subject: document["title"]!);
+        }
+      },
+      background: Container(
+          color: Colors.blue,
+          child: const Align(
+            child: Padding(
+              padding: EdgeInsets.only(left: 16),
+              child: Icon(Icons.open_in_new),
+            ),
+            alignment: Alignment.centerLeft,
+          )),
+      secondaryBackground: Container(
+        color: Colors.orange,
+        child: const Align(
+          child: Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: Icon(Icons.share),
+          ),
+          alignment: Alignment.centerRight,
+        ),
       ),
-      subtitle: Text(
-        document["url"],
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (kIsWeb || !(Platform.isAndroid || Platform.isIOS))
+      child: ListTile(
+        /// The detail view is disabled on the web
+        /// because it doesn't work properly
+        /// and serves little purpose.
+        onTap: !kIsWeb
+            ? () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LinkDetailView(document: document)));
+              }
+            : null,
+        title: Text(
+          document["title"],
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Text(
+          document["url"],
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (kIsWeb || !(Platform.isAndroid || Platform.isIOS))
+              IconButton(
+                  icon: const Icon(Icons.open_in_new),
+                  onPressed: () async {
+                    if (await canLaunch(document["url"]!)) {
+                      launch(document["url"], enableJavaScript: true);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Could not launch ${document["url"]}"),
+                        action: SnackBarAction(
+                          label: "Close",
+                          onPressed: () {},
+                        ),
+                      ));
+                    }
+                  }),
             IconButton(
-                icon: const Icon(Icons.open_in_new),
+                tooltip: "Mark as Favourite",
                 onPressed: () async {
-                  if (await canLaunch(document["url"]!)) {
-                    launch(document["url"], enableJavaScript: true);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Could not launch ${document["url"]}"),
+                  FirebaseFirestore.instance
+                      .collection("links")
+                      .doc(document.id)
+                      .update({"isFavourite": !document["isFavourite"]});
+                },
+                icon: const Icon(Icons.star),
+                color: document["isFavourite"] == true ? Colors.orange : null),
+            IconButton(
+                tooltip: "Delete",
+                onPressed: () {
+                  setState(() {
+                    _backupDocument = document;
+                  });
+                  FirebaseFirestore.instance
+                      .collection("links")
+                      .doc(document.id)
+                      .delete();
+                  final deleteSnackBar = SnackBar(
+                      content: const Text("Deleted"),
                       action: SnackBarAction(
-                        label: "Close",
-                        onPressed: () {},
-                      ),
-                    ));
-                  }
-                }),
-          IconButton(
-              tooltip: "Mark as Favourite",
-              onPressed: () {
-                FirebaseFirestore.instance
-                    .collection("links")
-                    .doc(document.id)
-                    .update({"isFavourite": !document["isFavourite"]});
-              },
-              icon: const Icon(Icons.star),
-              color: document["isFavourite"] == true ? Colors.orange : null),
-          IconButton(
-              tooltip: "Delete",
-              onPressed: () {
-                setState(() {
-                  _backupDocument = document;
-                });
-                FirebaseFirestore.instance
-                    .collection("links")
-                    .doc(document.id)
-                    .delete();
-                final deleteSnackBar = SnackBar(
-                    content: const Text("Deleted"),
-                    action: SnackBarAction(
-                        label: "Undo",
-                        onPressed: () {
-                          FirebaseFirestore.instance
-                              .collection("links")
-                              .doc(_backupDocument!.id)
-                              .set({
-                            "dateCreated": _backupDocument!["dateCreated"]!,
-                            "isFavourite": _backupDocument!["isFavourite"]!,
-                            "parentFolderId":
-                                _backupDocument!["parentFolderId"]!,
-                            "title": _backupDocument!["title"]!,
-                            "url": _backupDocument!["url"]!,
-                            "userId": FirebaseAuth.instance.currentUser!.uid
-                          });
-                        }));
-                ScaffoldMessenger.of(context).showSnackBar(deleteSnackBar);
-              },
-              icon: const Icon(Icons.delete))
-        ],
+                          label: "Undo",
+                          onPressed: () {
+                            FirebaseFirestore.instance
+                                .collection("links")
+                                .doc(_backupDocument!.id)
+                                .set({
+                              "dateCreated": _backupDocument!["dateCreated"]!,
+                              "isFavourite": _backupDocument!["isFavourite"]!,
+                              "parentFolderId":
+                                  _backupDocument!["parentFolderId"]!,
+                              "title": _backupDocument!["title"]!,
+                              "url": _backupDocument!["url"]!,
+                              "userId": FirebaseAuth.instance.currentUser!.uid
+                            });
+                          }));
+                  ScaffoldMessenger.of(context).showSnackBar(deleteSnackBar);
+                },
+                icon: const Icon(Icons.delete))
+          ],
+        ),
       ),
     );
   }

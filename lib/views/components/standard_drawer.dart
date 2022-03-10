@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:later_flutter/intro_screen/intro_screen.dart';
 import 'package:later_flutter/views/account/account_settings.dart';
 import 'package:later_flutter/views/folders/folder_list.dart';
 import 'package:later_flutter/views/folders/folder_manager.dart';
