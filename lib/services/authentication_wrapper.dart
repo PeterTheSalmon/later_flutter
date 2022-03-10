@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/intro_screen/intro_screen.dart';
 import 'package:later_flutter/services/global_variables.dart';
@@ -13,7 +14,7 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
 
-    if (Globals.hasSeenIntro == false) {
+    if (Globals.hasSeenIntro == false && !kIsWeb) {
       return AppIntroScreen();
     }
 

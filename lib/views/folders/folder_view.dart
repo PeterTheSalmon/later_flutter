@@ -124,7 +124,17 @@ class _FolderViewState extends State<FolderView> {
             ));
           }
         } else {
-          await Share.share(document["url"]!, subject: document["title"]!);
+          if (kIsWeb) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: const Text("Share not supported on web"),
+              action: SnackBarAction(
+                label: "Close",
+                onPressed: () {},
+              ),
+            ));
+          } else {
+            await Share.share(document["url"]!, subject: document["title"]!);
+          }
         }
       },
       background: Container(
