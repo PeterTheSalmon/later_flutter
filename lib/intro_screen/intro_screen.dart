@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:later_flutter/services/authentication_wrapper.dart';
@@ -64,7 +66,7 @@ List<PageViewModel> introPages = [
           ),
           const SizedBox(height: 50.0),
           Container(
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 maxWidth: 300.0,
               ),
               child: Image.asset("assets/folder_preview.png"))
