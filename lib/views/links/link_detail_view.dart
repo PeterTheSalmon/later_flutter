@@ -10,6 +10,7 @@ import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/links/edit_link_dialog.dart';
 import 'package:later_flutter/views/links/notes_dialog.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LinkDetailView extends StatefulWidget {
@@ -229,6 +230,12 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                 ));
               }
             }),
+        IconButton(
+          icon: Icon(Icons.share),
+          onPressed: () async {
+            Share.share(document["url"]!, subject: document["title"]!);
+          },
+        ),
         IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
