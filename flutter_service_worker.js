@@ -14,9 +14,10 @@ const RESOURCES = {
 "splash/img/light-1x.png": "f7d0d74353b5006581d93b0fe1644a12",
 "splash/style.css": "1b753c0b0be981e88026f85765c92568",
 "favicon.ico": "2ce33d3617aa61acd82143c568193d31",
-"index.html": "6859eda25f0f3f120adf78e4cc9d9863",
-"/": "6859eda25f0f3f120adf78e4cc9d9863",
-"main.dart.js": "67bd767d6121736b3b5ce0dd5dcbdd88",
+"index.html": "ccf71014a48bc413ecd0307c4ccad1fe",
+"/": "ccf71014a48bc413ecd0307c4ccad1fe",
+"CNAME": "aa71334148b7a6507b3fb188eeb6d867",
+"main.dart.js": "5b264d5c6fbc90266169b728d5917998",
 "icons/favicon-16x16.png": "aac8f2524284b820acc81c95baa5e324",
 "icons/favicon.ico": "c155661945bdc94d9a765d77031370b8",
 "icons/apple-icon.png": "93b71a92aab0a3272bb03d4a1ade94d6",
@@ -45,14 +46,19 @@ const RESOURCES = {
 "icons/favicon-32x32.png": "2774a73e46630bc325e8edfd27aa16da",
 "icons/ms-icon-70x70.png": "c68b13343f8c43478c0f247d0d6e87fe",
 "manifest.json": "3ae217696040712908e772566eac365e",
-"assets/AssetManifest.json": "45e5e05d87ccf9721688f3e976ece84e",
-"assets/NOTICES": "c7c1356980bab3a22231b87222a00040",
+"assets/AssetManifest.json": "5ea3be9f3f92ebf511edce117b1980c4",
+"assets/NOTICES": "147c26b445fc9f818a024ed3d8a17149",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
 "assets/assets/Icon256x256@2x.png": "180e7a963a983856d9f34c8872057b3d",
 "assets/assets/HeaderImage.jpg": "eae1e45ed0d7b12fef7c44f5aecc2d18",
-"assets/assets/HeaderImageLight.jpg": "126deaf4c727ea02ce32604c0d21a525"
+"assets/assets/HeaderImageLight.jpg": "126deaf4c727ea02ce32604c0d21a525",
+"assets/assets/folder_preview.png": "899490d45ac49e28f6d31c410ca21171",
+"canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
+"canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
+"canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
+"canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba"
 };
 
 // The application shell files that are downloaded before a service worker can
