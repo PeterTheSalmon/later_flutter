@@ -21,6 +21,7 @@ Future<void> showNewLinkSheet(BuildContext context,
   /// overlay to indicate that something is actually happening.
   if (fromClipboard) {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) => const Center(child: CircularProgressIndicator()));
   }
@@ -29,13 +30,13 @@ Future<void> showNewLinkSheet(BuildContext context,
   TextEditingController urlController = TextEditingController(
       text: fromClipboard
           ? await Clipboard.getData('text/plain').then((value) => value?.text)
-          : '');
+          : null);
 
   var data = await MetadataFetch.extract(urlController.text);
   TextEditingController titleController =
       TextEditingController(text: data?.title ?? '');
 
-  /// Remove the loading overlay k
+  /// Remove the loading overlay
   if (fromClipboard) {
     Navigator.pop(context);
   }
