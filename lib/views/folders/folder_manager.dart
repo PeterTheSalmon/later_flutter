@@ -54,6 +54,7 @@ class _FolderManagerState extends State<FolderManager> {
                 child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection("folders")
+                        .orderBy("name")
                         .where("userId",
                             isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                         .snapshots(),
