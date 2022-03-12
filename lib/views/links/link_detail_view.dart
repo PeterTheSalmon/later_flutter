@@ -231,7 +231,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
               }
             }),
         IconButton(
-          icon: Icon(Icons.share),
+          icon: const Icon(Icons.share),
           onPressed: () async {
             Share.share(document["url"]!, subject: document["title"]!);
           },
