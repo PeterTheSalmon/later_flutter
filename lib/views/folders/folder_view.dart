@@ -136,6 +136,7 @@ class _FolderViewState extends State<FolderView> {
             await Share.share(document["url"]!, subject: document["title"]!);
           }
         }
+        return;
       },
       background: Container(
           color: Colors.blue,
