@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
@@ -108,55 +109,57 @@ class _FolderViewState extends State<FolderView> {
 
   Widget _linkListTile(
       BuildContext context, DocumentSnapshot<Object?> document) {
-    return Dismissible(
-      key: Key(document.id),
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          if (await canLaunch(document["url"]!)) {
-            launch(document["url"], enableJavaScript: true);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Could not launch ${document["url"]}"),
-              action: SnackBarAction(
-                label: "Close",
-                onPressed: () {},
-              ),
-            ));
-          }
-        } else {
-          if (kIsWeb) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: const Text("Share not supported on web"),
-              action: SnackBarAction(
-                label: "Close",
-                onPressed: () {},
-              ),
-            ));
-          } else {
-            await Share.share(document["url"]!, subject: document["title"]!);
-          }
-        }
-        return;
-      },
-      background: Container(
-          color: Colors.blue,
-          child: const Align(
-            child: Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Icon(Icons.open_in_new),
+    return Slidable(
+      endActionPane: kIsWeb
+          ? null
+          : ActionPane(
+              motion: const DrawerMotion(),
+              children: [
+                SlidableAction(
+                    icon: Icons.open_in_new,
+                    label: "Open",
+                    backgroundColor: Colors.blue,
+                    onPressed: (context) async => {
+                          if (await canLaunch(document["url"]!))
+                            {launch(document["url"], enableJavaScript: true)}
+                          else
+                            {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content:
+                                    Text("Could not launch ${document["url"]}"),
+                                action: SnackBarAction(
+                                  label: "Close",
+                                  onPressed: () {},
+                                ),
+                              ))
+                            }
+                        }),
+                SlidableAction(
+                  icon: Icons.share,
+                  label: "Share",
+                  backgroundColor: Colors.orange,
+                  foregroundColor: Colors.white,
+                  onPressed: (context) async => {
+                    if (kIsWeb)
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: const Text("Share not supported on web"),
+                          action: SnackBarAction(
+                            label: "Close",
+                            onPressed: () {},
+                          ),
+                        ))
+                      }
+                    else
+                      {
+                        await Share.share(document["url"]!,
+                            subject: document["title"]!)
+                      }
+                  },
+                )
+              ],
             ),
-            alignment: Alignment.centerLeft,
-          )),
-      secondaryBackground: Container(
-        color: Colors.orange,
-        child: const Align(
-          child: Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.share),
-          ),
-          alignment: Alignment.centerRight,
-        ),
-      ),
       child: ListTile(
         /// The detail view is disabled on the web
         /// because it doesn't work properly
@@ -185,6 +188,7 @@ class _FolderViewState extends State<FolderView> {
           children: [
             if (kIsWeb || !(Platform.isAndroid || Platform.isIOS))
               IconButton(
+                  tooltip: "Open in browser",
                   icon: const Icon(Icons.open_in_new),
                   onPressed: () async {
                     if (await canLaunch(document["url"]!)) {
