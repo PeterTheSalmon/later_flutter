@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:later_flutter/intro_screen/intro_screen.dart';
 import 'package:later_flutter/views/components/standard_drawer.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -24,6 +25,8 @@ class _GeneralSettingsState extends State<GeneralSettings> {
   void initState() {
     super.initState();
     _initPackageInfo();
+    fToast = FToast();
+    fToast.init(context);
   }
 
   Future<void> _initPackageInfo() async {
@@ -32,6 +35,9 @@ class _GeneralSettingsState extends State<GeneralSettings> {
       _packageInfo = info;
     });
   }
+
+  int _tapCount = 0;
+  late FToast fToast;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +67,30 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           ListTile(
+                            leading: const Icon(Icons.link),
+                            title: Text('Later v${_packageInfo.version}'),
+                            onTap: () {
+                              setState(() {
+                                _tapCount++;
+                              });
+                              if (_tapCount >= 7) {
+                                fToast.showToast(
+                                    child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24.0, vertical: 12.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    color: Colors.grey,
+                                  ),
+                                  child: const Text(
+                                      "This is not the easter egg you are looking for..."),
+                                ));
+                                _tapCount = 0;
+                                return;
+                              }
+                            },
+                          ),
+                          ListTile(
                               leading: const Icon(Icons.info),
                               onTap: () {
                                 showAboutDialog(
@@ -74,7 +104,7 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                                   applicationVersion: _packageInfo.version,
                                 );
                               },
-                              title: const Text("About")),
+                              title: const Text("Licenses")),
                           ListTile(
                             leading: const Icon(Icons.web),
                             title: const Text("Visit My Website"),
@@ -95,6 +125,13 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                               onTap: () {
                                 launch(
                                     "https://github.com/peterthesalmon/later/releases");
+                              }),
+                          ListTile(
+                              leading: const Icon(Icons.android),
+                              title: const Text("Download the Android app"),
+                              onTap: () {
+                                launch(
+                                    "https://github.com/PeterTheSalmon/later_flutter/releases");
                               }),
                           ListTile(
                             leading: const Icon(Icons.web),

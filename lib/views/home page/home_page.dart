@@ -136,11 +136,12 @@ class _HomePageState extends State<HomePage> {
             appBar: AppBar(
               title: const Text("Later"),
               actions: [
-                IconButton(
-                    onPressed: () {
-                      _showWebWarning(context);
-                    },
-                    icon: const Icon(Icons.warning))
+                if (kIsWeb)
+                  IconButton(
+                      onPressed: () {
+                        _showWebWarning(context);
+                      },
+                      icon: const Icon(Icons.warning))
               ],
             ),
             floatingActionButton: SpeedDial(
