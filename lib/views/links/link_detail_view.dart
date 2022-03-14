@@ -30,6 +30,12 @@ class _LinkDetailViewState extends State<LinkDetailView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.document['title']),
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.copy),

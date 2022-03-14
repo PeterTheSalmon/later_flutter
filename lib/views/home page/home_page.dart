@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -358,49 +359,53 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    return Container(
-      width: 250,
-      height: 70,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Center(
-        child: ListTile(
-          title: Text(
-            randomLink!["title"],
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+    return OpenContainer(
+      tappable: false,
+      closedElevation: 0,
+      closedColor: Colors.transparent,
+      openColor: Colors.transparent,
+      middleColor: Colors.transparent,
+      openBuilder: (BuildContext context, VoidCallback _) =>
+          LinkDetailView(document: randomLink!),
+      closedBuilder: (BuildContext context, VoidCallback openContainer) =>
+          Container(
+        width: 250,
+        height: 70,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: ListTile(
+            title: Text(
+              randomLink!["title"],
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              randomLink!["url"],
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            onTap: () {
+              kIsWeb ? null : openContainer();
+            },
+            leading: IconButton(
+                icon: const Icon(Icons.open_in_new),
+                onPressed: () async {
+                  if (await canLaunch(randomLink!["url"]!)) {
+                    launch(randomLink!["url"], enableJavaScript: true);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Could not launch ${randomLink!["url"]}"),
+                      action: SnackBarAction(
+                        label: "Close",
+                        onPressed: () {},
+                      ),
+                    ));
+                  }
+                }),
           ),
-          subtitle: Text(
-            randomLink!["url"],
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          onTap: () {
-            kIsWeb
-                ? null
-                : Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            LinkDetailView(document: randomLink!)));
-          },
-          leading: IconButton(
-              icon: const Icon(Icons.open_in_new),
-              onPressed: () async {
-                if (await canLaunch(randomLink!["url"]!)) {
-                  launch(randomLink!["url"], enableJavaScript: true);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Could not launch ${randomLink!["url"]}"),
-                    action: SnackBarAction(
-                      label: "Close",
-                      onPressed: () {},
-                    ),
-                  ));
-                }
-              }),
         ),
       ),
     );
