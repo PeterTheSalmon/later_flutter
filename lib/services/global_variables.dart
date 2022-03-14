@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 /// Convenience class for values that rarely change and are used throughout the app
 class Globals {
-
+  /// Whether the user has seen the intro already
   static bool hasSeenIntro = false;
+
+  /// The previously shared url. This is used to prevent showing the share dialog again
+  static String? sharedUrl;
 
   static const List<String> morningGreetings = [
     "Good morning, ",
@@ -22,7 +25,6 @@ class Globals {
     "Evening, ",
   ];
 
-  static String? sharedUrl;
 
   Map<int, Color> customColour = {
     50: const Color.fromRGBO(243, 168, 59, .1),

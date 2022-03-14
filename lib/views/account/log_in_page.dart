@@ -41,7 +41,7 @@ class _LogInPageState extends State<LogInPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
-                      // * Gross code to add space above the textfields
+                      // Add space above the textfields
                       height: kIsWeb
                           ? MediaQuery.of(context).size.height * 0.3
                           : Platform.isIOS
@@ -93,7 +93,7 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                   ),
                   Consumer<AuthenticationService>(
-                      builder: (context, authenticationService, child) =>
+                      builder: (context, authenticationService, _) =>
                           SizedBox(
                               height: 50,
                               child: Text(

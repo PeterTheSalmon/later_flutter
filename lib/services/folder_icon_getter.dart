@@ -11,8 +11,7 @@ var symbolNames = [
   "wrench.and.screwdriver",
 ];
 
-/// Gotta say, I LOVE Copilot for situations like these: it just autofilled
-/// literally everything. Pure magic.
+/// Return an icon correspoding to the given SF Symbol name.
 Icon getFolderIcon(String iconName) {
   switch (iconName) {
     case 'folder':

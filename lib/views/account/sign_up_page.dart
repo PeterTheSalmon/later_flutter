@@ -13,6 +13,7 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
   final TextEditingController nameController = TextEditingController();
 
   SignUpPage({Key? key}) : super(key: key);
@@ -36,6 +37,8 @@ class SignUpPage extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: ListView(
               children: [
+
+                // text fields
                 TextFormField(
                   decoration: const InputDecoration(
                       suffixIcon: Icon(Icons.person),
@@ -73,6 +76,8 @@ class SignUpPage extends StatelessWidget {
                   controller: confirmPasswordController,
                   obscureText: true,
                 ),
+
+                // sign up button
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton.icon(
@@ -90,12 +95,16 @@ class SignUpPage extends StatelessWidget {
                     label: const Text("START"),
                   ),
                 ),
+
+                // error message
                 Consumer<AuthenticationService>(
                     builder: (context, authenticationService, child) =>
                         SizedBox(
                             height: 50,
                             child: Text(
                                 authenticationService.errorMessage ?? ""))),
+
+                // tos and user agreement
                 Row(
                   children: const [
                     Spacer(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Class used to globally set the `ScrollPhysics`
 class CustomScrollBehaviour extends ScrollBehavior {
   const CustomScrollBehaviour();
   @override

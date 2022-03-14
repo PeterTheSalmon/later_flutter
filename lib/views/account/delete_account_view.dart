@@ -24,24 +24,8 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: const Text(
-                  'Enter your password to delete your account',
-                  style: TextStyle(fontSize: 24),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Container(
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: TextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                  ),
-                ),
-              ),
+              _titleText(),
+              _passwordText(_passwordController),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -50,7 +34,6 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                     child: TextButton(
                       child: const Text('Cancel'),
                       onPressed: () {
-                        // * Needs to be implemented
                         Navigator.pop(context);
                       },
                     ),
@@ -59,71 +42,8 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                     padding: const EdgeInsets.all(18.0),
                     child: ElevatedButton(
                         child: const Text('Delete Account'),
-                        onPressed: () async {
-                          await context
-                              .read<AuthenticationService>()
-                              .reauthenticate(
-                                _passwordController.text,
-                              );
-                          if (context
-                                  .read<AuthenticationService>()
-                                  .errorMessage ==
-                              null) {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: const Text("Are you sure?"),
-                                      content: Container(
-                                        constraints:
-                                            const BoxConstraints(maxWidth: 300),
-                                        child: const Text(
-                                            "All account data will be lost. This action cannot be undone. Are you sure you want to delete your account?"),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          child: const Text("Cancel"),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        ElevatedButton(
-                                          child: const Text("Delete"),
-                                          onPressed: () async {
-                                            await context
-                                                .read<AuthenticationService>()
-                                                .deleteAccount();
-                                            Navigator.pop(context);
-                                            Navigator.pop(context);
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const AuthenticationWrapper(),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ));
-                          } else {
-                            // show a snackbar
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: const Text("Error"),
-                                      content: Text(context
-                                          .read<AuthenticationService>()
-                                          .errorMessage!),
-                                      actions: [
-                                        TextButton(
-                                          child: const Text("OK"),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    ));
-                          }
+                        onPressed: () {
+                          _deleteAccount(context);
                         }),
                   ),
                 ],
@@ -131,6 +51,89 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _deleteAccount(BuildContext context) async {
+    await context.read<AuthenticationService>().reauthenticate(
+          _passwordController.text,
+        );
+    if (context.read<AuthenticationService>().errorMessage == null) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text("Are you sure?"),
+                content: Container(
+                  constraints: const BoxConstraints(maxWidth: 300),
+                  child: const Text(
+                      "All account data will be lost. This action cannot be undone. Are you sure you want to delete your account?"),
+                ),
+                actions: [
+                  TextButton(
+                    child: const Text("Cancel"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ElevatedButton(
+                    child: const Text("Delete"),
+                    onPressed: () async {
+                      await context
+                          .read<AuthenticationService>()
+                          .deleteAccount();
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AuthenticationWrapper(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ));
+    } else {
+      // show a snackbar
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text("Error"),
+                content:
+                    Text(context.read<AuthenticationService>().errorMessage!),
+                actions: [
+                  TextButton(
+                    child: const Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ));
+    }
+  }
+
+  Container _passwordText(TextEditingController passwordController) {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 300),
+      child: TextField(
+        controller: passwordController,
+        obscureText: true,
+        decoration: const InputDecoration(
+          labelText: 'Password',
+        ),
+      ),
+    );
+  }
+
+  Container _titleText() {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 300),
+      child: const Text(
+        'Enter your password to delete your account',
+        style: TextStyle(fontSize: 24),
+        textAlign: TextAlign.center,
       ),
     );
   }

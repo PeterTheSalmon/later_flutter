@@ -9,7 +9,7 @@ import 'package:later_flutter/views/folders/edit_folder_dialog.dart';
 import 'package:later_flutter/views/folders/folder_icon_chooser.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/folders/new_folder_sheet.dart';
-import 'package:later_flutter/views/components/standard_drawer.dart';
+import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 
 class FolderManager extends StatefulWidget {
