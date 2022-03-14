@@ -68,6 +68,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
+                      // TODO: Add a url preview - perhaps just root domain?
                     ),
                     _websitePreview(context),
                     _notes(context)
