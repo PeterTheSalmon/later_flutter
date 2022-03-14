@@ -1,9 +1,11 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/account/account%20settings/account_settings.dart';
 import 'package:later_flutter/views/folders/folder_manager.dart';
 import 'package:later_flutter/views/home%20page/home_page.dart';
 import 'package:later_flutter/views/settings/general_settings.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
+import 'package:later_flutter/views/styles/fade_through_route.dart';
 
 class StaticListItems extends StatelessWidget {
   const StaticListItems({
@@ -12,6 +14,27 @@ class StaticListItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Route<T> sharedAxis<T>(RoutePageBuilder page,
+        [SharedAxisTransitionType type = SharedAxisTransitionType.scaled,
+        double duration = 0.3]) {
+      return PageRouteBuilder<T>(
+        transitionDuration: Duration(milliseconds: (duration * 1000).round()),
+        pageBuilder: (context, animation, secondaryAnimation) => page(
+          context,
+          animation,
+          secondaryAnimation,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SharedAxisTransition(
+            child: child,
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            transitionType: type,
+          );
+        },
+      );
+    }
+
     final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
 
     return Column(
@@ -20,11 +43,16 @@ class StaticListItems extends StatelessWidget {
         ListTile(
           title: const Text("Home"),
           leading: const Icon(Icons.home),
-          onTap: () {
+          onTap: () async {
+            if (displayMobileLayout) {
+              Navigator.pop(context);
+              await Future.delayed(const Duration(milliseconds: 30));
+            }
             Navigator.pushReplacement(
                 context,
                 displayMobileLayout
-                    ? MaterialPageRoute(builder: (context) => const HomePage())
+                    ? fadeThrough((context, animation, secondaryAnimation) =>
+                        const HomePage())
                     : FadeRoute(page: const HomePage()));
           },
         ),
@@ -39,24 +67,34 @@ class StaticListItems extends StatelessWidget {
             ListTile(
               title: const Text("General"),
               leading: const Icon(Icons.tune),
-              onTap: () {
+              onTap: () async {
+                if (displayMobileLayout) {
+                  Navigator.pop(context);
+                  await Future.delayed(const Duration(milliseconds: 30));
+                }
                 Navigator.pushReplacement(
                     context,
                     displayMobileLayout
-                        ? MaterialPageRoute(
-                            builder: (context) => const GeneralSettings())
+                        ? fadeThrough(
+                            (context, animation, secondaryAnimation) =>
+                                const GeneralSettings())
                         : FadeRoute(page: const GeneralSettings()));
               },
             ),
             ListTile(
               title: const Text("Account"),
               leading: const Icon(Icons.person),
-              onTap: () {
+              onTap: () async {
+                if (displayMobileLayout) {
+                  Navigator.pop(context);
+                  await Future.delayed(const Duration(milliseconds: 30));
+                }
                 Navigator.pushReplacement(
                     context,
                     displayMobileLayout
-                        ? MaterialPageRoute(
-                            builder: (context) => const AccountSettings())
+                        ? fadeThrough(
+                            (context, animation, secondaryAnimation) =>
+                                const AccountSettings())
                         : FadeRoute(page: const AccountSettings()));
               },
             ),
@@ -65,12 +103,16 @@ class StaticListItems extends StatelessWidget {
         ListTile(
           title: const Text("Manage Folders"),
           leading: const Icon(Icons.folder_open),
-          onTap: () {
+          onTap: () async {
+            if (displayMobileLayout) {
+              Navigator.pop(context);
+              await Future.delayed(const Duration(milliseconds: 50));
+            }
             Navigator.pushReplacement(
                 context,
                 displayMobileLayout
-                    ? MaterialPageRoute(
-                        builder: (context) => const FolderManager())
+                    ? fadeThrough((context, animation, secondaryAnimation) =>
+                        const FolderManager())
                     : FadeRoute(page: const FolderManager()));
           },
         ),
