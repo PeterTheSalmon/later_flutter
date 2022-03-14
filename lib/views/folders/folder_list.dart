@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:later_flutter/services/folder_icon_getter.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
+import 'package:later_flutter/views/styles/fade_through_route.dart';
 
 class FolderList extends StatelessWidget {
   const FolderList({Key? key}) : super(key: key);
@@ -37,12 +38,17 @@ class FolderList extends StatelessWidget {
             return ListTile(
               title: Text(document["name"]),
               leading: getFolderIcon(document["iconName"]),
-              onTap: () {
+              onTap: () async {
+                if (displayMobileLayout) {
+                  Navigator.pop(context);
+                  await Future.delayed(const Duration(milliseconds: 50));
+                }
                 Navigator.pushReplacement(
                     context,
                     displayMobileLayout
-                        ? MaterialPageRoute(
-                            builder: (context) => FolderView(
+                        ? fadeThrough(
+                            (context, animation, secondaryAnimation) =>
+                                FolderView(
                                   parentFolderId: document.id,
                                   parentFolderName: document["name"],
                                 ))
