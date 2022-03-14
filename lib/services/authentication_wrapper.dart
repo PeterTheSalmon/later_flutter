@@ -14,10 +14,12 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
 
+    // If we have a first time user, show the intro screen
     if (Globals.hasSeenIntro == false && !kIsWeb) {
       return AppIntroScreen();
     }
 
+    // Otherwise, check firebase status and react accordingly
     if (firebaseUser != null) {
       return const HomePage();
     } else {

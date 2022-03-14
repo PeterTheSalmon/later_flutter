@@ -11,7 +11,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/services/share_service.dart';
 import 'package:later_flutter/views/folders/new_folder_sheet.dart';
-import 'package:later_flutter/views/components/standard_drawer.dart';
+import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/links/new_link_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';

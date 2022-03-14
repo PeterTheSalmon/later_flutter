@@ -51,7 +51,7 @@ class LaterApp extends StatelessWidget {
         ],
         child: MaterialApp(
           builder: (context, widget) {
-            return ScrollConfiguration(
+            return ScrollConfiguration( // ? Is it unsafe to force unwrap the `widget`?
                 behavior: const CustomScrollBehaviour(), child: widget!);
           },
           debugShowCheckedModeBanner: false,
