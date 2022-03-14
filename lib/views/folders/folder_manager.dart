@@ -103,25 +103,35 @@ class _FolderManagerState extends State<FolderManager> {
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              // * It may be worth combining these two icons into one
-                              IconButton(
-                                tooltip: "Choose Icon",
-                                icon: const Icon(Icons.dashboard_customize),
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          FolderIconChooser(folder: document));
-                                },
-                              ),
-                              IconButton(
-                                  tooltip: "Edit Folder",
+                              PopupMenuButton(
                                   icon: const Icon(Icons.edit),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => EditFolderDialog(
-                                            document: document));
+                                  tooltip: "Edit Folder",
+                                  itemBuilder: (context) {
+                                    return [
+                                      const PopupMenuItem(
+                                        value: "icon",
+                                        child: Text("Change Icon"),
+                                      ),
+                                      const PopupMenuItem(
+                                        value: "name",
+                                        child: Text("Change Name"),
+                                      ),
+                                    ];
+                                  },
+                                  onSelected: (value) {
+                                    if (value == "icon") {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              FolderIconChooser(
+                                                  folder: document));
+                                    } else if (value == "name") {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              EditFolderDialog(
+                                                  document: document));
+                                    }
                                   }),
                               IconButton(
                                 tooltip: "Delete Folder",

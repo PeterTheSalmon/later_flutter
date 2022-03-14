@@ -60,9 +60,10 @@ class LaterApp extends StatelessWidget {
             primaryColor: Globals.appColour,
           ),
           darkTheme: ThemeData(
-              primarySwatch: Globals().appSwatch(),
-              brightness: Brightness.dark,
-              primaryColor: Globals.appColour),
+            primarySwatch: Globals().appSwatch(),
+            brightness: Brightness.dark,
+            primaryColor: Globals.appColour,
+          ),
           home: const AuthenticationWrapper(),
         ));
   }
