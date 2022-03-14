@@ -6,6 +6,7 @@ import 'package:later_flutter/firebase_options.dart';
 import 'package:later_flutter/services/authentication_service.dart';
 import 'package:later_flutter/services/authentication_wrapper.dart';
 import 'package:later_flutter/services/global_variables.dart';
+import 'package:later_flutter/services/scroll_physics.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,10 @@ class LaterApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          builder: (context, widget) {
+            return ScrollConfiguration(
+                behavior: const CustomScrollBehaviour(), child: widget!);
+          },
           debugShowCheckedModeBanner: false,
           title: "Later",
           theme: ThemeData(
