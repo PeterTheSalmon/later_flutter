@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
       ..onDataReceived = _handleSharedData
       ..getSharedData().then(_handleSharedData);
     countFolders();
-    getLinks();
+    setRandomLink();
   }
 
   void countFolders() async {
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void getLinks() async {
+  void setRandomLink() async {
     QuerySnapshot _myDocs = await FirebaseFirestore.instance
         .collection('links')
         .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
@@ -82,7 +82,8 @@ class _HomePageState extends State<HomePage> {
     /// new every time the homepage is loaded. As such, we need to confirm that
     /// it truly is new before showing the new link dialog.
     if (Globals.sharedUrl != sharedData) {
-      SharedPreferences.getInstance().then((prefs) => prefs.setString('previousShared', sharedData));
+      SharedPreferences.getInstance()
+          .then((prefs) => prefs.setString('previousShared', sharedData));
       Globals.sharedUrl = sharedData;
       setState(() {
         _sharedText = sharedData;
@@ -292,7 +293,7 @@ class _HomePageState extends State<HomePage> {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.2),
-                    blurRadius: 10,
+                    blurRadius: 3,
                   ),
                 ],
               ),
@@ -365,6 +366,11 @@ class _HomePageState extends State<HomePage> {
       tappable: false,
       closedElevation: 0,
       openElevation: 0,
+      onClosed: (Object? action) {
+        // upon closing the container, regenerate the random link
+        // to ensure there is no weird behaviour with edits/deletes
+        setRandomLink();
+      },
 
       closedColor: Colors.transparent,
       openColor: Colors.transparent,
@@ -376,8 +382,11 @@ class _HomePageState extends State<HomePage> {
         width: 250,
         height: 70,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
+          border: Border.all(color: Colors.grey, width: 2),
           borderRadius: BorderRadius.circular(10),
+          color: MediaQuery.of(context).platformBrightness == Brightness.dark
+              ? const Color.fromARGB(255, 90, 90, 90)
+              : const Color.fromARGB(255, 233, 233, 233),
         ),
         child: Center(
           child: ListTile(

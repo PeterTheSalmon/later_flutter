@@ -56,5 +56,6 @@ class Globals {
     "Later supports keyboard shortcuts! Try ctrl/cmd + alt + n to save a link on your clipboard.",
     "When sharing a link or adding from your clipboard, Later will automatically add the title of the page!",
     "Swipe links to access quick options on mobile!",
+    "Check out the random link, right below these tips!",
   ];
 }

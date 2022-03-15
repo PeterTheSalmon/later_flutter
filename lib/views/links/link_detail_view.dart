@@ -28,6 +28,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width * 0.9;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.document['title']),
@@ -57,7 +58,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
           BottomAppBar(child: _bottomNavigationBar(document: widget.document)),
       body: Center(
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 400),
+          constraints: BoxConstraints(maxWidth: _width > 400 ? 400 : _width),
           alignment: Alignment.center,
           child: SingleChildScrollView(
             child: Padding(
@@ -75,7 +76,20 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
-                      // TODO: Add a url preview - perhaps just root domain?
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 20.0, left: 10, right: 10),
+                      child: Text(
+                        widget.document['url'],
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Colors.grey),
+                      ),
                     ),
                     _websitePreview(context),
                     _notes(context)
@@ -246,6 +260,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         IconButton(
+            tooltip: "Open in browser",
             icon: const Icon(Icons.open_in_new),
             onPressed: () async {
               if (await canLaunch(widget.document["url"]!)) {
@@ -261,12 +276,14 @@ class _LinkDetailViewState extends State<LinkDetailView> {
               }
             }),
         IconButton(
+          tooltip: "Share",
           icon: const Icon(Icons.share),
           onPressed: () async {
             Share.share(document["url"]!, subject: document["title"]!);
           },
         ),
         IconButton(
+            tooltip: "Edit",
             icon: const Icon(Icons.edit),
             onPressed: () {
               // show edit dialog
@@ -276,6 +293,8 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                       Dialog(child: EditLinkDialog(document: document)));
             }),
         IconButton(
+          tooltip: "Move to another folder",
+          icon: const Icon(Icons.folder),
           onPressed: () {
             showDialog(
                 context: context,
@@ -358,9 +377,9 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                       ),
                     )));
           },
-          icon: const Icon(Icons.folder),
         ),
         IconButton(
+          tooltip: "Delete",
           icon: const Icon(Icons.delete),
           onPressed: () {
             Navigator.pop(context);
