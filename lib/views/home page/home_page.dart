@@ -207,9 +207,23 @@ class _HomePageState extends State<HomePage> {
                             textAlign: TextAlign.center),
                         _tipsBox(context),
                         const Spacer(),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Random Link:"),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              // dice icon
+                              Icon(
+                                Icons.casino,
+                                size: 20,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "Random Link:",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
                         ),
                         _randomLink(),
                         const Spacer(),
@@ -352,8 +366,11 @@ class _HomePageState extends State<HomePage> {
         width: 250,
         height: 70,
         decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: 2),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.black),
+          color: MediaQuery.of(context).platformBrightness == Brightness.dark
+              ? const Color.fromARGB(255, 63, 63, 63)
+              : const Color.fromARGB(255, 233, 233, 233),
         ),
         child: const Center(
           child: Text("No links found"),
@@ -362,7 +379,6 @@ class _HomePageState extends State<HomePage> {
     }
 
     return OpenContainer(
-      // TODO: Editing this link doesn't show changes on the home screen
       tappable: false,
       closedElevation: 0,
       openElevation: 0,
@@ -371,7 +387,6 @@ class _HomePageState extends State<HomePage> {
         // to ensure there is no weird behaviour with edits/deletes
         setRandomLink();
       },
-
       closedColor: Colors.transparent,
       openColor: Colors.transparent,
       middleColor: Colors.transparent,
@@ -385,7 +400,7 @@ class _HomePageState extends State<HomePage> {
           border: Border.all(color: Colors.grey, width: 2),
           borderRadius: BorderRadius.circular(10),
           color: MediaQuery.of(context).platformBrightness == Brightness.dark
-              ? const Color.fromARGB(255, 90, 90, 90)
+              ? const Color.fromARGB(255, 63, 63, 63)
               : const Color.fromARGB(255, 233, 233, 233),
         ),
         child: Center(
@@ -403,21 +418,6 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               kIsWeb ? null : openContainer();
             },
-            leading: IconButton(
-                icon: const Icon(Icons.open_in_new),
-                onPressed: () async {
-                  if (await canLaunch(randomLink!["url"]!)) {
-                    launch(randomLink!["url"], enableJavaScript: true);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Could not launch ${randomLink!["url"]}"),
-                      action: SnackBarAction(
-                        label: "Close",
-                        onPressed: () {},
-                      ),
-                    ));
-                  }
-                }),
           ),
         ),
       ),
