@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
             ),
             floatingActionButton: SpeedDial(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(16),
               ),
               animatedIcon: AnimatedIcons.menu_close,
               backgroundColor: Globals.appColour,

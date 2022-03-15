@@ -345,7 +345,7 @@ class _FolderViewState extends State<FolderView> {
     return SpeedDial(
       backgroundColor: Globals.appColour,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(16),
       ),
       animatedIcon: AnimatedIcons.menu_close,
       children: [

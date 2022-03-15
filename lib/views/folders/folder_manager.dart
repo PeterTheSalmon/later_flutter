@@ -42,7 +42,7 @@ class _FolderManagerState extends State<FolderManager> {
                   : null,
               floatingActionButton: FloatingActionButton.extended(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 onPressed: () {
                   showNewFolderSheet(context);
