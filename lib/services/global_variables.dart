@@ -25,7 +25,6 @@ class Globals {
     "Evening, ",
   ];
 
-
   Map<int, Color> customColour = {
     50: const Color.fromRGBO(243, 168, 59, .1),
     100: const Color.fromRGBO(243, 168, 59, .2),
@@ -50,12 +49,12 @@ class Globals {
     "You can also share the app with your friends!",
     "Check out the Mac app for a Mac version!",
     "You can use Later on the web, on desktop, or on mobile!",
-    "Mmm tips",
     "Later supports keyboard shortcuts! Try ctrl/cmd + n to save a link.",
     "Later supports keyboard shortcuts! Try ctrl/cmd + shift + n to create a folder.",
     "Later supports keyboard shortcuts! Try ctrl/cmd + alt + n to save a link on your clipboard.",
     "When sharing a link or adding from your clipboard, Later will automatically add the title of the page!",
     "Swipe links to access quick options on mobile!",
     "Check out the random link, right below these tips!",
+    "Access your links anywhere at later.petersalmon.dev",
   ];
 }

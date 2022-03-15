@@ -198,9 +198,9 @@ class _HomePageState extends State<HomePage> {
                         Text(
                             currentTime > 22
                                 ? "Don't stay up too later!"
-                                : currentTime < 10
+                                : currentTime < 12
                                     ? "${Globals.morningGreetings[morningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}!"
-                                    : currentTime < 16
+                                    : currentTime < 17
                                         ? "${Globals.afternoonGreetings[afternoonIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}."
                                         : "${Globals.eveningGreetings[eveningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}.",
                             style: const TextStyle(fontSize: 20),
@@ -212,15 +212,10 @@ class _HomePageState extends State<HomePage> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: const [
-                              // dice icon
-                              Icon(
-                                Icons.casino,
-                                size: 20,
-                              ),
-                              SizedBox(width: 10),
                               Text(
-                                "Random Link:",
-                                style: TextStyle(fontSize: 18),
+                                "Random Link",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
                               ),
                             ],
                           ),
