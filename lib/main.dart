@@ -73,6 +73,12 @@ class LaterApp extends StatelessWidget {
             primarySwatch: Globals().appSwatch(),
             brightness: Brightness.light,
             primaryColor: Globals.appColour,
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: Globals.appColour,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
           ),
           darkTheme: ThemeData(
             primarySwatch: Globals().appSwatch(),
