@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:later_flutter/views/folders/new_folder_sheet.dart';
+import 'package:later_flutter/views/new%20link%20and%20folder%20flows/added_link_snackbar.dart';
+import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_folder_sheet.dart';
 
 /// A list of folders used to select a destination for new links
 class FolderPicker extends StatelessWidget {
@@ -89,15 +90,7 @@ class FolderPickerList extends StatelessWidget {
                         "userId": FirebaseAuth.instance.currentUser!.uid
                       });
                       Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text("Added!"),
-                          action: SnackBarAction(
-                            label: "Close",
-                            onPressed: () {},
-                          ),
-                        ),
-                      );
+                      showAddedLinkSnackbar(context);
                     },
                   );
                 }).toList()),

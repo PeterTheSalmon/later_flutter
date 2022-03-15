@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/views/new%20link%20and%20folder%20flows/added_link_snackbar.dart';
 import 'package:uuid/uuid.dart';
 
 /// Shows a sheet or dialog to add a new folder
@@ -13,7 +14,7 @@ import 'package:uuid/uuid.dart';
 ///
 ///   `prefillLinkName` and `prefillLinkUrl`: prefill the link name and url
 ///     and add them to the folder instantly. If null, skip this step.
-///     
+///
 ///   __ONLY enabled when using the dialog__
 
 Future<void> showNewFolderSheet(BuildContext context,
@@ -91,6 +92,7 @@ Future<void> showNewFolderSheet(BuildContext context,
                                         FirebaseAuth.instance.currentUser!.uid
                                   });
                                   Navigator.pop(context);
+                                  showAddedLinkSnackbar(context);
                                 }
                                 Navigator.pop(context);
                               },
