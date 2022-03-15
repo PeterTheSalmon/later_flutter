@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/links/edit_link_dialog.dart';
 import 'package:later_flutter/views/links/notes_dialog.dart';
@@ -89,6 +90,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
   }
 
   Widget _notes(BuildContext context) {
+    ScrollController _scrollController = ScrollController();
     return Container(
       height: 200,
       constraints: const BoxConstraints(maxWidth: 300),
@@ -125,6 +127,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                     width: 250,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
+                      color: Colors.grey.withOpacity(0.2),
                       border: Border.all(
                         color: Theme.of(context).primaryColor,
                         width: 2,
@@ -134,7 +137,10 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _scrollController,
                         child: SingleChildScrollView(
+                          controller: _scrollController,
                           child: Text(snapshot.data!['notes'],
                               textAlign: TextAlign.start),
                         ),
