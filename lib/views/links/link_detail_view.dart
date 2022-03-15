@@ -89,72 +89,89 @@ class _LinkDetailViewState extends State<LinkDetailView> {
   }
 
   Widget _notes(BuildContext context) {
-    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-      stream: FirebaseFirestore.instance
-          .collection('links')
-          .doc(widget.document.id)
-          .snapshots(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        final Map<String, dynamic> documentMap = snapshot.data?.data() == null
-            ? {}
-            : snapshot.data?.data() as Map<String, dynamic>;
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Center(child: CircularProgressIndicator()),
-          );
-        }
+    return Container(
+      height: 200,
+      constraints: const BoxConstraints(maxWidth: 300),
+      child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: FirebaseFirestore.instance
+            .collection('links')
+            .doc(widget.document.id)
+            .snapshots(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          final Map<String, dynamic> documentMap = snapshot.data?.data() == null
+              ? {}
+              : snapshot.data?.data() as Map<String, dynamic>;
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
 
-        if (documentMap.containsKey('notes')) {
-          return Container(
-            constraints: const BoxConstraints(maxWidth: 300),
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Divider(
-                    thickness: 2,
+          if (documentMap.containsKey('notes')) {
+            return Container(
+              height: 200,
+              constraints: const BoxConstraints(maxWidth: 300),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  /// Spacing
+                  const SizedBox(height: 20),
+                  Container(
+                    width: 250,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                        width: 2,
+                      ),
+                    ),
+                    constraints: const BoxConstraints(maxHeight: 100),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Scrollbar(
+                        child: SingleChildScrollView(
+                          child: Text(snapshot.data!['notes'],
+                              textAlign: TextAlign.start),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child:
-                      Text(snapshot.data!['notes'], textAlign: TextAlign.start),
-                ),
-                TextButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => NotesDialog(
-                                document: widget.document,
-                                initalText: documentMap['notes'],
-                              ));
-                    },
-                    child: const Text("Edit Note")),
-              ],
-            ),
-          );
-        } else {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              child: const Text("Add a note"),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => NotesDialog(
-                          document: widget.document,
-                          initalText: "",
-                        ));
-              },
-            ),
-          );
-        }
-      },
+                  TextButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => NotesDialog(
+                                  document: widget.document,
+                                  initalText: documentMap['notes'],
+                                ));
+                      },
+                      child: const Text("Edit Note")),
+                ],
+              ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                child: const Text("Add a note"),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => NotesDialog(
+                            document: widget.document,
+                            initalText: "",
+                          ));
+                },
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 

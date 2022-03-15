@@ -23,11 +23,19 @@ void main() async {
 
   // initialize shared prefences
   final prefs = await SharedPreferences.getInstance();
+
+  // check if intro seen
   final bool? hasSeenIntro = prefs.getBool('hasSeenIntro');
   if (hasSeenIntro == null || hasSeenIntro == false) {
     Globals.hasSeenIntro = false;
   } else {
     Globals.hasSeenIntro = true;
+  }
+
+  // check if data has been shared
+  String? previousShared = prefs.getString('previousShared');
+  if (previousShared != null) {
+    Globals.sharedUrl = previousShared;
   }
 
   runApp(const LaterApp());
@@ -51,8 +59,10 @@ class LaterApp extends StatelessWidget {
         ],
         child: MaterialApp(
           builder: (context, widget) {
-            return ScrollConfiguration( // ? Is it unsafe to force unwrap the `widget`?
-                behavior: const CustomScrollBehaviour(), child: widget!);
+            return ScrollConfiguration(
+                // ? Is it unsafe to force unwrap the `widget`?
+                behavior: const CustomScrollBehaviour(),
+                child: widget!);
           },
           debugShowCheckedModeBanner: false,
           title: "Later",
