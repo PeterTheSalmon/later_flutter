@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class DisplayNameButton extends StatelessWidget {
   const DisplayNameButton({
     Key? key,
@@ -9,9 +8,10 @@ class DisplayNameButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      child: const Text("Change Display Name"),
-      onPressed: () {
+    return ListTile(
+      leading: const Icon(Icons.person),
+      title: const Text("Change Display Name"),
+      onTap: () {
         final TextEditingController nameController = TextEditingController();
         showDialog(
             context: context,

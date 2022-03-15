@@ -35,49 +35,64 @@ class _AccountSettingsState extends State<AccountSettings> {
               ? const Drawer(child: StandardDrawer())
               : null,
           body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
               child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    // * Main content
-                    const Text(
-                      'Manage your account',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                    Text(FirebaseAuth.instance.currentUser?.email ?? '',
-                        style: const TextStyle(fontSize: 14)),
-                    const Divider(),
-                    const SignOutButton(),
-                    const SizedBox(height: 5),
-                    const DisplayNameButton(),
-                    const SizedBox(height: 5),
+                  child: Container(
+            constraints: BoxConstraints(maxWidth: 550),
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Hi there, ${FirebaseAuth.instance.currentUser?.displayName ?? "User"}",
+                    style: TextStyle(fontSize: 24),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    FirebaseAuth.instance.currentUser?.email ?? '',
+                    style: const TextStyle(fontSize: 14),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const Divider(),
+                  const SignOutButton(),
+                  const DisplayNameButton(),
 
-                    // * Password reset
-                    OutlinedButton(
-                      child: Text(
-                        _passwordResetSent ? "Email Sent!" : "Reset Password",
-                        style: TextStyle(
-                            color: _passwordResetSent ? Colors.green : null),
-                      ),
-                      onPressed: () {
-                        context
-                            .read<AuthenticationService>()
-                            .resetPassword(context);
-                        setState(() {
-                          _passwordResetSent = true;
-                        });
-                      },
+                  // * Password reset
+                  ListTile(
+                    leading: Icon(Icons.password),
+                    title: Text(
+                      _passwordResetSent ? "Email Sent!" : "Reset Password",
+                      style: TextStyle(
+                          color: _passwordResetSent ? Colors.green : null),
                     ),
+                    onTap: () {
+                      if (_passwordResetSent) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              const Text("Password reset email already sent"),
+                          action: SnackBarAction(
+                            label: "Got it!",
+                            onPressed: () {},
+                          ),
+                        ));
+                        return;
+                      }
+                      context
+                          .read<AuthenticationService>()
+                          .resetPassword(context);
+                      setState(() {
+                        _passwordResetSent = true;
+                      });
+                    },
+                  ),
 
-                    const SizedBox(height: 5),
-                    const DeleteAccountButton(),
-                  ],
-                ),
+                  const DeleteAccountButton(),
+                ],
               ),
             ),
-          ),
+          ))),
         ),
       )
     ]);

@@ -10,9 +10,10 @@ class SignOutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      child: const Text("Sign Out"),
-      onPressed: () {
+    return ListTile(
+      leading: const Icon(Icons.exit_to_app),
+      title: const Text("Sign Out"),
+      onTap: () {
         context.read<AuthenticationService>().signOut(context);
       },
     );

@@ -14,26 +14,6 @@ class StaticListItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Route<T> sharedAxis<T>(RoutePageBuilder page,
-        [SharedAxisTransitionType type = SharedAxisTransitionType.scaled,
-        double duration = 0.3]) {
-      return PageRouteBuilder<T>(
-        transitionDuration: Duration(milliseconds: (duration * 1000).round()),
-        pageBuilder: (context, animation, secondaryAnimation) => page(
-          context,
-          animation,
-          secondaryAnimation,
-        ),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return SharedAxisTransition(
-            child: child,
-            animation: animation,
-            secondaryAnimation: secondaryAnimation,
-            transitionType: type,
-          );
-        },
-      );
-    }
 
     final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
 
