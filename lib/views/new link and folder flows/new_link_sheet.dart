@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:later_flutter/services/check_url_conventions.dart';
-import 'package:later_flutter/views/folders/folder_picker.dart';
+import 'package:later_flutter/views/new%20link%20and%20folder%20flows/folder_picker.dart';
 import 'package:metadata_fetch/metadata_fetch.dart';
 
 /// Shows a new link sheet or dialog
@@ -23,7 +23,9 @@ Future<void> showNewLinkSheet(BuildContext context,
     showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (context) => const Center(child: CircularProgressIndicator()));
+        builder: (context) => WillPopScope(
+            onWillPop: () async => false,
+            child: const Center(child: CircularProgressIndicator())));
   }
 
   // Get the clipboard

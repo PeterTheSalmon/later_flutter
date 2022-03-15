@@ -8,7 +8,7 @@ import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/folders/edit_folder_dialog.dart';
 import 'package:later_flutter/views/folders/folder_icon_chooser.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
-import 'package:later_flutter/views/folders/new_folder_sheet.dart';
+import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_folder_sheet.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:later_flutter/views/styles/fade_through_route.dart';
