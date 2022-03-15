@@ -18,7 +18,7 @@ class NotesDialog extends StatelessWidget {
     return Dialog(
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Column(
             children: [
               const Text(
@@ -44,7 +44,7 @@ class NotesDialog extends StatelessWidget {
                       },
                       child: const Text("Cancel")),
                   // save button
-                  ElevatedButton(
+                  OutlinedButton(
                       onPressed: () async {
                         if (notesController.text.isEmpty) {
                           FirebaseFirestore.instance
