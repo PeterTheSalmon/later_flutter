@@ -14,6 +14,7 @@ import 'package:later_flutter/views/folders/new_folder_sheet.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/links/new_link_sheet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -81,6 +82,7 @@ class _HomePageState extends State<HomePage> {
     /// new every time the homepage is loaded. As such, we need to confirm that
     /// it truly is new before showing the new link dialog.
     if (Globals.sharedUrl != sharedData) {
+      SharedPreferences.getInstance().then((prefs) => prefs.setString('previousShared', sharedData));
       Globals.sharedUrl = sharedData;
       setState(() {
         _sharedText = sharedData;
@@ -291,7 +293,6 @@ class _HomePageState extends State<HomePage> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.2),
                     blurRadius: 10,
-                    offset: const Offset(5, 5),
                   ),
                 ],
               ),
@@ -360,8 +361,11 @@ class _HomePageState extends State<HomePage> {
     }
 
     return OpenContainer(
+      // TODO: Editing this link doesn't show changes on the home screen
       tappable: false,
       closedElevation: 0,
+      openElevation: 0,
+
       closedColor: Colors.transparent,
       openColor: Colors.transparent,
       middleColor: Colors.transparent,
