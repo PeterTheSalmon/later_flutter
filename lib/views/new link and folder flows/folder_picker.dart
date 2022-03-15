@@ -38,6 +38,7 @@ class FolderPickerList extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("folders")
+            .orderBy("name")
             .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -70,30 +71,33 @@ class FolderPickerList extends StatelessWidget {
                   )),
               const Divider(),
               Expanded(
-                child: ListView(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                  return ListTile(
-                    title: Text(
-                      document["name"],
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    leading: const Icon(Icons.folder),
-                    onTap: () {
-                      FirebaseFirestore.instance.collection("links").add({
-                        "dateCreated": Timestamp.now(),
-                        "isFavourite": false,
-                        "parentFolderId": document.id,
-                        "title": title,
-                        "url": url,
-                        "userId": FirebaseAuth.instance.currentUser!.uid
-                      });
-                      Navigator.pop(context);
-                      showAddedLinkSnackbar(context);
-                    },
-                  );
-                }).toList()),
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  child: ListView(
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                    return ListTile(
+                      title: Text(
+                        document["name"],
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      leading: const Icon(Icons.folder),
+                      onTap: () {
+                        FirebaseFirestore.instance.collection("links").add({
+                          "dateCreated": Timestamp.now(),
+                          "isFavourite": false,
+                          "parentFolderId": document.id,
+                          "title": title,
+                          "url": url,
+                          "userId": FirebaseAuth.instance.currentUser!.uid
+                        });
+                        Navigator.pop(context);
+                        showAddedLinkSnackbar(context);
+                      },
+                    );
+                  }).toList()),
+                ),
               ),
             ]),
           );
