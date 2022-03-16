@@ -86,12 +86,7 @@ class _LogInPageState extends State<LogInPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton.icon(
-                        onPressed: () {
-                          context.read<AuthenticationService>().signIn(
-                                emailController.text.trim(),
-                                passwordController.text.trim(),
-                              );
-                        },
+                        onPressed: _signIn,
                         icon: const Icon(Icons.arrow_forward),
                         label: const Text("SIGN IN"),
                       ),
@@ -126,5 +121,12 @@ class _LogInPageState extends State<LogInPage> {
         ),
       ),
     );
+  }
+
+  void _signIn() {
+    context.read<AuthenticationService>().signIn(
+          emailController.text.trim(),
+          passwordController.text.trim(),
+        );
   }
 }
