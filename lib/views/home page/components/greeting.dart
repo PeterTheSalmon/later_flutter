@@ -6,13 +6,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 class GreetingMessage extends StatelessWidget {
   GreetingMessage({
     Key? key,
+    required this.currentTime,
+    required this.morningIndex,
+    required this.afternoonIndex,
+    required this.eveningIndex,
   }) : super(key: key);
 
-  final int currentTime = DateTime.now().hour;
+  final int currentTime;
 
-  final morningIndex = Random().nextInt(Globals.morningGreetings.length);
-  final afternoonIndex = Random().nextInt(Globals.afternoonGreetings.length);
-  final eveningIndex = Random().nextInt(Globals.eveningGreetings.length);
+  final int morningIndex;
+  final int afternoonIndex;
+  final int eveningIndex;
 
   @override
   Widget build(BuildContext context) {
