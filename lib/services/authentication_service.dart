@@ -85,9 +85,12 @@ class AuthenticationService with ChangeNotifier {
     }
   }
 
+  /// Delete the current user account, including any and all data owned by the user
+  /// Only call this method once delete confirmation is received,
+  /// as it is irreversible.
+  /// * Pushing the authentication wrapper is handled from `delete_account_view.dart`
   Future<void> deleteAccount() async {
     // first we delete the users folders and links from the database
-
     var folders = FirebaseFirestore.instance
         .collection('folders')
         .where("userId", isEqualTo: _firebaseAuth.currentUser!.uid);
@@ -98,6 +101,7 @@ class AuthenticationService with ChangeNotifier {
               .delete();
         }));
 
+    // links
     var links = FirebaseFirestore.instance
         .collection('links')
         .where("userId", isEqualTo: _firebaseAuth.currentUser!.uid);

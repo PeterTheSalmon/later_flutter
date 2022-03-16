@@ -86,7 +86,7 @@ class _FolderManagerState extends State<FolderManager> {
                           ),
                           leading: getFolderIcon(document["iconName"]),
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                                 context,
                                 displayMobileLayout
                                     ? fadeThrough((context, animation,
