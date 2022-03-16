@@ -26,7 +26,7 @@ class StaticListItems extends StatelessWidget {
               Navigator.pop(context);
               await Future.delayed(const Duration(milliseconds: 30));
             }
-            Navigator.pushReplacement(
+            Navigator.push(
                 context,
                 displayMobileLayout
                     ? fadeThrough((context, animation, secondaryAnimation) =>
@@ -50,7 +50,7 @@ class StaticListItems extends StatelessWidget {
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 30));
                 }
-                Navigator.pushReplacement(
+                Navigator.push(
                     context,
                     displayMobileLayout
                         ? fadeThrough(
@@ -67,7 +67,7 @@ class StaticListItems extends StatelessWidget {
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 30));
                 }
-                Navigator.pushReplacement(
+                Navigator.push(
                     context,
                     displayMobileLayout
                         ? fadeThrough(
@@ -86,7 +86,7 @@ class StaticListItems extends StatelessWidget {
               Navigator.pop(context);
               await Future.delayed(const Duration(milliseconds: 50));
             }
-            Navigator.pushReplacement(
+            Navigator.push(
                 context,
                 displayMobileLayout
                     ? fadeThrough((context, animation, secondaryAnimation) =>

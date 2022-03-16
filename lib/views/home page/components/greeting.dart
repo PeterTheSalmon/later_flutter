@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/global_variables.dart';
-import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class GreetingMessage extends StatelessWidget {
-  GreetingMessage({
+  const GreetingMessage({
     Key? key,
     required this.currentTime,
     required this.morningIndex,

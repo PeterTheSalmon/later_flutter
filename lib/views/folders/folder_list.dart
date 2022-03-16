@@ -43,7 +43,7 @@ class FolderList extends StatelessWidget {
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 50));
                 }
-                Navigator.pushReplacement(
+                Navigator.push(
                     context,
                     displayMobileLayout
                         ? fadeThrough(
