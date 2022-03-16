@@ -57,7 +57,9 @@ class _StandardDrawerState extends State<StandardDrawer> {
         Expanded(
           child: ListView(
               padding: const EdgeInsets.only(top: 0),
-              children: const [StaticListItems(), FolderList()]),
+              children: const [
+                
+                StaticListItems(), FolderList()]),
         ),
       ]),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Convenience class for values that rarely change and are used throughout the app
 class Globals {
@@ -43,18 +45,76 @@ class Globals {
 
   /// A list of tips for use on the home page.
   /// The tips are displayed in a random order.
-  static List<String> tipList = [
-    "Click the menu in the bottom right for quick actions!",
-    "Later is completely open source and free to use!",
-    "You can also share the app with your friends!",
-    "Check out the Mac app for a Mac version!",
-    "You can use Later on the web, on desktop, or on mobile!",
-    "Later supports keyboard shortcuts! Try ctrl/cmd + n to save a link.",
-    "Later supports keyboard shortcuts! Try ctrl/cmd + shift + n to create a folder.",
-    "Later supports keyboard shortcuts! Try ctrl/cmd + alt + n to save a link on your clipboard.",
-    "When sharing a link or adding from your clipboard, Later will automatically add the title of the page!",
-    "Swipe links to access quick options on mobile!",
-    "Check out the random link, right below these tips!",
-    "Access your links anywhere at later.petersalmon.dev",
+
+  static List<Tip> tips = [
+    Tip(
+        title: "Quick Actions",
+        content: "Click the menu in the bottom right for quick actions!"),
+    Tip(
+        title: "Open Source",
+        content: "Later is completely open source and free to use!",
+        buttonTitle: "View Source",
+        buttonAction: () {
+          launch("https://github.com/PeterTheSalmon/later_flutter");
+        }),
+    Tip(
+        title: "Love Later?",
+        content: "You can also share the app with your friends!",
+        buttonTitle: "Share",
+        buttonAction: () {
+          Share.share("https://www.petersalmon.dev/later",
+              subject: "Check out Later!");
+        }),
+    Tip(
+        title: "Mac App",
+        content: "Check out the Mac app for a Mac version!",
+        buttonTitle: "Download",
+        buttonAction: () {
+          launch("https://github.com/PeterTheSalmon/Later");
+        }),
+    Tip(
+        title: "Access Anywhere",
+        content: "You can use Later on the web, on desktop, or on mobile!"),
+    Tip(
+        title: "Keyboard Shortcuts",
+        content:
+            "Later supports keyboard shortcuts! Try ctrl/cmd + n to save a link."),
+    Tip(
+        title: "Keyboard Shortcuts",
+        content:
+            "Later supports keyboard shortcuts! Try ctrl/cmd + shift + n to create a folder."),
+    Tip(
+        title: "Keyboard Shortcuts",
+        content:
+            "Later supports keyboard shortcuts! Try ctrl/cmd + alt + n to save a link from your clipboard."),
+    Tip(
+        title: "Quick Add Links",
+        content:
+            "When sharing a link or adding from your clipboard, Later will automatically add the title of the page!"),
+    Tip(
+        title: "Swipe Links",
+        content: "Swipe links to access quick options on mobile!"),
+    Tip(
+        title: "Random Link",
+        content: "Check out the random link, right below these tips!"),
+    Tip(
+        title: "Access Anywhere",
+        content: "Access your links anytime at later.petersalmon.dev",
+        buttonTitle: "Open Now",
+        buttonAction: () {
+          launch("https://later.petersalmon.dev");
+        }),
   ];
+}
+
+class Tip {
+  final String title;
+  final String content;
+  final String? buttonTitle;
+  final Function? buttonAction;
+  Tip(
+      {required this.title,
+      required this.content,
+      this.buttonTitle,
+      this.buttonAction});
 }
