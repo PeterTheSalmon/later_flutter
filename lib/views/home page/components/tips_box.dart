@@ -24,7 +24,7 @@ class _TipsBoxState extends State<TipsBox> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       child: Padding(
         key: ValueKey<int>(_tipIndex),
         padding: const EdgeInsets.only(top: 20.0),
