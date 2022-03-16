@@ -29,6 +29,12 @@ class _HomePageState extends State<HomePage> {
   String? _sharedText;
   DocumentSnapshot? randomLink;
 
+  final int currentTime = DateTime.now().hour;
+
+  final morningIndex = Random().nextInt(Globals.morningGreetings.length);
+  final afternoonIndex = Random().nextInt(Globals.afternoonGreetings.length);
+  final eveningIndex = Random().nextInt(Globals.eveningGreetings.length);
+
   @override
   void initState() {
     super.initState();
@@ -164,7 +170,12 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            GreetingMessage(),
+                            GreetingMessage(
+                              afternoonIndex: afternoonIndex,
+                              eveningIndex: eveningIndex,
+                              morningIndex: morningIndex,
+                              currentTime: currentTime,
+                            ),
                             const TipsBox(),
                             RandomLink(
                                 randomLink: randomLink, context: context),
