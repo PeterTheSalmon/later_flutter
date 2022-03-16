@@ -1,13 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:later_flutter/views/account/account%20settings/account_settings.dart';
 import 'package:later_flutter/views/drawer/components/header.dart';
 import 'package:later_flutter/views/drawer/components/static_items.dart';
 import 'package:later_flutter/views/folders/folder_list.dart';
-import 'package:later_flutter/views/folders/folder_manager.dart';
-import 'package:later_flutter/views/settings/general_settings.dart';
-import 'package:later_flutter/views/home%20page/home_page.dart';
-import 'package:later_flutter/views/styles/fade_route.dart';
 
 class StandardDrawer extends StatefulWidget {
   const StandardDrawer({
