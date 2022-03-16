@@ -17,7 +17,7 @@ class RandomLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: randomLink == null ? 0 : 1,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       child: randomLink == null
           ? const Card()
           : Card(
