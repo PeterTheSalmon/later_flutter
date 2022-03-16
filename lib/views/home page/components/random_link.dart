@@ -1,4 +1,3 @@
-
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +25,7 @@ class RandomLink extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
+                    onTap: () {},
                     leading: IconButton(
                         tooltip: "Open in browser",
                         icon: const Icon(Icons.open_in_new),

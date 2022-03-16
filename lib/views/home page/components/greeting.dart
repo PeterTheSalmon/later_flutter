@@ -22,7 +22,7 @@ class GreetingMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
         currentTime > 22
-            ? "Don't stay up too later!"
+            ? "Don't stay up too late!"
             : currentTime < 12
                 ? "${Globals.morningGreetings[morningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}!"
                 : currentTime < 17
