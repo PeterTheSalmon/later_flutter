@@ -51,7 +51,7 @@ class _TipsBoxState extends State<TipsBox> {
                       child: Text(
                         Globals.tips[_tipIndex].content,
                         key: ValueKey<int>(_tipIndex),
-                        textAlign: TextAlign.start,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),

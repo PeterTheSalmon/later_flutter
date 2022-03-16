@@ -34,7 +34,7 @@ class DisplayNameButton extends StatelessWidget {
                         controller: nameController,
                       ),
                       const SizedBox(height: 20),
-                      OutlinedButton(
+                      ElevatedButton(
                         onPressed: () {
                           if (FirebaseAuth.instance.currentUser == null) {
                             Navigator.pop(context);
