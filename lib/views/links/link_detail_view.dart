@@ -203,7 +203,6 @@ class _LinkDetailViewState extends State<LinkDetailView> {
         child: AnyLinkPreview(
           link: widget.document['url'],
           bodyMaxLines: 3,
-          showMultimedia: true,
           backgroundColor:
               MediaQuery.of(context).platformBrightness == Brightness.dark
                   ? const Color.fromARGB(255, 71, 71, 71)

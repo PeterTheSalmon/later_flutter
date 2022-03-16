@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:animations/animations.dart';
+import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +33,8 @@ class _HomePageState extends State<HomePage> {
   DocumentSnapshot? randomLink;
   final int currentTime = DateTime.now().hour;
 
+  bool _condition = false;
+
   final morningIndex = Random().nextInt(Globals.morningGreetings.length);
   final afternoonIndex = Random().nextInt(Globals.afternoonGreetings.length);
   final eveningIndex = Random().nextInt(Globals.eveningGreetings.length);
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     setState(() {
-      _tipIndex = Random().nextInt(Globals.tipList.length);
+      _tipIndex = Random().nextInt(Globals.tips.length);
     });
     ShareService()
       ..onDataReceived = _handleSharedData
@@ -136,99 +139,86 @@ class _HomePageState extends State<HomePage> {
               child: StandardDrawer(),
             ),
           Expanded(
-              child: Scaffold(
-            appBar: AppBar(
-              title: const Text("Later"),
-              actions: [
-                if (kIsWeb)
-                  IconButton(
-                      onPressed: () {
-                        _showWebWarning(context);
-                      },
-                      icon: const Icon(Icons.warning))
-              ],
-            ),
-            floatingActionButton: SpeedDial(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+            child: Scaffold(
+              appBar: AppBar(
+                title: const Text("Later"),
+                actions: [
+                  if (kIsWeb)
+                    IconButton(
+                        onPressed: () {
+                          _showWebWarning(context);
+                        },
+                        icon: const Icon(Icons.warning))
+                ],
               ),
-              animatedIcon: AnimatedIcons.menu_close,
-              backgroundColor: Globals.appColour,
-              children: [
-                SpeedDialChild(
-                    child: const Icon(Icons.copy),
-                    label: "Add from Clipboard",
-                    onTap: () async {
+              floatingActionButton: SpeedDial(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                animatedIcon: AnimatedIcons.menu_close,
+                backgroundColor: Globals.appColour,
+                children: [
+                  SpeedDialChild(
+                      child: const Icon(Icons.copy),
+                      label: "Add from Clipboard",
+                      onTap: () async {
+                        showNewLinkSheet(context,
+                            parentFolderId: "",
+                            fromClipboard: true,
+                            useDialog: true);
+                      }),
+                  SpeedDialChild(
+                    child: const Icon(Icons.add_link),
+                    label: "Save Link",
+                    onTap: () {
                       showNewLinkSheet(context,
-                          parentFolderId: "",
-                          fromClipboard: true,
-                          useDialog: true);
-                    }),
-                SpeedDialChild(
-                  child: const Icon(Icons.add_link),
-                  label: "Save Link",
-                  onTap: () {
-                    showNewLinkSheet(context,
-                        useDialog: true, parentFolderId: "");
-                  },
-                ),
-                SpeedDialChild(
-                  child: const Icon(Icons.folder),
-                  label: "Create Folder",
-                  onTap: () {
-                    showNewFolderSheet(context, useDialog: true);
-                  },
-                ),
-              ],
-            ),
-            drawer: displayMobileLayout
-                ? const Drawer(child: StandardDrawer())
-                : null,
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                          useDialog: true, parentFolderId: "");
+                    },
+                  ),
+                  SpeedDialChild(
+                    child: const Icon(Icons.folder),
+                    label: "Create Folder",
+                    onTap: () {
+                      showNewFolderSheet(context, useDialog: true);
+                    },
+                  ),
+                ],
+              ),
+              drawer: displayMobileLayout
+                  ? const Drawer(child: StandardDrawer())
+                  : null,
+              body: SingleChildScrollView(
                 child: Center(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).orientation ==
-                            Orientation.portrait
-                        ? 500
-                        : 370,
-                    child: Column(
-                      children: [
-                        Text(
-                            currentTime > 22
-                                ? "Don't stay up too later!"
-                                : currentTime < 12
-                                    ? "${Globals.morningGreetings[morningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}!"
-                                    : currentTime < 17
-                                        ? "${Globals.afternoonGreetings[afternoonIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}."
-                                        : "${Globals.eveningGreetings[eveningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}.",
-                            style: const TextStyle(fontSize: 20),
-                            textAlign: TextAlign.center),
-                        _tipsBox(context),
-                        const Spacer(),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Text(
-                                "Random Link",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 550),
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                                currentTime > 22
+                                    ? "Don't stay up too later!"
+                                    : currentTime < 12
+                                        ? "${Globals.morningGreetings[morningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}!"
+                                        : currentTime < 17
+                                            ? "${Globals.afternoonGreetings[afternoonIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}."
+                                            : "${Globals.eveningGreetings[eveningIndex]}${FirebaseAuth.instance.currentUser?.displayName ?? "Set your display name in Account settings"}.",
+                                style: const TextStyle(fontSize: 20),
+                                textAlign: TextAlign.center),
+                            _tipsBox(context),
+                            _randomLink(),
+                          ],
                         ),
-                        _randomLink(),
-                        const Spacer(),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          )),
+          ),
         ]),
       ),
     );
@@ -285,137 +275,149 @@ class _HomePageState extends State<HomePage> {
             )));
   }
 
-  Padding _tipsBox(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: GestureDetector(
-        child: SizedBox(
-          height: 120,
-          child: AnimatedContainer(
-              duration: const Duration(milliseconds: 100),
-              decoration: BoxDecoration(
-                color:
-                    MediaQuery.of(context).platformBrightness == Brightness.dark
-                        ? const Color.fromARGB(255, 90, 90, 90)
-                        : const Color.fromARGB(255, 233, 233, 233),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 3,
+  Widget _tipsBox(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      child: Padding(
+        key: ValueKey<int>(_tipIndex),
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Card(
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: IconButton(
+                    icon: const Icon(Icons.lightbulb),
+                    onPressed: () {},
                   ),
-                ],
-              ),
-              height: _containerHeight,
-              width: _containerWidth,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                    child: Column(
-                  children: [
-                    const Spacer(),
-                    SizedBox(
-                      width: 184,
+                  title: Text(Globals.tips[_tipIndex].title),
+                ),
+                const Divider(
+                  thickness: 2,
+                ),
+                SizedBox(
+                  height: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 10),
+                    child: Center(
                       child: Text(
-                        Globals.tipList[_tipIndex],
+                        Globals.tips[_tipIndex].content,
+                        key: ValueKey<int>(_tipIndex),
+                        textAlign: TextAlign.start,
                       ),
                     ),
-                    const Spacer(),
-                    Text(
-                      "Tap for next tip",
-                      style: TextStyle(
-                          color: MediaQuery.of(context).platformBrightness ==
-                                  Brightness.dark
-                              ? const Color.fromARGB(255, 182, 181, 181)
-                              : const Color.fromARGB(255, 88, 88, 88)),
-                    )
+                  ),
+                ),
+                ButtonBar(
+                  children: [
+                    if (Globals.tips[_tipIndex].buttonAction != null)
+                      TextButton(
+                        child: Text(Globals.tips[_tipIndex].buttonTitle!),
+                        onPressed: () {
+                          Globals.tips[_tipIndex].buttonAction!();
+                        },
+                      ),
+                    TextButton(
+                      child: const Text("Next Tip"),
+                      onPressed: () {
+                        int previousIndex = _tipIndex;
+                        while (previousIndex == _tipIndex) {
+                          setState(() {
+                            _tipIndex = Random().nextInt(Globals.tips.length);
+                          });
+                        }
+                      },
+                    ),
                   ],
-                )),
-              )),
-        ),
-        onTap: () {
-          int previousIndex = _tipIndex;
-          while (previousIndex == _tipIndex) {
-            setState(() {
-              _tipIndex = Random().nextInt(Globals.tipList.length);
-            });
-          }
-          setState(() {
-            _containerHeight += 10;
-            _containerWidth += 10;
-          });
-          Future.delayed(const Duration(milliseconds: 100), () {
-            setState(() {
-              _containerHeight -= 10;
-              _containerWidth -= 10;
-            });
-          });
-        },
+                ),
+              ],
+            )),
       ),
     );
   }
 
   Widget _randomLink() {
-    if (randomLink == null) {
-      return Container(
-        width: 250,
-        height: 70,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 2),
-          borderRadius: BorderRadius.circular(10),
-          color: MediaQuery.of(context).platformBrightness == Brightness.dark
-              ? const Color.fromARGB(255, 63, 63, 63)
-              : const Color.fromARGB(255, 233, 233, 233),
-        ),
-        child: const Center(
-          child: Text("No links found"),
-        ),
-      );
-    }
-
-    return OpenContainer(
-      tappable: false,
-      closedElevation: 0,
-      openElevation: 0,
-      onClosed: (Object? action) {
-        // upon closing the container, regenerate the random link
-        // to ensure there is no weird behaviour with edits/deletes
-        setRandomLink();
-      },
-      closedColor: Colors.transparent,
-      openColor: Colors.transparent,
-      middleColor: Colors.transparent,
-      openBuilder: (BuildContext context, VoidCallback _) =>
-          LinkDetailView(document: randomLink!),
-      closedBuilder: (BuildContext context, VoidCallback openContainer) =>
-          Container(
-        width: 250,
-        height: 70,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 2),
-          borderRadius: BorderRadius.circular(10),
-          color: MediaQuery.of(context).platformBrightness == Brightness.dark
-              ? const Color.fromARGB(255, 63, 63, 63)
-              : const Color.fromARGB(255, 233, 233, 233),
-        ),
-        child: Center(
-          child: ListTile(
-            title: Text(
-              randomLink!["title"],
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+    return AnimatedOpacity(
+      opacity: randomLink == null ? 0 : 1,
+      duration: const Duration(milliseconds: 500),
+      child: randomLink == null
+          ? const Card()
+          : Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: IconButton(
+                        tooltip: "Open in browser",
+                        icon: const Icon(Icons.open_in_new),
+                        onPressed: () async {
+                          if (await canLaunch(randomLink!["url"]!)) {
+                            launch(randomLink!["url"], enableJavaScript: true);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Could not launch ${randomLink!["url"]}"),
+                              action: SnackBarAction(
+                                label: "Close",
+                                onPressed: () {},
+                              ),
+                            ));
+                          }
+                        }),
+                    title: Text(
+                      randomLink!["title"],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Text(
+                      randomLink!["url"],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 180,
+                    child: AnyLinkPreview(
+                      link: randomLink!["url"],
+                      borderRadius: 0,
+                      bodyMaxLines: 3,
+                      boxShadow: const [],
+                      backgroundColor:
+                          MediaQuery.of(context).platformBrightness ==
+                                  Brightness.dark
+                              ? const Color.fromARGB(255, 71, 71, 71)
+                              : const Color.fromARGB(255, 243, 243, 243),
+                      titleStyle: TextStyle(
+                          color: MediaQuery.of(context).platformBrightness ==
+                                  Brightness.dark
+                              ? Colors.white
+                              : Colors.black),
+                      placeholderWidget: Container(
+                          decoration: BoxDecoration(
+                            color: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? const Color.fromARGB(255, 71, 71, 71)
+                                : const Color.fromARGB(255, 243, 243, 243),
+                          ),
+                          child: const Center(
+                              child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                          ))),
+                      errorWidget: Container(
+                          decoration: BoxDecoration(
+                            color: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? const Color.fromARGB(255, 71, 71, 71)
+                                : const Color.fromARGB(255, 243, 243, 243),
+                          ),
+                          child: const Center(
+                              child: Text("No Preview Available :("))),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            subtitle: Text(
-              randomLink!["url"],
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            onTap: () {
-              kIsWeb ? null : openContainer();
-            },
-          ),
-        ),
-      ),
     );
   }
 }

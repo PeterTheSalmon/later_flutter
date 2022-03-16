@@ -14,7 +14,6 @@ class StaticListItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
 
     return Column(
