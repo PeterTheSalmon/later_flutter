@@ -4,7 +4,6 @@ import 'package:later_flutter/services/authentication_service.dart';
 import 'package:later_flutter/views/account/account%20settings/components/change_display_name.dart';
 import 'package:later_flutter/views/account/account%20settings/components/delete_account_button.dart';
 import 'package:later_flutter/views/account/account%20settings/components/sign_out_button.dart';
-import 'package:later_flutter/views/account/delete_account_view.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +36,7 @@ class _AccountSettingsState extends State<AccountSettings> {
           body: SingleChildScrollView(
               child: Center(
                   child: Container(
-            constraints: BoxConstraints(maxWidth: 550),
+            constraints: const BoxConstraints(maxWidth: 550),
             child: Padding(
               padding: const EdgeInsets.all(18.0),
               child: Column(
@@ -45,7 +44,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                 children: [
                   Text(
                     "Hi there, ${FirebaseAuth.instance.currentUser?.displayName ?? "User"}",
-                    style: TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: 24),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -61,7 +60,7 @@ class _AccountSettingsState extends State<AccountSettings> {
 
                   // * Password reset
                   ListTile(
-                    leading: Icon(Icons.password),
+                    leading: const Icon(Icons.password),
                     title: Text(
                       _passwordResetSent ? "Email Sent!" : "Reset Password",
                       style: TextStyle(

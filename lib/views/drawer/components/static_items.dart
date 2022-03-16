@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/account/account%20settings/account_settings.dart';
 import 'package:later_flutter/views/folders/folder_manager.dart';
