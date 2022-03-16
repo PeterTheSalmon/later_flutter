@@ -1,5 +1,6 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -54,45 +55,48 @@ class RandomLink extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(
-                    height: 180,
-                    child: AnyLinkPreview(
-                      link: randomLink!["url"],
-                      borderRadius: 0,
-                      bodyMaxLines: 3,
-                      boxShadow: const [],
-                      backgroundColor:
-                          MediaQuery.of(context).platformBrightness ==
-                                  Brightness.dark
-                              ? const Color.fromARGB(255, 71, 71, 71)
-                              : const Color.fromARGB(255, 243, 243, 243),
-                      titleStyle: TextStyle(
-                          color: MediaQuery.of(context).platformBrightness ==
-                                  Brightness.dark
-                              ? Colors.white
-                              : Colors.black),
-                      placeholderWidget: Container(
-                          decoration: BoxDecoration(
-                            color: MediaQuery.of(context).platformBrightness ==
+                  if (!kIsWeb)
+                    SizedBox(
+                      height: 180,
+                      child: AnyLinkPreview(
+                        link: randomLink!["url"],
+                        borderRadius: 0,
+                        bodyMaxLines: 3,
+                        boxShadow: const [],
+                        backgroundColor:
+                            MediaQuery.of(context).platformBrightness ==
                                     Brightness.dark
                                 ? const Color.fromARGB(255, 71, 71, 71)
                                 : const Color.fromARGB(255, 243, 243, 243),
-                          ),
-                          child: const Center(
-                              child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                          ))),
-                      errorWidget: Container(
-                          decoration: BoxDecoration(
+                        titleStyle: TextStyle(
                             color: MediaQuery.of(context).platformBrightness ==
                                     Brightness.dark
-                                ? const Color.fromARGB(255, 71, 71, 71)
-                                : const Color.fromARGB(255, 243, 243, 243),
-                          ),
-                          child: const Center(
-                              child: Text("No Preview Available :("))),
+                                ? Colors.white
+                                : Colors.black),
+                        placeholderWidget: Container(
+                            decoration: BoxDecoration(
+                              color: MediaQuery.of(context)
+                                          .platformBrightness ==
+                                      Brightness.dark
+                                  ? const Color.fromARGB(255, 71, 71, 71)
+                                  : const Color.fromARGB(255, 243, 243, 243),
+                            ),
+                            child: const Center(
+                                child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                            ))),
+                        errorWidget: Container(
+                            decoration: BoxDecoration(
+                              color: MediaQuery.of(context)
+                                          .platformBrightness ==
+                                      Brightness.dark
+                                  ? const Color.fromARGB(255, 71, 71, 71)
+                                  : const Color.fromARGB(255, 243, 243, 243),
+                            ),
+                            child: const Center(
+                                child: Text("No Preview Available :("))),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
