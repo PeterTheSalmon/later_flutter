@@ -81,16 +81,14 @@ class Globals {
             "Later supports keyboard shortcuts! Try ctrl/cmd + n to save a link."),
     Tip(
         title: "Keyboard Shortcuts",
-        content:
-            "Later supports keyboard shortcuts! Try ctrl/cmd + shift + n to create a folder."),
+        content: "Try ctrl/cmd + shift + n to create a folder."),
     Tip(
         title: "Keyboard Shortcuts",
-        content:
-            "Later supports keyboard shortcuts! Try ctrl/cmd + alt + n to save a link from your clipboard."),
+        content: "Try ctrl/cmd + alt + n to save a link from your clipboard."),
     Tip(
         title: "Quick Add Links",
         content:
-            "When sharing a link or adding from your clipboard, Later will automatically add the title of the page!"),
+            "Later will automatically add the title of a  page from your clipboard!"),
     Tip(
         title: "Swipe Links",
         content: "Swipe links to access quick options on mobile!"),
