@@ -1,4 +1,4 @@
-package com.petersalmon.later_flutter
+package dev.petersalmon.later
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +20,7 @@ class MainActivity: FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger,
-                "com.petersalmon.later_flutter").setMethodCallHandler { call, result ->
+                "dev.petersalmon.later").setMethodCallHandler { call, result ->
                 if (call.method == "getSharedData") {
                     handleIntent()
                     result.success(sharedData)
