@@ -49,8 +49,7 @@ class FolderPickerList extends StatelessWidget {
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Padding(
-              padding: EdgeInsets.all(8.0),
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

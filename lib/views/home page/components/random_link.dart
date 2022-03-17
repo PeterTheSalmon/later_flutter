@@ -66,7 +66,7 @@ class RandomLink extends StatelessWidget {
                         backgroundColor:
                             MediaQuery.of(context).platformBrightness ==
                                     Brightness.dark
-                                ? const Color.fromARGB(255, 71, 71, 71)
+                                ? const Color.fromARGB(255, 66, 66, 66)
                                 : const Color.fromARGB(255, 243, 243, 243),
                         titleStyle: TextStyle(
                             color: MediaQuery.of(context).platformBrightness ==
@@ -78,7 +78,7 @@ class RandomLink extends StatelessWidget {
                               color: MediaQuery.of(context)
                                           .platformBrightness ==
                                       Brightness.dark
-                                  ? const Color.fromARGB(255, 71, 71, 71)
+                                  ? const Color.fromARGB(255, 66, 66, 66)
                                   : const Color.fromARGB(255, 243, 243, 243),
                             ),
                             child: const Center(
@@ -88,7 +88,7 @@ class RandomLink extends StatelessWidget {
                               color: MediaQuery.of(context)
                                           .platformBrightness ==
                                       Brightness.dark
-                                  ? const Color.fromARGB(255, 71, 71, 71)
+                                  ? const Color.fromARGB(255, 66, 66, 66)
                                   : const Color.fromARGB(255, 243, 243, 243),
                             ),
                             child: const Center(
