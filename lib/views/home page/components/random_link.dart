@@ -82,9 +82,7 @@ class RandomLink extends StatelessWidget {
                                   : const Color.fromARGB(255, 243, 243, 243),
                             ),
                             child: const Center(
-                                child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                            ))),
+                                child: CircularProgressIndicator())),
                         errorWidget: Container(
                             decoration: BoxDecoration(
                               color: MediaQuery.of(context)

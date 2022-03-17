@@ -161,26 +161,22 @@ class _HomePageState extends State<HomePage> {
                   : null,
               body: SingleChildScrollView(
                 child: Center(
-                  child: Container(
-                    constraints: const BoxConstraints(maxWidth: 550),
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Container(
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            GreetingMessage(
-                              afternoonIndex: afternoonIndex,
-                              eveningIndex: eveningIndex,
-                              morningIndex: morningIndex,
-                              currentTime: currentTime,
-                            ),
-                            const TipsBox(),
-                            RandomLink(
-                                randomLink: randomLink, context: context),
-                          ],
-                        ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 500),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          GreetingMessage(
+                            afternoonIndex: afternoonIndex,
+                            eveningIndex: eveningIndex,
+                            morningIndex: morningIndex,
+                            currentTime: currentTime,
+                          ),
+                          const TipsBox(),
+                          RandomLink(randomLink: randomLink, context: context),
+                        ],
                       ),
                     ),
                   ),
