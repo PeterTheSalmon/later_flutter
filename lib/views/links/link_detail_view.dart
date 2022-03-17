@@ -216,7 +216,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
               boxShadow: const [],
               backgroundColor:
                   MediaQuery.of(context).platformBrightness == Brightness.dark
-                      ? const Color.fromARGB(255, 71, 71, 71)
+                      ? const Color.fromARGB(255, 66, 66, 66)
                       : const Color.fromARGB(255, 243, 243, 243),
               titleStyle: TextStyle(
                   color: MediaQuery.of(context).platformBrightness ==
@@ -227,7 +227,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                   decoration: BoxDecoration(
                     color: MediaQuery.of(context).platformBrightness ==
                             Brightness.dark
-                        ? const Color.fromARGB(255, 71, 71, 71)
+                        ? const Color.fromARGB(255, 66, 66, 66)
                         : const Color.fromARGB(255, 243, 243, 243),
                   ),
                   child: const Center(child: CircularProgressIndicator())),
@@ -235,7 +235,7 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                   decoration: BoxDecoration(
                     color: MediaQuery.of(context).platformBrightness ==
                             Brightness.dark
-                        ? const Color.fromARGB(255, 71, 71, 71)
+                        ? const Color.fromARGB(255, 66, 66, 66)
                         : const Color.fromARGB(255, 243, 243, 243),
                   ),
                   child: const Center(child: Text("No Preview Available :("))),
