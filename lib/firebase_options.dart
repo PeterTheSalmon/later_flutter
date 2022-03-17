@@ -45,7 +45,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAwAsMZuvucu094_tq0dYuT6AM2vSWEcHI',
-    appId: '1:147947085523:android:9806448e3283c20b53fe26',
+    appId: '1:147947085523:android:1fcc8ddcc968f5b153fe26',
     messagingSenderId: '147947085523',
     projectId: 'later-b3ead',
     storageBucket: 'later-b3ead.appspot.com',
@@ -53,21 +53,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD655XohcMY5rNlR_Yk2dqyP8SXGZuvGvQ',
-    appId: '1:147947085523:ios:ef59c283df2aa62a53fe26',
+    appId: '1:147947085523:ios:d378fa365384ed7f53fe26',
     messagingSenderId: '147947085523',
     projectId: 'later-b3ead',
     storageBucket: 'later-b3ead.appspot.com',
-    iosClientId: '147947085523-rn50qo5t04rnj8n9lke2p9vfa3llf0nk.apps.googleusercontent.com',
-    iosBundleId: 'com.petersalmon.laterFlutter',
+    iosClientId: '147947085523-tq7c2anlmdc6pofqv5knq17sbktm4api.apps.googleusercontent.com',
+    iosBundleId: 'dev.petersalmon.later',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyD655XohcMY5rNlR_Yk2dqyP8SXGZuvGvQ',
-    appId: '1:147947085523:ios:ef59c283df2aa62a53fe26',
+    appId: '1:147947085523:ios:d378fa365384ed7f53fe26',
     messagingSenderId: '147947085523',
     projectId: 'later-b3ead',
     storageBucket: 'later-b3ead.appspot.com',
-    iosClientId: '147947085523-rn50qo5t04rnj8n9lke2p9vfa3llf0nk.apps.googleusercontent.com',
-    iosBundleId: 'com.petersalmon.laterFlutter',
+    iosClientId: '147947085523-tq7c2anlmdc6pofqv5knq17sbktm4api.apps.googleusercontent.com',
+    iosBundleId: 'dev.petersalmon.later',
   );
 }

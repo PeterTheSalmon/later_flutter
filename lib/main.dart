@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+  // neccessary when main is async, I believe
   WidgetsFlutterBinding.ensureInitialized();
 
   // initialize firebase
@@ -78,7 +79,6 @@ class LaterApp extends StatelessWidget {
             primarySwatch: Globals().appSwatch(),
             brightness: Brightness.dark,
             primaryColor: Globals.appColour,
-
           ),
           home: const AuthenticationWrapper(),
         ));

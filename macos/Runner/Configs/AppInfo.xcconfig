@@ -8,7 +8,7 @@
 PRODUCT_NAME = later_flutter
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.petersalmon.laterFlutter
+PRODUCT_BUNDLE_IDENTIFIER = dev.petersalmon.later
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2022 com.petersalmon. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2022 dev.petersalmon. All rights reserved.

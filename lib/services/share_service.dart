@@ -36,7 +36,7 @@ class ShareService {
   Future<String> getSharedData() async {
     // TODO: add support for iOS
     if (Platform.isAndroid) {
-      return await const MethodChannel('com.petersalmon.later_flutter')
+      return await const MethodChannel('dev.petersalmon.later')
               .invokeMethod("getSharedData") ??
           "";
     } else {
