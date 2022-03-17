@@ -78,6 +78,7 @@ class LaterApp extends StatelessWidget {
             primarySwatch: Globals().appSwatch(),
             brightness: Brightness.dark,
             primaryColor: Globals.appColour,
+
           ),
           home: const AuthenticationWrapper(),
         ));

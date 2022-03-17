@@ -44,7 +44,7 @@ class NotesDialog extends StatelessWidget {
                       },
                       child: const Text("Cancel")),
                   // save button
-                  OutlinedButton(
+                  ElevatedButton(
                       onPressed: () async {
                         if (notesController.text.isEmpty) {
                           FirebaseFirestore.instance

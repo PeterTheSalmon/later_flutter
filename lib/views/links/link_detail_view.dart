@@ -56,43 +56,16 @@ class _LinkDetailViewState extends State<LinkDetailView> {
       bottomNavigationBar:
           BottomAppBar(child: _bottomNavigationBar(document: widget.document)),
       body: Center(
-        child: Container(
-          constraints: BoxConstraints(maxWidth: _width > 400 ? 400 : _width),
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 500),
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(
-                        widget.document['title'],
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: 20.0, left: 10, right: 10),
-                      child: Text(
-                        widget.document['url'],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.grey),
-                      ),
-                    ),
-                    _websitePreview(context),
-                    _notes(context)
-                  ],
+                  children: [_websitePreview(context), _notes(context)],
                 ),
               ),
             ),
@@ -103,153 +76,222 @@ class _LinkDetailViewState extends State<LinkDetailView> {
   }
 
   Widget _notes(BuildContext context) {
-    ScrollController _scrollController = ScrollController();
-    return Container(
-      height: 200,
-      constraints: const BoxConstraints(maxWidth: 300),
-      child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance
-            .collection('links')
-            .doc(widget.document.id)
-            .snapshots(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          final Map<String, dynamic> documentMap = snapshot.data?.data() == null
-              ? {}
-              : snapshot.data?.data() as Map<String, dynamic>;
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(child: CircularProgressIndicator()),
-            );
-          }
-
-          if (documentMap.containsKey('notes')) {
-            return Container(
-              height: 200,
-              constraints: const BoxConstraints(maxWidth: 300),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  /// Spacing
-                  const SizedBox(height: 20),
-                  Container(
-                    width: 250,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Colors.grey.withOpacity(0.2),
-                      border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                        width: 2,
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            // this row forces the card to be as big as possible
+            Row(
+              mainAxisSize: MainAxisSize.max,
+            ),
+            StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                stream: FirebaseFirestore.instance
+                    .collection('links')
+                    .doc(widget.document.id)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  final Map<String, dynamic> documentMap =
+                      snapshot.data?.data() == null
+                          ? {}
+                          : snapshot.data?.data() as Map<String, dynamic>;
+                  if (snapshot.hasError) {
+                    return SizedBox(
+                      height: 70,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Error: ${snapshot.error}'),
                       ),
-                    ),
-                    constraints: const BoxConstraints(maxHeight: 100),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Scrollbar(
-                        isAlwaysShown: true,
-                        controller: _scrollController,
-                        child: SingleChildScrollView(
-                          controller: _scrollController,
-                          child: Text(snapshot.data!['notes'],
-                              textAlign: TextAlign.start),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const SizedBox(
+                      height: 70,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+                    );
+                  }
+                  if (documentMap.containsKey('notes')) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          constraints:
+                              const BoxConstraints(minWidth: double.infinity),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2),
+                            color: Colors.grey.withOpacity(0.2),
+                            border: Border.all(
+                              color: Theme.of(context).primaryColor,
+                              width: 2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(snapshot.data!['notes'],
+                                textAlign: TextAlign.start),
+                          ),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => NotesDialog(
+                                        document: widget.document,
+                                        initalText: documentMap['notes'],
+                                      ));
+                            },
+                            child: const Text("Edit Note")),
+                      ],
+                    );
+                  } else {
+                    return SizedBox(
+                      height: 70,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          child: const Text("Add a note"),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => NotesDialog(
+                                      document: widget.document,
+                                      initalText: "",
+                                    ));
+                          },
                         ),
                       ),
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => NotesDialog(
-                                  document: widget.document,
-                                  initalText: documentMap['notes'],
-                                ));
-                      },
-                      child: const Text("Edit Note")),
-                ],
-              ),
-            );
-          } else {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextButton(
-                child: const Text("Add a note"),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) => NotesDialog(
-                            document: widget.document,
-                            initalText: "",
-                          ));
-                },
-              ),
-            );
-          }
-        },
+                    );
+                  }
+                }),
+          ],
+        ),
       ),
     );
   }
 
   Widget _websitePreview(BuildContext context) {
-    if ((!kIsWeb)) {
-      return SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
-        height: MediaQuery.of(context).size.height * 0.3,
-        child: AnyLinkPreview(
-          link: widget.document['url'],
-          bodyMaxLines: 3,
-          backgroundColor:
-              MediaQuery.of(context).platformBrightness == Brightness.dark
-                  ? const Color.fromARGB(255, 71, 71, 71)
-                  : const Color.fromARGB(255, 243, 243, 243),
-          titleStyle: TextStyle(
-              color:
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  widget.document['title'],
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                const Divider(
+                  thickness: 2,
+                ),
+                Text(
+                  widget.document['url'],
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 200,
+            child: AnyLinkPreview(
+              link: widget.document["url"],
+              borderRadius: 0,
+              bodyMaxLines: 3,
+              boxShadow: const [],
+              backgroundColor:
                   MediaQuery.of(context).platformBrightness == Brightness.dark
+                      ? const Color.fromARGB(255, 71, 71, 71)
+                      : const Color.fromARGB(255, 243, 243, 243),
+              titleStyle: TextStyle(
+                  color: MediaQuery.of(context).platformBrightness ==
+                          Brightness.dark
                       ? Colors.white
                       : Colors.black),
-          placeholderWidget: Container(
-              decoration: BoxDecoration(
-                color:
-                    MediaQuery.of(context).platformBrightness == Brightness.dark
+              placeholderWidget: Container(
+                  decoration: BoxDecoration(
+                    color: MediaQuery.of(context).platformBrightness ==
+                            Brightness.dark
                         ? const Color.fromARGB(255, 71, 71, 71)
                         : const Color.fromARGB(255, 243, 243, 243),
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 3,
                   ),
-                ],
-              ),
-              child: const Center(
-                  child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
-              ))),
-          errorWidget: Container(
-              decoration: BoxDecoration(
-                color:
-                    MediaQuery.of(context).platformBrightness == Brightness.dark
+                  child: const Center(child: CircularProgressIndicator())),
+              errorWidget: Container(
+                  decoration: BoxDecoration(
+                    color: MediaQuery.of(context).platformBrightness ==
+                            Brightness.dark
                         ? const Color.fromARGB(255, 71, 71, 71)
                         : const Color.fromARGB(255, 243, 243, 243),
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 3,
                   ),
-                ],
-              ),
-              child: const Center(child: Text("No Preview Available"))),
-        ),
-      );
-    } else {
-      return Container();
-    }
+                  child: const Center(child: Text("No Preview Available :("))),
+            ),
+          ),
+        ],
+      ),
+
+      // child: AnyLinkPreview(
+      //   link: widget.document['url'],
+      //   bodyMaxLines: 3,
+      //   backgroundColor:
+      //       MediaQuery.of(context).platformBrightness == Brightness.dark
+      //           ? const Color.fromARGB(255, 71, 71, 71)
+      //           : const Color.fromARGB(255, 243, 243, 243),
+      //   titleStyle: TextStyle(
+      //       color:
+      //           MediaQuery.of(context).platformBrightness == Brightness.dark
+      //               ? Colors.white
+      //               : Colors.black),
+      //   placeholderWidget: Container(
+      //       decoration: BoxDecoration(
+      //         color:
+      //             MediaQuery.of(context).platformBrightness == Brightness.dark
+      //                 ? const Color.fromARGB(255, 71, 71, 71)
+      //                 : const Color.fromARGB(255, 243, 243, 243),
+      //         borderRadius: BorderRadius.circular(12),
+      //         boxShadow: const [
+      //           BoxShadow(
+      //             color: Colors.grey,
+      //             blurRadius: 3,
+      //           ),
+      //         ],
+      //       ),
+      //       child: const Center(
+      //           child: Padding(
+      //         padding: EdgeInsets.all(8.0),
+      //         child: CircularProgressIndicator(),
+      //       ))),
+      //   errorWidget: Container(
+      //       decoration: BoxDecoration(
+      //         color:
+      //             MediaQuery.of(context).platformBrightness == Brightness.dark
+      //                 ? const Color.fromARGB(255, 71, 71, 71)
+      //                 : const Color.fromARGB(255, 243, 243, 243),
+      //         borderRadius: BorderRadius.circular(12),
+      //         boxShadow: const [
+      //           BoxShadow(
+      //             color: Colors.grey,
+      //             blurRadius: 3,
+      //           ),
+      //         ],
+      //       ),
+      //       child: const Center(child: Text("No Preview Available"))),
+      // ),
+    );
   }
 
   Row _bottomNavigationBar({required DocumentSnapshot document}) {
