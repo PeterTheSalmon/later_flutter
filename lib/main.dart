@@ -10,7 +10,7 @@ import 'package:later_flutter/services/scroll_physics.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
+void main() async { 
   // neccessary when main is async, I believe
   WidgetsFlutterBinding.ensureInitialized();
 
