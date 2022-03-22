@@ -1,11 +1,11 @@
 {
-    "name": "later_flutter",
-    "short_name": "later_flutter",
+    "name": "Later",
+    "short_name": "Later",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Later: save links. Access on any device. Free and open source.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
