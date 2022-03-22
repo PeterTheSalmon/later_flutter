@@ -26,7 +26,7 @@ class RandomLink extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    onTap: () {},
+                    onTap: _launchURL,
                     leading: SizedBox(
                       height: 48,
                       child: IconButton(
@@ -34,22 +34,7 @@ class RandomLink extends StatelessWidget {
                           constraints: const BoxConstraints(),
                           tooltip: "Open in browser",
                           icon: const Icon(Icons.open_in_new),
-                          onPressed: () async {
-                            if (await canLaunch(randomLink!["url"]!)) {
-                              launch(randomLink!["url"],
-                                  enableJavaScript: true);
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(
-                                    "Could not launch ${randomLink!["url"]}"),
-                                action: SnackBarAction(
-                                  label: "Close",
-                                  onPressed: () {},
-                                ),
-                              ));
-                            }
-                          }),
+                          onPressed: _launchURL),
                     ),
                     title: Text(
                       randomLink!["title"],
@@ -106,5 +91,21 @@ class RandomLink extends StatelessWidget {
               ),
             ),
     );
+  }
+
+  void _launchURL() async {
+    if (await canLaunch(randomLink!["url"]!)) {
+      launch(
+        randomLink!["url"],
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Could not launch ${randomLink!["url"]}"),
+        action: SnackBarAction(
+          label: "Close",
+          onPressed: () {},
+        ),
+      ));
+    }
   }
 }
