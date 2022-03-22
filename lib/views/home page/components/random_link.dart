@@ -28,6 +28,8 @@ class RandomLink extends StatelessWidget {
                   ListTile(
                     onTap: () {},
                     leading: IconButton(
+                        padding: const EdgeInsets.all(0),
+                        constraints: const BoxConstraints(),
                         tooltip: "Open in browser",
                         icon: const Icon(Icons.open_in_new),
                         onPressed: () async {

@@ -33,10 +33,7 @@ class _TipsBoxState extends State<TipsBox> {
             child: Column(
               children: [
                 ListTile(
-                  leading: IconButton(
-                    icon: const Icon(Icons.lightbulb),
-                    onPressed: () {},
-                  ),
+                  leading: const Icon(Icons.lightbulb),
                   title: Text(Globals.tips[_tipIndex].title),
                 ),
                 const Divider(

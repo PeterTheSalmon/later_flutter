@@ -169,6 +169,17 @@ class _HomePageState extends State<HomePage> {
                             currentTime: currentTime,
                           ),
                           const TipsBox(),
+                          if (kIsWeb)
+                            Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(children: const [
+                                ListTile(
+                                  leading: Icon(Icons.warning_amber),
+                                  title: Text("Link"),
+                                  subtitle: Text("Click to copy"),
+                                )
+                              ]),
+                            ),
                           RandomLink(randomLink: randomLink, context: context),
                         ],
                       ),
