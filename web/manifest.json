@@ -1,6 +1,6 @@
 {
     "name": "Later",
-    "short_name": "Later: save links",
+    "short_name": "Later",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

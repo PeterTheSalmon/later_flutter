@@ -10,8 +10,8 @@ import 'package:later_flutter/services/scroll_physics.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async { 
-  // neccessary when main is async, I believe
+void main() async {
+  // necessary when main is async, I believe
   WidgetsFlutterBinding.ensureInitialized();
 
   // initialize firebase
@@ -48,39 +48,41 @@ class LaterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ListenableProvider<AuthenticationService>(
-              create: (_) =>
-                  AuthenticationService(FirebaseAuth.instance, null)),
-          StreamProvider(
-            create: (context) =>
-                context.read<AuthenticationService>().authStateChanges,
-            initialData: null,
+      providers: [
+        ListenableProvider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance, null),
+        ),
+        StreamProvider(
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
+          initialData: null,
+        ),
+      ],
+      child: MaterialApp(
+        builder: (context, widget) {
+          return ScrollConfiguration(
+            // ? Is it unsafe to force unwrap the `widget`?
+            behavior: const CustomScrollBehaviour(),
+            child: widget!,
+          );
+        },
+        debugShowCheckedModeBanner: false,
+        title: "Later",
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            color: Globals.appColour,
           ),
-        ],
-        child: MaterialApp(
-          builder: (context, widget) {
-            return ScrollConfiguration(
-                // ? Is it unsafe to force unwrap the `widget`?
-                behavior: const CustomScrollBehaviour(),
-                child: widget!);
-          },
-          debugShowCheckedModeBanner: false,
-          title: "Later",
-          theme: ThemeData(
-            appBarTheme: AppBarTheme(
-              color: Globals.appColour,
-            ),
-            primarySwatch: Globals().appSwatch(),
-            brightness: Brightness.light,
-            primaryColor: Globals.appColour,
-          ),
-          darkTheme: ThemeData(
-            primarySwatch: Globals().appSwatch(),
-            brightness: Brightness.dark,
-            primaryColor: Globals.appColour,
-          ),
-          home: const AuthenticationWrapper(),
-        ));
+          primarySwatch: Globals().appSwatch(),
+          brightness: Brightness.light,
+          primaryColor: Globals.appColour,
+        ),
+        darkTheme: ThemeData(
+          primarySwatch: Globals().appSwatch(),
+          brightness: Brightness.dark,
+          primaryColor: Globals.appColour,
+        ),
+        home: const AuthenticationWrapper(),
+      ),
+    );
   }
 }

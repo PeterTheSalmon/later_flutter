@@ -3,7 +3,6 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
@@ -27,7 +26,6 @@ class _LinkDetailViewState extends State<LinkDetailView> {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width * 0.9;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.document['title']),
@@ -243,54 +241,6 @@ class _LinkDetailViewState extends State<LinkDetailView> {
           ),
         ],
       ),
-
-      // child: AnyLinkPreview(
-      //   link: widget.document['url'],
-      //   bodyMaxLines: 3,
-      //   backgroundColor:
-      //       MediaQuery.of(context).platformBrightness == Brightness.dark
-      //           ? const Color.fromARGB(255, 71, 71, 71)
-      //           : const Color.fromARGB(255, 243, 243, 243),
-      //   titleStyle: TextStyle(
-      //       color:
-      //           MediaQuery.of(context).platformBrightness == Brightness.dark
-      //               ? Colors.white
-      //               : Colors.black),
-      //   placeholderWidget: Container(
-      //       decoration: BoxDecoration(
-      //         color:
-      //             MediaQuery.of(context).platformBrightness == Brightness.dark
-      //                 ? const Color.fromARGB(255, 71, 71, 71)
-      //                 : const Color.fromARGB(255, 243, 243, 243),
-      //         borderRadius: BorderRadius.circular(12),
-      //         boxShadow: const [
-      //           BoxShadow(
-      //             color: Colors.grey,
-      //             blurRadius: 3,
-      //           ),
-      //         ],
-      //       ),
-      //       child: const Center(
-      //           child: Padding(
-      //         padding: EdgeInsets.all(8.0),
-      //         child: CircularProgressIndicator(),
-      //       ))),
-      //   errorWidget: Container(
-      //       decoration: BoxDecoration(
-      //         color:
-      //             MediaQuery.of(context).platformBrightness == Brightness.dark
-      //                 ? const Color.fromARGB(255, 71, 71, 71)
-      //                 : const Color.fromARGB(255, 243, 243, 243),
-      //         borderRadius: BorderRadius.circular(12),
-      //         boxShadow: const [
-      //           BoxShadow(
-      //             color: Colors.grey,
-      //             blurRadius: 3,
-      //           ),
-      //         ],
-      //       ),
-      //       child: const Center(child: Text("No Preview Available"))),
-      // ),
     );
   }
 
