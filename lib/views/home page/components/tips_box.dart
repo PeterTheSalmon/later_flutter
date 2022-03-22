@@ -33,7 +33,10 @@ class _TipsBoxState extends State<TipsBox> {
             child: Column(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.lightbulb),
+                  leading: const SizedBox(
+                    height: 48,
+                    child: Icon(Icons.lightbulb),
+                  ),
                   title: Text(Globals.tips[_tipIndex].title),
                 ),
                 const Divider(
@@ -63,7 +66,7 @@ class _TipsBoxState extends State<TipsBox> {
                         },
                       ),
                     TextButton(
-                      child: const Text("Next Tip"),
+                      child: const Text("Next tip"),
                       onPressed: () {
                         int previousIndex = _tipIndex;
                         while (previousIndex == _tipIndex) {

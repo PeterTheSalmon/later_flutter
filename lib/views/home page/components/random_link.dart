@@ -27,25 +27,30 @@ class RandomLink extends StatelessWidget {
                 children: [
                   ListTile(
                     onTap: () {},
-                    leading: IconButton(
-                        padding: const EdgeInsets.all(0),
-                        constraints: const BoxConstraints(),
-                        tooltip: "Open in browser",
-                        icon: const Icon(Icons.open_in_new),
-                        onPressed: () async {
-                          if (await canLaunch(randomLink!["url"]!)) {
-                            launch(randomLink!["url"], enableJavaScript: true);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  "Could not launch ${randomLink!["url"]}"),
-                              action: SnackBarAction(
-                                label: "Close",
-                                onPressed: () {},
-                              ),
-                            ));
-                          }
-                        }),
+                    leading: SizedBox(
+                      height: 48,
+                      child: IconButton(
+                          padding: const EdgeInsets.all(0),
+                          constraints: const BoxConstraints(),
+                          tooltip: "Open in browser",
+                          icon: const Icon(Icons.open_in_new),
+                          onPressed: () async {
+                            if (await canLaunch(randomLink!["url"]!)) {
+                              launch(randomLink!["url"],
+                                  enableJavaScript: true);
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                    "Could not launch ${randomLink!["url"]}"),
+                                action: SnackBarAction(
+                                  label: "Close",
+                                  onPressed: () {},
+                                ),
+                              ));
+                            }
+                          }),
+                    ),
                     title: Text(
                       randomLink!["title"],
                       maxLines: 1,

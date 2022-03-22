@@ -16,6 +16,8 @@ import 'package:later_flutter/views/home%20page/functions/show_web_warning.dart'
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_folder_sheet.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_sheet.dart';
+import 'package:later_flutter/views/settings/general_settings.dart';
+import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -111,14 +113,6 @@ class _HomePageState extends State<HomePage> {
             child: Scaffold(
               appBar: AppBar(
                 title: const Text("Later"),
-                actions: [
-                  if (kIsWeb)
-                    IconButton(
-                        onPressed: () {
-                          showWebWarning(context);
-                        },
-                        icon: const Icon(Icons.warning))
-                ],
               ),
               floatingActionButton: SpeedDial(
                 animatedIcon: AnimatedIcons.menu_close,
@@ -172,12 +166,48 @@ class _HomePageState extends State<HomePage> {
                           if (kIsWeb)
                             Card(
                               clipBehavior: Clip.antiAlias,
-                              child: Column(children: const [
-                                ListTile(
-                                  leading: Icon(Icons.warning_amber),
-                                  title: Text("Link"),
-                                  subtitle: Text("Click to copy"),
-                                )
+                              child: Column(children: [
+                                const ListTile(
+                                  leading: SizedBox(
+                                    height: 48,
+                                    child: Icon(Icons.announcement),
+                                  ),
+                                  title: Text("Web App Limitations"),
+                                  subtitle: Text(
+                                    "Some features aren't available on the web",
+                                  ),
+                                ),
+                                const Divider(
+                                  thickness: 2,
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Some features, including editing and sharing links, aren't available on the web. You can still use the desktop or mobile app to access these features.",
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ),
+                                ButtonBar(
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        showWebWarning(context);
+                                      },
+                                      child: const Text("Learn more"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          FadeRoute(
+                                            page: const GeneralSettings(),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text("Download native apps"),
+                                    ),
+                                  ],
+                                ),
                               ]),
                             ),
                           RandomLink(randomLink: randomLink, context: context),

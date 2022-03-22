@@ -33,15 +33,6 @@ class _StandardDrawerState extends State<StandardDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(20, 0, 0, 0),
-            blurRadius: 0,
-            spreadRadius: 0,
-          ),
-        ],
-      ),
       child: Column(children: [
         StandardDrawerHeader(
             headerImageDark: headerImageDark,
@@ -65,21 +56,13 @@ class DesktopDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: MediaQuery.of(context).platformBrightness == Brightness.dark
-            ? const Color.fromARGB(255, 66, 66, 66)
-            : const Color.fromARGB(255, 243, 243, 243),
-      ),
-      child: Card(
-        elevation: 100,
+    return const Material(
+      elevation: 4,
+      child: Padding(
+        padding: EdgeInsets.only(right: 8.0),
         child: Drawer(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: const StandardDrawer()),
+          elevation: 10,
+          child: StandardDrawer(),
         ),
       ),
     );
