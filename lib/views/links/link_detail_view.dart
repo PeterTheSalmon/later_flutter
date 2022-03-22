@@ -41,9 +41,8 @@ class _LinkDetailViewState extends State<LinkDetailView> {
             onPressed: () {
               Clipboard.setData(ClipboardData(text: widget.document['url']));
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('Copied to Clipboard'),
-                  action: SnackBarAction(label: 'Close', onPressed: () {}),
+                const SnackBar(
+                  content: Text('Copied to Clipboard'),
                 ),
               );
             },
@@ -51,8 +50,9 @@ class _LinkDetailViewState extends State<LinkDetailView> {
           )
         ],
       ),
-      bottomNavigationBar:
-          BottomAppBar(child: _bottomNavigationBar(document: widget.document)),
+      bottomNavigationBar: BottomAppBar(
+        child: _bottomNavigationBar(document: widget.document),
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -63,7 +63,10 @@ class _LinkDetailViewState extends State<LinkDetailView> {
                 alignment: Alignment.topCenter,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [_websitePreview(context), _notes(context)],
+                  children: [
+                    _websitePreview(context),
+                    _notes(context),
+                  ],
                 ),
               ),
             ),
@@ -181,26 +184,47 @@ class _LinkDetailViewState extends State<LinkDetailView> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text(
-                  widget.document['title'],
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                const Divider(
-                  thickness: 2,
-                ),
-                Text(
-                  widget.document['url'],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.grey),
+                InkWell(
+                  onTap: () async {
+                    if (await canLaunch(widget.document["url"])) {
+                      launch(widget.document["url"]);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Could not launch link'),
+                          action: SnackBarAction(
+                            label: 'Close',
+                            onPressed: () {},
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.document['title'],
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      const Divider(
+                        thickness: 2,
+                      ),
+                      Text(
+                        widget.document['url'],
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.grey),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

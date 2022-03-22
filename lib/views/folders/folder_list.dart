@@ -44,19 +44,20 @@ class FolderList extends StatelessWidget {
                   await Future.delayed(const Duration(milliseconds: 50));
                 }
                 Navigator.push(
-                    context,
-                    displayMobileLayout
-                        ? fadeThrough(
-                            (context, animation, secondaryAnimation) =>
-                                FolderView(
-                                  parentFolderId: document.id,
-                                  parentFolderName: document["name"],
-                                ))
-                        : FadeRoute(
-                            page: FolderView(
+                  context,
+                  displayMobileLayout
+                      ? fadeThrough((context, animation, secondaryAnimation) =>
+                          FolderView(
                             parentFolderId: document.id,
                             parentFolderName: document["name"],
-                          )));
+                          ))
+                      : FadeRoute(
+                          page: FolderView(
+                            parentFolderId: document.id,
+                            parentFolderName: document["name"],
+                          ),
+                        ),
+                );
               },
             );
           }).toList());
