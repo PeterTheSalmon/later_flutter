@@ -109,6 +109,7 @@ class _HomePageState extends State<HomePage> {
         autofocus: true,
         child: Row(children: [
           if (!displayMobileLayout) const DesktopDrawer(),
+            
           Expanded(
             child: Scaffold(
               appBar: AppBar(

@@ -56,15 +56,18 @@ class DesktopDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Material(
-      elevation: 4,
-      child: Padding(
-        padding: EdgeInsets.only(right: 8.0),
-        child: Drawer(
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: const [
+        Drawer(
           elevation: 10,
           child: StandardDrawer(),
         ),
-      ),
+        VerticalDivider(
+          thickness: 2,
+          width: 2,
+        ),
+      ],
     );
   }
 }
