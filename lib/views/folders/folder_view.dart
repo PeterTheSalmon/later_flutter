@@ -54,10 +54,7 @@ class _FolderViewState extends State<FolderView> {
     final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
     return Row(
       children: [
-        if (!displayMobileLayout)
-          const Drawer(
-            child: StandardDrawer(),
-          ),
+        if (!displayMobileLayout) const DesktopDrawer(),
         Expanded(
           child: Scaffold(
             appBar: AppBar(
@@ -344,9 +341,6 @@ class _FolderViewState extends State<FolderView> {
   SpeedDial _speedDialButtons(BuildContext context) {
     return SpeedDial(
       backgroundColor: Globals.appColour,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
       animatedIcon: AnimatedIcons.menu_close,
       children: [
         SpeedDialChild(

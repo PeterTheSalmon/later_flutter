@@ -29,6 +29,7 @@ class AuthenticationWrapper extends StatelessWidget {
             duration: const Duration(milliseconds: 500),
             child: snapshot.connectionState == ConnectionState.waiting
                 ? Scaffold(
+                    key: const ValueKey("loading"),
                     body: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,8 +44,12 @@ class AuthenticationWrapper extends StatelessWidget {
                     ),
                   )
                 : snapshot.data != null
-                    ? const HomePage()
-                    : const LogInPage(),
+                    ? const HomePage(
+                        key: ValueKey("home"),
+                      )
+                    : const LogInPage(
+                        key: ValueKey("login"),
+                      ),
           ),
         );
       },

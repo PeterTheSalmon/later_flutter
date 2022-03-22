@@ -51,11 +51,37 @@ class _StandardDrawerState extends State<StandardDrawer> {
         Expanded(
           child: ListView(
               padding: const EdgeInsets.only(top: 0),
-              children: const [
-                
-                StaticListItems(), FolderList()]),
+              children: const [StaticListItems(), FolderList()]),
         ),
       ]),
+    );
+  }
+}
+
+class DesktopDrawer extends StatelessWidget {
+  const DesktopDrawer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? const Color.fromARGB(255, 66, 66, 66)
+            : const Color.fromARGB(255, 243, 243, 243),
+      ),
+      child: Card(
+        elevation: 100,
+        child: Drawer(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: const StandardDrawer()),
+        ),
+      ),
     );
   }
 }

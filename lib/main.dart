@@ -75,11 +75,17 @@ class LaterApp extends StatelessWidget {
           primarySwatch: Globals().appSwatch(),
           brightness: Brightness.light,
           primaryColor: Globals.appColour,
+          snackBarTheme: const SnackBarThemeData(
+            behavior: SnackBarBehavior.floating,
+          ),
         ),
         darkTheme: ThemeData(
           primarySwatch: Globals().appSwatch(),
           brightness: Brightness.dark,
           primaryColor: Globals.appColour,
+          snackBarTheme: const SnackBarThemeData(
+            behavior: SnackBarBehavior.floating,
+          ),
         ),
         home: const AuthenticationWrapper(),
       ),

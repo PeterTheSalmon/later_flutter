@@ -30,10 +30,7 @@ class _FolderManagerState extends State<FolderManager> {
 
     return Row(
       children: [
-        if (!displayMobileLayout)
-          const Drawer(
-            child: StandardDrawer(),
-          ),
+        if (!displayMobileLayout) const DesktopDrawer(),
         Expanded(
           child: Scaffold(
               appBar: AppBar(title: const Text("Manage Folders")),
@@ -41,9 +38,6 @@ class _FolderManagerState extends State<FolderManager> {
                   ? const Drawer(child: StandardDrawer())
                   : null,
               floatingActionButton: FloatingActionButton.extended(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
                 onPressed: () {
                   showNewFolderSheet(context);
                 },
