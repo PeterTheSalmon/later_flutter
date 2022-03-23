@@ -26,6 +26,7 @@ class AuthenticationWrapper extends StatelessWidget {
                 : const Color.fromARGB(255, 243, 243, 243),
           ),
           child: AnimatedSwitcher(
+            // The native apps don't need this fade.
             duration: const Duration(milliseconds: kIsWeb ? 500 : 0),
             child: snapshot.connectionState == ConnectionState.waiting
                 ? (kIsWeb

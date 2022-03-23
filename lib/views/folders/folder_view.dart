@@ -201,7 +201,19 @@ class _FolderViewState extends State<FolderView> {
               ? () {
                   openContainer();
                 }
-              : null,
+              : () async {
+                  if (await canLaunch(document["url"])) {
+                    launch(document["url"]);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Could not launch ${document["url"]}"),
+                      action: SnackBarAction(
+                        label: "Close",
+                        onPressed: () {},
+                      ),
+                    ));
+                  }
+                },
           title: Text(
             document["title"],
             maxLines: 1,
