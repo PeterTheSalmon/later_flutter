@@ -21,7 +21,7 @@ class _GlobalLinkSearchViewState extends State<GlobalLinkSearchView> {
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _allResults = [];
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _resultsList = [];
 
-  late var resultsLoaded;
+  late Future<bool> resultsLoaded;
 
   Future<bool> getLinks() async {
     QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance

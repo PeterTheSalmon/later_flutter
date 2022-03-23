@@ -10,7 +10,7 @@ import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:later_flutter/views/styles/fade_through_route.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../drawer/standard_drawer.dart';
+import '../../drawer/standard_drawer.dart';
 
 class LinkSearchView extends StatefulWidget {
   const LinkSearchView({Key? key, required this.parentFolderId})

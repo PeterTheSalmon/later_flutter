@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/services/global_variables.dart';
-import 'package:later_flutter/views/folders/link_search_view.dart';
+import 'package:later_flutter/views/folders/search/link_search_view.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_sheet.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
@@ -82,7 +82,7 @@ class _FolderViewState extends State<FolderView> {
                             ),
                     );
                   },
-                )
+                ),
               ],
             ),
             floatingActionButton: _speedDialButtons(context),
