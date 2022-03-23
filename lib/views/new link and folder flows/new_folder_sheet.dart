@@ -92,7 +92,7 @@ Future<void> showNewFolderSheet(BuildContext context,
                                         FirebaseAuth.instance.currentUser!.uid
                                   });
                                   Navigator.pop(context);
-                                  showAddedLinkSnackbar(context);
+                                  showAddedLinkSnackbar(context, id);
                                 }
                                 Navigator.pop(context);
                               },

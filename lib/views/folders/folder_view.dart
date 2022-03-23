@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/services/global_variables.dart';
-import 'package:later_flutter/views/folders/link_search_delegate.dart';
+import 'package:later_flutter/views/folders/link_search_view.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_sheet.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
+import 'package:later_flutter/views/styles/fade_route.dart';
+import 'package:later_flutter/views/styles/fade_through_route.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -64,10 +66,21 @@ class _FolderViewState extends State<FolderView> {
                 IconButton(
                   icon: const Icon(Icons.search),
                   onPressed: () {
-                    showSearch(
-                        context: context,
-                        delegate: LinkSearchDelegate(
-                            parentFolderId: widget.parentFolderId));
+                    Navigator.push(
+                      context,
+                      displayMobileLayout
+                          ? fadeThrough(
+                              (context, animation, secondaryAnimation) =>
+                                  LinkSearchView(
+                                parentFolderId: widget.parentFolderId,
+                              ),
+                            )
+                          : FadeRoute(
+                              page: LinkSearchView(
+                                parentFolderId: widget.parentFolderId,
+                              ),
+                            ),
+                    );
                   },
                 )
               ],

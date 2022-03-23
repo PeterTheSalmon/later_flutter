@@ -92,7 +92,7 @@ class FolderPickerList extends StatelessWidget {
                           "userId": FirebaseAuth.instance.currentUser!.uid
                         });
                         Navigator.pop(context);
-                        showAddedLinkSnackbar(context);
+                        showAddedLinkSnackbar(context, document.id);
                       },
                     );
                   }).toList()),

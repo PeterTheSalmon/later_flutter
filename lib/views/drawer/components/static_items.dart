@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:later_flutter/views/account/account%20settings/account_settings.dart';
 import 'package:later_flutter/views/folders/folder_manager.dart';
-import 'package:later_flutter/views/folders/link_search_view.dart';
 import 'package:later_flutter/views/home%20page/home_page.dart';
 import 'package:later_flutter/views/settings/general_settings.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
@@ -19,16 +18,6 @@ class StaticListItems extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ListTile(
-          leading: const Icon(Icons.home),
-          title: const Text('search'),
-          onTap: () {
-            Navigator.of(context).push(FadeRoute(
-                page: LinkSearchView(
-              parentFolderId: "",
-            )));
-          },
-        ),
         ListTile(
           title: const Text("Home"),
           leading: const Icon(Icons.home),
