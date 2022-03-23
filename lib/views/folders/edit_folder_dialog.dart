@@ -1,11 +1,9 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class EditFolderDialog extends StatelessWidget {
-  EditFolderDialog({Key? key, required this.document}) : super(key: key);
-  DocumentSnapshot document;
+  const EditFolderDialog({Key? key, required this.document}) : super(key: key);
+  final DocumentSnapshot document;
 
   @override
   Widget build(BuildContext context) {
