@@ -4,37 +4,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/models/link.dart';
-import 'package:later_flutter/views/folders/search/global_link_search_view.dart';
+import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
-import 'package:later_flutter/views/styles/fade_route.dart';
-import 'package:later_flutter/views/styles/fade_through_route.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../drawer/standard_drawer.dart';
-
-class LinkSearchView extends StatefulWidget {
-  const LinkSearchView({Key? key, required this.parentFolderId})
-      : super(key: key);
-
-  final String parentFolderId;
+class GlobalLinkSearchView extends StatefulWidget {
+  const GlobalLinkSearchView({Key? key}) : super(key: key);
 
   @override
-  State<LinkSearchView> createState() => _LinkSearchViewState();
+  State<GlobalLinkSearchView> createState() => _GlobalLinkSearchViewState();
 }
 
-class _LinkSearchViewState extends State<LinkSearchView> {
+class _GlobalLinkSearchViewState extends State<GlobalLinkSearchView> {
   final TextEditingController _searchController = TextEditingController();
 
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _allResults = [];
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _resultsList = [];
 
-  late Future<bool> resultsLoaded;
+  late var resultsLoaded;
 
   Future<bool> getLinks() async {
     QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance
         .collection("links")
         .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-        .where("parentFolderId", isEqualTo: widget.parentFolderId)
         .orderBy("title")
         .get();
     setState(() {
@@ -109,40 +101,17 @@ class _LinkSearchViewState extends State<LinkSearchView> {
                 autofocus: true,
                 controller: _searchController,
                 decoration: const InputDecoration(
-                  hintText: 'Search folder',
+                  hintText: 'Search everywhere',
                   border: InputBorder.none,
                 ),
               ),
             ),
-            body: SingleChildScrollView(
-              child: Column(
+            body: ListView.builder(
+              itemCount: _resultsList.length,
+              itemBuilder: (BuildContext context, int index) => Column(
                 children: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          displayMobileLayout
-                              ? fadeThrough(
-                                  (context, animation, secondaryAnimation) =>
-                                      const GlobalLinkSearchView(),
-                                )
-                              : FadeRoute(
-                                  page: const GlobalLinkSearchView(),
-                                ),
-                        );
-                      },
-                      child: const Text("Search all folders instead")),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: _resultsList.length,
-                    itemBuilder: (BuildContext context, int index) => Column(
-                      children: [
-                        LinkSearchTile(linkSnapshot: _resultsList[index]),
-                        const Divider()
-                      ],
-                    ),
-                  ),
+                  LinkSearchTile(linkSnapshot: _resultsList[index]),
+                  const Divider()
                 ],
               ),
             ),
@@ -153,7 +122,6 @@ class _LinkSearchViewState extends State<LinkSearchView> {
   }
 }
 
-/// A slightly toned-down version of the [_linkListTile] widget.
 class LinkSearchTile extends StatelessWidget {
   const LinkSearchTile({Key? key, required this.linkSnapshot})
       : super(key: key);
