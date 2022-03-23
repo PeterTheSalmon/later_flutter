@@ -26,23 +26,25 @@ class AuthenticationWrapper extends StatelessWidget {
                 : const Color.fromARGB(255, 243, 243, 243),
           ),
           child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: kIsWeb ? 500 : 0),
             child: snapshot.connectionState == ConnectionState.waiting
-                ? Scaffold(
-                    key: const ValueKey("loading"),
-                    body: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(),
+                ? (kIsWeb
+                    ? Scaffold(
+                        key: const ValueKey("loading"),
+                        body: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: CircularProgressIndicator(),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  )
+                        ),
+                      )
+                    : const Scaffold())
                 : snapshot.data != null
                     ? const HomePage(
                         key: ValueKey("home"),
