@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/services/global_variables.dart';
+import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/folders/search/link_search_view.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_sheet.dart';
-import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:later_flutter/views/styles/fade_through_route.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FolderView extends StatefulWidget {
   const FolderView(
@@ -90,40 +90,44 @@ class _FolderViewState extends State<FolderView> {
                 ? const Drawer(child: StandardDrawer())
                 : null,
             body: StreamBuilder<QuerySnapshot>(
-                stream: _showFavouritesOnly ? _favouriteStream() : _stream(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: SelectableText("Error: ${snapshot.error}"),
-                    );
-                  }
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.data!.docs.isEmpty) {
-                    return _emptyDataView(context);
-                  }
-                  return Column(
-                    children: [
-                      _favouritesToggle(),
-                      const Divider(),
-                      Expanded(
-                        child: ListView(
-                          children: snapshot.data!.docs
-                              .map((DocumentSnapshot document) {
+              stream: _showFavouritesOnly ? _favouriteStream() : _stream(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: SelectableText("Error: ${snapshot.error}"),
+                  );
+                }
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return _emptyDataView(context);
+                }
+                return Column(
+                  children: [
+                    _favouritesToggle(),
+                    const Divider(),
+                    Expanded(
+                      child: ListView(
+                        children: snapshot.data!.docs.map(
+                          (DocumentSnapshot document) {
                             return Column(
                               children: [
                                 _linkListTile(context, document),
                                 const Divider()
                               ],
                             );
-                          }).toList(),
-                        ),
+                          },
+                        ).toList(),
                       ),
-                    ],
-                  );
-                }),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ],

@@ -19,8 +19,6 @@ class FolderManager extends StatefulWidget {
 }
 
 class _FolderManagerState extends State<FolderManager> {
-  DocumentSnapshot? _backupDocument;
-  final List<QueryDocumentSnapshot> _backupLinks = [];
 
   @override
   Widget build(BuildContext context) {

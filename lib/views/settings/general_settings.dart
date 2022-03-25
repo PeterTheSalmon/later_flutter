@@ -6,7 +6,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GeneralSettings extends StatefulWidget {
-  const GeneralSettings({Key? key}) : super(key: key);
+  const GeneralSettings({Key? key, this.highlightPlatforms = false})
+      : super(key: key);
+  final bool highlightPlatforms;
 
   @override
   State<GeneralSettings> createState() => _GeneralSettingsState();
