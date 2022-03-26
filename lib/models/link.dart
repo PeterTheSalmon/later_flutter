@@ -7,15 +7,16 @@ class Link {
   bool isFavourite;
   String userId;
   String parentFolderId;
+  bool? archived;
 
-  Link({
-    required this.title,
-    required this.url,
-    required this.dateCreated,
-    required this.isFavourite,
-    required this.userId,
-    required this.parentFolderId,
-  });
+  Link(
+      {required this.title,
+      required this.url,
+      required this.dateCreated,
+      required this.isFavourite,
+      required this.userId,
+      required this.parentFolderId,
+      this.archived});
 
   /// Used to convert the link to a json object for Firestore
   Map<String, dynamic> toMap() {
@@ -30,13 +31,14 @@ class Link {
   }
 
   /// Create a link from a firebase snapshot
-  Link.fromSnapshot({required DocumentSnapshot snapshot})
-      : title = snapshot["title"],
-        url = snapshot["url"],
-        dateCreated = snapshot["dateCreated"],
-        isFavourite = snapshot["isFavourite"],
-        userId = snapshot["userId"],
-        parentFolderId = snapshot["parentFolderId"];
+  Link.fromMap({required Map<String, dynamic> map})
+      : title = map["title"],
+        url = map["url"],
+        dateCreated = map["dateCreated"],
+        isFavourite = map["isFavourite"],
+        userId = map["userId"],
+        parentFolderId = map["parentFolderId"],
+        archived = map["archived"];
 
   @override
   String toString() {

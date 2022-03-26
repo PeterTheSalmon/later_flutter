@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:later_flutter/models/link.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/folders/search/link_search_view.dart';
@@ -39,6 +40,7 @@ class _FolderViewState extends State<FolderView> {
         .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
         .where("parentFolderId", isEqualTo: widget.parentFolderId)
         .where("isFavourite", isEqualTo: true)
+        .where("archived", isEqualTo: null)
         .orderBy("title")
         .snapshots();
   }
@@ -106,24 +108,77 @@ class _FolderViewState extends State<FolderView> {
                 if (snapshot.data!.docs.isEmpty) {
                   return _emptyDataView(context);
                 }
+                var _controller = ScrollController();
                 return Column(
                   children: [
                     _favouritesToggle(),
                     const Divider(),
                     Expanded(
                       child: ListView(
-                        children: snapshot.data!.docs.map(
-                          (DocumentSnapshot document) {
-                            return Column(
-                              children: [
-                                _linkListTile(context, document),
-                                const Divider()
-                              ],
-                            );
-                          },
-                        ).toList(),
+                        controller: _controller,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: snapshot.data!.docs.map(
+                              (DocumentSnapshot document) {
+                                return Column(
+                                  children: [
+                                    _linkListTile(
+                                        context,
+                                        Link.fromMap(
+                                            map: document.data()
+                                                as Map<String, dynamic>),
+                                        document),
+                                    const Divider()
+                                  ],
+                                );
+                              },
+                            ).toList(),
+                          ),
+                          ExpansionTile(
+                            onExpansionChanged: (value) {
+                              if (value) {
+                                // code to scroll down a bit
+                              }
+                            },
+                            title: const Text("Archived"),
+                            children: [
+                              ListView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                children: const [
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("1"),
+                                  Text("2"),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 100,
+                          ),
+                        ],
                       ),
-                    ),
+                    )
                   ],
                 );
               },
@@ -135,7 +190,7 @@ class _FolderViewState extends State<FolderView> {
   }
 
   Widget _linkListTile(
-      BuildContext context, DocumentSnapshot<Object?> document) {
+      BuildContext context, Link link, DocumentSnapshot document) {
     return OpenContainer(
       tappable: false,
       openElevation: 0,
@@ -157,14 +212,13 @@ class _FolderViewState extends State<FolderView> {
                       label: "Open",
                       backgroundColor: Colors.blue,
                       onPressed: (context) async => {
-                            if (await canLaunch(document["url"]!))
-                              {launch(document["url"], enableJavaScript: true)}
+                            if (await canLaunch(link.url))
+                              {launch(link.url, enableJavaScript: true)}
                             else
                               {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
-                                  content: Text(
-                                      "Could not launch ${document["url"]}"),
+                                  content: Text("Could not launch ${link.url}"),
                                   action: SnackBarAction(
                                     label: "Close",
                                     onPressed: () {},
@@ -189,10 +243,7 @@ class _FolderViewState extends State<FolderView> {
                           ))
                         }
                       else
-                        {
-                          await Share.share(document["url"]!,
-                              subject: document["title"]!)
-                        }
+                        {await Share.share(link.url, subject: link.title)}
                     },
                   )
                 ],

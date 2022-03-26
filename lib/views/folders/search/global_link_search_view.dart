@@ -3,11 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/models/link.dart';
+import 'package:later_flutter/views/drawer/standard_drawer.dart';
+import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../../models/link.dart';
-import '../../drawer/standard_drawer.dart';
-import '../../links/link_detail_view.dart';
 
 class GlobalLinkSearchView extends StatefulWidget {
   const GlobalLinkSearchView({Key? key}) : super(key: key);
@@ -44,9 +43,8 @@ class _GlobalLinkSearchViewState extends State<GlobalLinkSearchView> {
       // we have a search parameter
       for (var linkSnapshot in _allResults) {
         String title =
-            Link.fromSnapshot(snapshot: linkSnapshot).title.toLowerCase();
-        String url =
-            Link.fromSnapshot(snapshot: linkSnapshot).title.toLowerCase();
+            Link.fromMap(map: linkSnapshot.data()).title.toLowerCase();
+        String url = Link.fromMap(map: linkSnapshot.data()).url.toLowerCase();
 
         if (title.contains(_searchController.text.toLowerCase()) ||
             url.contains(_searchController.text.toLowerCase())) {
@@ -130,7 +128,7 @@ class LinkSearchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Link link = Link.fromSnapshot(snapshot: linkSnapshot);
+    Link link = Link.fromMap(map: linkSnapshot.data()!);
     return OpenContainer(
       tappable: false,
       openElevation: 0,

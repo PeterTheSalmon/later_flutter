@@ -51,9 +51,8 @@ class _LinkSearchViewState extends State<LinkSearchView> {
       // we have a search parameter
       for (var linkSnapshot in _allResults) {
         String title =
-            Link.fromSnapshot(snapshot: linkSnapshot).title.toLowerCase();
-        String url =
-            Link.fromSnapshot(snapshot: linkSnapshot).title.toLowerCase();
+            Link.fromMap(map: linkSnapshot.data()).title.toLowerCase();
+        String url = Link.fromMap(map: linkSnapshot.data()).url.toLowerCase();
 
         if (title.contains(_searchController.text.toLowerCase()) ||
             url.contains(_searchController.text.toLowerCase())) {
@@ -161,7 +160,7 @@ class LinkSearchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Link link = Link.fromSnapshot(snapshot: linkSnapshot);
+    Link link = Link.fromMap(map: linkSnapshot.data()!);
     return OpenContainer(
       tappable: false,
       openElevation: 0,

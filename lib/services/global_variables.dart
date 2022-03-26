@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
+
 /// Convenience class for values that rarely change and are used throughout the app
 class Globals {
   /// Whether the user has seen the intro already
