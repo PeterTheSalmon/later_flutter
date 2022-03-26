@@ -19,32 +19,39 @@ void showAddedLinkSnackbar(BuildContext context, String parentFolderId) async {
 
   final displayMobileLayout = mq.size.width < 550;
 
-  final parentFolder = Folder.fromSnapshot(await FirebaseFirestore.instance
-      .collection('folders')
-      .doc(parentFolderId)
-      .get());
+  final parentFolder = Folder.fromSnapshot(
+    await FirebaseFirestore.instance
+        .collection('folders')
+        .doc(parentFolderId)
+        .get(),
+  );
 
   sm.showSnackBar(
     SnackBar(
-      content: const Text("Added link!"),
+      content: const Text('Added link!'),
       action: SnackBarAction(
-          label: "Open Folder",
-          onPressed: () {
-            if (!nav.mounted) {
-              return;
-            }
-            nav.push(
-              displayMobileLayout
-                  ? fadeThrough((context, animation, secondaryAnimation) =>
-                      FolderView(
-                          parentFolderId: parentFolderId,
-                          parentFolderName: parentFolder.name))
-                  : FadeRoute(
-                      page: FolderView(
-                          parentFolderId: parentFolderId,
-                          parentFolderName: parentFolder.name)),
-            );
-          }),
+        label: 'Open Folder',
+        onPressed: () {
+          if (!nav.mounted) {
+            return;
+          }
+          nav.push(
+            displayMobileLayout
+                ? fadeThrough(
+                    (context, animation, secondaryAnimation) => FolderView(
+                      parentFolderId: parentFolderId,
+                      parentFolderName: parentFolder.name,
+                    ),
+                  )
+                : FadeRoute(
+                    page: FolderView(
+                      parentFolderId: parentFolderId,
+                      parentFolderName: parentFolder.name,
+                    ),
+                  ),
+          );
+        },
+      ),
     ),
   );
 }

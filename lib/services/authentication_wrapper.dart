@@ -1,10 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/intro_screen/intro_screen.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/account/log_in_page.dart';
 import 'package:later_flutter/views/home%20page/home_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationWrapper extends StatelessWidget {
   const AuthenticationWrapper({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class AuthenticationWrapper extends StatelessWidget {
             child: snapshot.connectionState == ConnectionState.waiting
                 ? (kIsWeb
                     ? Scaffold(
-                        key: const ValueKey("loading"),
+                        key: const ValueKey('loading'),
                         body: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,10 +48,10 @@ class AuthenticationWrapper extends StatelessWidget {
                     : const Scaffold())
                 : snapshot.data != null
                     ? const HomePage(
-                        key: ValueKey("home"),
+                        key: ValueKey('home'),
                       )
                     : const LogInPage(
-                        key: ValueKey("login"),
+                        key: ValueKey('login'),
                       ),
           ),
         );

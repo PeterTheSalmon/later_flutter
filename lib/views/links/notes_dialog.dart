@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class NotesDialog extends StatelessWidget {
   const NotesDialog({
@@ -13,7 +13,7 @@ class NotesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController notesController =
+    final TextEditingController notesController =
         TextEditingController(text: initalText);
     return Dialog(
       child: SingleChildScrollView(
@@ -22,7 +22,7 @@ class NotesDialog extends StatelessWidget {
           child: Column(
             children: [
               const Text(
-                "Add a note",
+                'Add a note',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20),
               ),
@@ -35,31 +35,32 @@ class NotesDialog extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("Cancel")),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel'),
+                  ),
                   // save button
                   ElevatedButton(
-                      onPressed: () async {
-                        if (notesController.text.isEmpty) {
-                          FirebaseFirestore.instance
-                              .collection('links')
-                              .doc(document.id)
-                              .update({'notes': FieldValue.delete()});
-                        } else {
-                          FirebaseFirestore.instance
-                              .collection("links")
-                              .doc(document.id)
-                              .update({'notes': notesController.text});
-                        }
-                        Navigator.pop(context);
-                      },
-                      child: const Text("Save"))
+                    onPressed: () async {
+                      if (notesController.text.isEmpty) {
+                        FirebaseFirestore.instance
+                            .collection('links')
+                            .doc(document.id)
+                            .update({'notes': FieldValue.delete()});
+                      } else {
+                        FirebaseFirestore.instance
+                            .collection('links')
+                            .doc(document.id)
+                            .update({'notes': notesController.text});
+                      }
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Save'),
+                  )
                 ],
               )
             ],

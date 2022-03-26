@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-var symbolNames = [
-  "folder",
-  "display",
-  "music.note",
-  "star",
-  "link",
-  "cloud",
-  "externaldrive",
-  "wrench.and.screwdriver",
+List<String> symbolNames = [
+  'folder',
+  'display',
+  'music.note',
+  'star',
+  'link',
+  'cloud',
+  'externaldrive',
+  'wrench.and.screwdriver',
 ];
 
 /// Return an icon correspoding to the given SF Symbol name.

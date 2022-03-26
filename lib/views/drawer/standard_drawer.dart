@@ -32,19 +32,22 @@ class _StandardDrawerState extends State<StandardDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      StandardDrawerHeader(
-        headerImageDark: headerImageDark,
-        headerImageLight: headerImageLight,
-      ),
+    return Column(
+      children: [
+        StandardDrawerHeader(
+          headerImageDark: headerImageDark,
+          headerImageLight: headerImageLight,
+        ),
 
-      // Scrollable List Section
-      Expanded(
-        child: ListView(
-            padding: const EdgeInsets.only(top: 0),
-            children: const [StaticListItems(), FolderList()]),
-      ),
-    ]);
+        // Scrollable List Section
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: const [StaticListItems(), FolderList()],
+          ),
+        ),
+      ],
+    );
   }
 }
 

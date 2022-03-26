@@ -29,57 +29,61 @@ class _TipsBoxState extends State<TipsBox> {
         key: ValueKey<int>(_tipIndex),
         padding: const EdgeInsets.only(top: 20.0),
         child: Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const SizedBox(
-                    height: 48,
-                    child: Icon(Icons.lightbulb),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            children: [
+              ListTile(
+                leading: const SizedBox(
+                  height: 48,
+                  child: Icon(Icons.lightbulb),
+                ),
+                title: Text(Globals.tips[_tipIndex].title),
+              ),
+              const Divider(
+                thickness: 2,
+              ),
+              SizedBox(
+                height: 55,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
                   ),
-                  title: Text(Globals.tips[_tipIndex].title),
-                ),
-                const Divider(
-                  thickness: 2,
-                ),
-                SizedBox(
-                  height: 55,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 10),
-                    child: Center(
-                      child: Text(
-                        Globals.tips[_tipIndex].content,
-                        key: ValueKey<int>(_tipIndex),
-                        textAlign: TextAlign.center,
-                      ),
+                  child: Center(
+                    child: Text(
+                      Globals.tips[_tipIndex].content,
+                      key: ValueKey<int>(_tipIndex),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
-                ButtonBar(
-                  children: [
-                    if (Globals.tips[_tipIndex].buttonAction != null)
-                      TextButton(
-                        child: Text(Globals.tips[_tipIndex].buttonTitle!),
-                        onPressed: () {
-                          Globals.tips[_tipIndex].buttonAction!();
-                        },
-                      ),
+              ),
+              ButtonBar(
+                children: [
+                  if (Globals.tips[_tipIndex].buttonAction != null)
                     TextButton(
-                      child: const Text("Next tip"),
+                      child: Text(Globals.tips[_tipIndex].buttonTitle!),
                       onPressed: () {
-                        int previousIndex = _tipIndex;
-                        while (previousIndex == _tipIndex) {
-                          setState(() {
-                            _tipIndex = Random().nextInt(Globals.tips.length);
-                          });
-                        }
+                        // ignore: avoid_dynamic_calls
+                        Globals.tips[_tipIndex].buttonAction!();
                       },
                     ),
-                  ],
-                ),
-              ],
-            )),
+                  TextButton(
+                    child: const Text('Next tip'),
+                    onPressed: () {
+                      final int previousIndex = _tipIndex;
+                      while (previousIndex == _tipIndex) {
+                        setState(() {
+                          _tipIndex = Random().nextInt(Globals.tips.length);
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

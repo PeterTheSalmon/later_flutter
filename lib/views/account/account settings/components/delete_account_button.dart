@@ -11,12 +11,15 @@ class DeleteAccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.no_accounts),
-      title: const Text("Delete Account"),
+      title: const Text('Delete Account'),
       onTap: () {
         Navigator.push(
-            context,
-            fadeThrough((context, animation, secondaryAnimation) =>
-                const DeleteAccountView()));
+          context,
+          fadeThrough(
+            (context, animation, secondaryAnimation) =>
+                const DeleteAccountView(),
+          ),
+        );
         // showDialog(
         //     context: context,
         //     builder: (context) {

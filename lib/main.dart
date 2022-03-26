@@ -18,9 +18,12 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // set android nav and status bar to be transparent
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      systemNavigationBarColor: Colors.transparent));
+      systemNavigationBarColor: Colors.transparent,
+    ),
+  );
 
   // initialize shared prefences
   final prefs = await SharedPreferences.getInstance();
@@ -34,7 +37,7 @@ void main() async {
   }
 
   // check if data has been shared
-  String? previousShared = prefs.getString('previousShared');
+  final String? previousShared = prefs.getString('previousShared');
   if (previousShared != null) {
     Globals.sharedUrl = previousShared;
   }
@@ -67,7 +70,7 @@ class LaterApp extends StatelessWidget {
           );
         },
         debugShowCheckedModeBanner: false,
-        title: "Later",
+        title: 'Later',
         theme: ThemeData(
           appBarTheme: AppBarTheme(
             color: Globals.appColour,

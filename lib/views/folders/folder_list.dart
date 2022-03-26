@@ -14,30 +14,31 @@ class FolderList extends StatelessWidget {
     final bool displayMobileLayout = MediaQuery.of(context).size.width < 550;
 
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("folders")
-            .orderBy("name")
-            .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SelectableText(
-                  "Something went wrong:\n\n${snapshot.error!.toString()}"),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(child: CircularProgressIndicator()),
-            );
-          }
-          return Column(
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+      stream: FirebaseFirestore.instance
+          .collection('folders')
+          .orderBy('name')
+          .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SelectableText(
+              'Something went wrong:\n\n${snapshot.error!.toString()}',
+            ),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+        return Column(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
             return ListTile(
-              title: Text(document["name"]),
-              leading: getFolderIcon(document["iconName"]),
+              title: Text(document['name'] as String),
+              leading: getFolderIcon(document['iconName'] as String),
               onTap: () async {
                 if (displayMobileLayout) {
                   Navigator.pop(context);
@@ -46,21 +47,25 @@ class FolderList extends StatelessWidget {
                 Navigator.push(
                   context,
                   displayMobileLayout
-                      ? fadeThrough((context, animation, secondaryAnimation) =>
-                          FolderView(
+                      ? fadeThrough(
+                          (context, animation, secondaryAnimation) =>
+                              FolderView(
                             parentFolderId: document.id,
-                            parentFolderName: document["name"],
-                          ))
+                            parentFolderName: document['name'] as String,
+                          ),
+                        )
                       : FadeRoute(
                           page: FolderView(
                             parentFolderId: document.id,
-                            parentFolderName: document["name"],
+                            parentFolderName: document['name'] as String,
                           ),
                         ),
                 );
               },
             );
-          }).toList());
-        });
+          }).toList(),
+        );
+      },
+    );
   }
 }

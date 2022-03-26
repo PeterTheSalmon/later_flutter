@@ -11,7 +11,7 @@ class SignOutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.exit_to_app),
-      title: const Text("Sign Out"),
+      title: const Text('Sign Out'),
       onTap: () {
         context.read<AuthenticationService>().signOut(context);
       },

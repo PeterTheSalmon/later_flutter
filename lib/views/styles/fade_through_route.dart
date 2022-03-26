@@ -14,9 +14,10 @@ Route<T> fadeThrough<T>(RoutePageBuilder page, [double duration = 0.3]) {
     ),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return FadeThroughTransition(
-          animation: animation,
-          secondaryAnimation: secondaryAnimation,
-          child: child);
+        animation: animation,
+        secondaryAnimation: secondaryAnimation,
+        child: child,
+      );
     },
   );
 }

@@ -30,19 +30,20 @@ class RandomLink extends StatelessWidget {
                     leading: SizedBox(
                       height: 48,
                       child: IconButton(
-                          padding: const EdgeInsets.all(0),
-                          constraints: const BoxConstraints(),
-                          tooltip: "Open in browser",
-                          icon: const Icon(Icons.open_in_new),
-                          onPressed: _launchURL),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        tooltip: 'Open in browser',
+                        icon: const Icon(Icons.open_in_new),
+                        onPressed: _launchURL,
+                      ),
                     ),
                     title: Text(
-                      randomLink!["title"],
+                      randomLink!['title'] as String,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Text(
-                      randomLink!["url"],
+                      randomLink!['url'] as String,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -51,9 +52,8 @@ class RandomLink extends StatelessWidget {
                     SizedBox(
                       height: 180,
                       child: AnyLinkPreview(
-                        link: randomLink!["url"],
+                        link: randomLink!['url'] as String,
                         borderRadius: 0,
-                        bodyMaxLines: 3,
                         boxShadow: const [],
                         backgroundColor:
                             MediaQuery.of(context).platformBrightness ==
@@ -61,30 +61,33 @@ class RandomLink extends StatelessWidget {
                                 ? const Color.fromARGB(255, 66, 66, 66)
                                 : const Color.fromARGB(255, 243, 243, 243),
                         titleStyle: TextStyle(
+                          color: MediaQuery.of(context).platformBrightness ==
+                                  Brightness.dark
+                              ? Colors.white
+                              : Colors.black,
+                        ),
+                        placeholderWidget: Container(
+                          decoration: BoxDecoration(
                             color: MediaQuery.of(context).platformBrightness ==
                                     Brightness.dark
-                                ? Colors.white
-                                : Colors.black),
-                        placeholderWidget: Container(
-                            decoration: BoxDecoration(
-                              color: MediaQuery.of(context)
-                                          .platformBrightness ==
-                                      Brightness.dark
-                                  ? const Color.fromARGB(255, 66, 66, 66)
-                                  : const Color.fromARGB(255, 243, 243, 243),
-                            ),
-                            child: const Center(
-                                child: CircularProgressIndicator())),
+                                ? const Color.fromARGB(255, 66, 66, 66)
+                                : const Color.fromARGB(255, 243, 243, 243),
+                          ),
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
                         errorWidget: Container(
-                            decoration: BoxDecoration(
-                              color: MediaQuery.of(context)
-                                          .platformBrightness ==
-                                      Brightness.dark
-                                  ? const Color.fromARGB(255, 66, 66, 66)
-                                  : const Color.fromARGB(255, 243, 243, 243),
-                            ),
-                            child: const Center(
-                                child: Text("No Preview Available :("))),
+                          decoration: BoxDecoration(
+                            color: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? const Color.fromARGB(255, 66, 66, 66)
+                                : const Color.fromARGB(255, 243, 243, 243),
+                          ),
+                          child: const Center(
+                            child: Text('No Preview Available :('),
+                          ),
+                        ),
                       ),
                     ),
                 ],
@@ -94,18 +97,20 @@ class RandomLink extends StatelessWidget {
   }
 
   void _launchURL() async {
-    if (await canLaunch(randomLink!["url"]!)) {
+    if (await canLaunch(randomLink!['url'] as String)) {
       launch(
-        randomLink!["url"],
+        randomLink!['url'] as String,
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Could not launch ${randomLink!["url"]}"),
-        action: SnackBarAction(
-          label: "Close",
-          onPressed: () {},
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Could not launch ${randomLink!["url"]}"),
+          action: SnackBarAction(
+            label: 'Close',
+            onPressed: () {},
+          ),
         ),
-      ));
+      );
     }
   }
 }

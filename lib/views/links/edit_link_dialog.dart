@@ -10,61 +10,66 @@ class EditLinkDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController titleController =
-        TextEditingController(text: document['title']);
-    TextEditingController urlController =
-        TextEditingController(text: document['url']);
+    final TextEditingController titleController =
+        TextEditingController(text: document['title'] as String);
+    final TextEditingController urlController =
+        TextEditingController(text: document['url'] as String);
     return Material(
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
                 children: [
                   const Text(
-                    "Edit Link",
+                    'Edit Link',
                     style: TextStyle(fontSize: 18),
                   ),
                   const Spacer(),
                   IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.close))
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.close),
+                  )
                 ],
               ),
               TextField(
                 controller: titleController,
                 decoration: const InputDecoration(
-                    suffixIcon: Icon(Icons.title),
-                    labelText: "Title",
-                    enabledBorder: UnderlineInputBorder()),
+                  suffixIcon: Icon(Icons.title),
+                  labelText: 'Title',
+                  enabledBorder: UnderlineInputBorder(),
+                ),
               ),
               TextField(
-                  controller: urlController,
-                  decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.link),
-                      labelText: "URL",
-                      enabledBorder: UnderlineInputBorder())),
+                controller: urlController,
+                decoration: const InputDecoration(
+                  suffixIcon: Icon(Icons.link),
+                  labelText: 'URL',
+                  enabledBorder: UnderlineInputBorder(),
+                ),
+              ),
               const SizedBox(height: 10),
               Center(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        FirebaseFirestore.instance
-                            .collection("links")
-                            .doc(document.id)
-                            .update({
-                          "title": titleController.text,
-                          "url": checkUrlConventions(url: urlController.text),
-                        });
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                      child: const Text("SAVE AND CLOSE"))),
+                child: ElevatedButton(
+                  onPressed: () {
+                    FirebaseFirestore.instance
+                        .collection('links')
+                        .doc(document.id)
+                        .update({
+                      'title': titleController.text,
+                      'url': checkUrlConventions(url: urlController.text),
+                    });
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text('SAVE AND CLOSE'),
+                ),
+              ),
             ],
           ),
         ),

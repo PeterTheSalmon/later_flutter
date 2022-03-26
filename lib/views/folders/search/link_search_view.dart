@@ -4,13 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/models/link.dart';
+import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/folders/search/global_link_search_view.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:later_flutter/views/styles/fade_through_route.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../drawer/standard_drawer.dart';
 
 class LinkSearchView extends StatefulWidget {
   const LinkSearchView({Key? key, required this.parentFolderId})
@@ -31,11 +30,12 @@ class _LinkSearchViewState extends State<LinkSearchView> {
   late Future<bool> resultsLoaded;
 
   Future<bool> getLinks() async {
-    QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance
-        .collection("links")
-        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-        .where("parentFolderId", isEqualTo: widget.parentFolderId)
-        .orderBy("title")
+    final QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore
+        .instance
+        .collection('links')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .where('parentFolderId', isEqualTo: widget.parentFolderId)
+        .orderBy('title')
         .get();
     setState(() {
       _allResults = data.docs;
@@ -47,12 +47,13 @@ class _LinkSearchViewState extends State<LinkSearchView> {
   void searchResultsList() {
     List<QueryDocumentSnapshot<Map<String, dynamic>>> showResults = [];
 
-    if (_searchController.text != "") {
+    if (_searchController.text != '') {
       // we have a search parameter
-      for (var linkSnapshot in _allResults) {
-        String title =
+      for (final linkSnapshot in _allResults) {
+        final String title =
             Link.fromMap(map: linkSnapshot.data()).title.toLowerCase();
-        String url = Link.fromMap(map: linkSnapshot.data()).url.toLowerCase();
+        final String url =
+            Link.fromMap(map: linkSnapshot.data()).url.toLowerCase();
 
         if (title.contains(_searchController.text.toLowerCase()) ||
             url.contains(_searchController.text.toLowerCase())) {
@@ -117,20 +118,21 @@ class _LinkSearchViewState extends State<LinkSearchView> {
               child: Column(
                 children: [
                   TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          displayMobileLayout
-                              ? fadeThrough(
-                                  (context, animation, secondaryAnimation) =>
-                                      const GlobalLinkSearchView(),
-                                )
-                              : FadeRoute(
-                                  page: const GlobalLinkSearchView(),
-                                ),
-                        );
-                      },
-                      child: const Text("Search all folders instead")),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        displayMobileLayout
+                            ? fadeThrough(
+                                (context, animation, secondaryAnimation) =>
+                                    const GlobalLinkSearchView(),
+                              )
+                            : FadeRoute(
+                                page: const GlobalLinkSearchView(),
+                              ),
+                      );
+                    },
+                    child: const Text('Search all folders instead'),
+                  ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -160,7 +162,7 @@ class LinkSearchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Link link = Link.fromMap(map: linkSnapshot.data()!);
+    final Link link = Link.fromMap(map: linkSnapshot.data()!);
     return OpenContainer(
       tappable: false,
       openElevation: 0,
@@ -183,7 +185,7 @@ class LinkSearchTile extends StatelessWidget {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("Could not launch ${link.url}"),
+                      content: Text('Could not launch ${link.url}'),
                     ),
                   );
                 }

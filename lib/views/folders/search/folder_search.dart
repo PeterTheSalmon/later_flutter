@@ -21,10 +21,11 @@ class _FolderSearchState extends State<FolderSearch> {
   late Future<bool> resultsLoaded;
 
   Future<bool> getLinks() async {
-    QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance
-        .collection("folders")
-        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-        .orderBy("name")
+    final QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore
+        .instance
+        .collection('folders')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .orderBy('name')
         .get();
     setState(() {
       _allResults = data.docs;
@@ -36,10 +37,11 @@ class _FolderSearchState extends State<FolderSearch> {
   void searchResultsList() {
     List<QueryDocumentSnapshot<Map<String, dynamic>>> showResults = [];
 
-    if (_searchController.text != "") {
+    if (_searchController.text != '') {
       // we have a search parameter
-      for (var folderSnapshot in _allResults) {
-        String name = Folder.fromSnapshot(folderSnapshot).name.toLowerCase();
+      for (final folderSnapshot in _allResults) {
+        final String name =
+            Folder.fromSnapshot(folderSnapshot).name.toLowerCase();
 
         if (name.contains(_searchController.text.toLowerCase())) {
           showResults.add(folderSnapshot);

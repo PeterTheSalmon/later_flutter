@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:later_flutter/services/authentication_service.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SignUpPage extends StatelessWidget {
+  SignUpPage({Key? key}) : super(key: key);
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController confirmEmailController = TextEditingController();
 
@@ -16,13 +18,11 @@ class SignUpPage extends StatelessWidget {
 
   final TextEditingController nameController = TextEditingController();
 
-  SignUpPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create an Account"),
+        title: const Text('Create an Account'),
       ),
       body: Center(
         child: SizedBox(
@@ -37,42 +37,46 @@ class SignUpPage extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: ListView(
               children: [
-
                 // text fields
                 TextFormField(
                   decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.person),
-                      labelText: "Display Name",
-                      enabledBorder: UnderlineInputBorder()),
+                    suffixIcon: Icon(Icons.person),
+                    labelText: 'Display Name',
+                    enabledBorder: UnderlineInputBorder(),
+                  ),
                   controller: nameController,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.email),
-                      labelText: "Email",
-                      enabledBorder: UnderlineInputBorder()),
+                    suffixIcon: Icon(Icons.email),
+                    labelText: 'Email',
+                    enabledBorder: UnderlineInputBorder(),
+                  ),
                   controller: emailController,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.email),
-                      labelText: "Confirm Email",
-                      enabledBorder: UnderlineInputBorder()),
+                    suffixIcon: Icon(Icons.email),
+                    labelText: 'Confirm Email',
+                    enabledBorder: UnderlineInputBorder(),
+                  ),
                   controller: confirmEmailController,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.lock),
-                      labelText: "Password",
-                      enabledBorder: UnderlineInputBorder()),
+                    suffixIcon: Icon(Icons.lock),
+                    labelText: 'Password',
+                    enabledBorder: UnderlineInputBorder(),
+                  ),
                   controller: passwordController,
                   obscureText: true,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.lock),
-                      labelText: "Confirm Password",
-                      enabledBorder: UnderlineInputBorder()),
+                    suffixIcon: Icon(Icons.lock),
+                    labelText: 'Confirm Password',
+                    enabledBorder: UnderlineInputBorder(),
+                  ),
                   controller: confirmPasswordController,
                   obscureText: true,
                 ),
@@ -92,23 +96,25 @@ class SignUpPage extends StatelessWidget {
                           );
                     },
                     icon: const Icon(Icons.arrow_forward),
-                    label: const Text("START"),
+                    label: const Text('START'),
                   ),
                 ),
 
                 // error message
                 Consumer<AuthenticationService>(
-                    builder: (context, authenticationService, child) =>
-                        SizedBox(
-                            height: 50,
-                            child: Text(
-                                authenticationService.errorMessage ?? ""))),
+                  builder: (context, authenticationService, child) => SizedBox(
+                    height: 50,
+                    child: Text(
+                      authenticationService.errorMessage ?? '',
+                    ),
+                  ),
+                ),
 
                 // tos and user agreement
                 Row(
                   children: const [
                     Spacer(),
-                    Text("By creating an acount you agree to the"),
+                    Text('By creating an acount you agree to the'),
                     Spacer()
                   ],
                 ),
@@ -133,23 +139,27 @@ class TermsPrivacyLinks extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          child: const Text("Privacy Policy",
-              style: TextStyle(color: Colors.blueAccent)),
+          child: const Text(
+            'Privacy Policy',
+            style: TextStyle(color: Colors.blueAccent),
+          ),
           onTap: () async {
             const url =
-                "https://github.com/PeterTheSalmon/Later/blob/main/Later%20Privacy%20Policy%20-%20January%2031%202022.pdf";
+                'https://github.com/PeterTheSalmon/Later/blob/main/Later%20Privacy%20Policy%20-%20January%2031%202022.pdf';
             if (await canLaunch(url)) {
               launch(url, forceWebView: true, enableJavaScript: true);
             }
           },
         ),
-        const Text(" and "),
+        const Text(' and '),
         GestureDetector(
-          child: const Text("Terms of Use",
-              style: TextStyle(color: Colors.blueAccent)),
+          child: const Text(
+            'Terms of Use',
+            style: TextStyle(color: Colors.blueAccent),
+          ),
           onTap: () async {
             const url =
-                "https://github.com/PeterTheSalmon/Later/blob/main/Later%20Terms%20of%20Use%20-%20January%2031%202022.pdf";
+                'https://github.com/PeterTheSalmon/Later/blob/main/Later%20Terms%20of%20Use%20-%20January%2031%202022.pdf';
             if (await canLaunch(url)) {
               launch(url, forceWebView: true, enableJavaScript: true);
             }

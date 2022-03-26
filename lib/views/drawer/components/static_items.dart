@@ -19,7 +19,7 @@ class StaticListItems extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          title: const Text("Home"),
+          title: const Text('Home'),
           leading: const Icon(Icons.home),
           onTap: () async {
             if (displayMobileLayout) {
@@ -27,23 +27,27 @@ class StaticListItems extends StatelessWidget {
               await Future.delayed(const Duration(milliseconds: 30));
             }
             Navigator.push(
-                context,
-                displayMobileLayout
-                    ? fadeThrough((context, animation, secondaryAnimation) =>
-                        const HomePage())
-                    : FadeRoute(page: const HomePage()));
+              context,
+              displayMobileLayout
+                  ? fadeThrough(
+                      (context, animation, secondaryAnimation) =>
+                          const HomePage(),
+                    )
+                  : FadeRoute(page: const HomePage()),
+            );
           },
         ),
         ExpansionTile(
-          leading: Icon(Icons.settings,
-              color:
-                  MediaQuery.of(context).platformBrightness == Brightness.dark
-                      ? Colors.white
-                      : const Color.fromARGB(255, 126, 126, 126)),
-          title: const Text("Settings"),
+          leading: Icon(
+            Icons.settings,
+            color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? Colors.white
+                : const Color.fromARGB(255, 126, 126, 126),
+          ),
+          title: const Text('Settings'),
           children: [
             ListTile(
-              title: const Text("General"),
+              title: const Text('General'),
               leading: const Icon(Icons.tune),
               onTap: () async {
                 if (displayMobileLayout) {
@@ -51,16 +55,18 @@ class StaticListItems extends StatelessWidget {
                   await Future.delayed(const Duration(milliseconds: 30));
                 }
                 Navigator.push(
-                    context,
-                    displayMobileLayout
-                        ? fadeThrough(
-                            (context, animation, secondaryAnimation) =>
-                                const GeneralSettings())
-                        : FadeRoute(page: const GeneralSettings()));
+                  context,
+                  displayMobileLayout
+                      ? fadeThrough(
+                          (context, animation, secondaryAnimation) =>
+                              const GeneralSettings(),
+                        )
+                      : FadeRoute(page: const GeneralSettings()),
+                );
               },
             ),
             ListTile(
-              title: const Text("Account"),
+              title: const Text('Account'),
               leading: const Icon(Icons.person),
               onTap: () async {
                 if (displayMobileLayout) {
@@ -68,18 +74,20 @@ class StaticListItems extends StatelessWidget {
                   await Future.delayed(const Duration(milliseconds: 30));
                 }
                 Navigator.push(
-                    context,
-                    displayMobileLayout
-                        ? fadeThrough(
-                            (context, animation, secondaryAnimation) =>
-                                const AccountSettings())
-                        : FadeRoute(page: const AccountSettings()));
+                  context,
+                  displayMobileLayout
+                      ? fadeThrough(
+                          (context, animation, secondaryAnimation) =>
+                              const AccountSettings(),
+                        )
+                      : FadeRoute(page: const AccountSettings()),
+                );
               },
             ),
           ],
         ),
         ListTile(
-          title: const Text("Manage Folders"),
+          title: const Text('Manage Folders'),
           leading: const Icon(Icons.folder_open),
           onTap: () async {
             if (displayMobileLayout) {
@@ -87,11 +95,14 @@ class StaticListItems extends StatelessWidget {
               await Future.delayed(const Duration(milliseconds: 50));
             }
             Navigator.push(
-                context,
-                displayMobileLayout
-                    ? fadeThrough((context, animation, secondaryAnimation) =>
-                        const FolderManager())
-                    : FadeRoute(page: const FolderManager()));
+              context,
+              displayMobileLayout
+                  ? fadeThrough(
+                      (context, animation, secondaryAnimation) =>
+                          const FolderManager(),
+                    )
+                  : FadeRoute(page: const FolderManager()),
+            );
           },
         ),
         const Divider(),

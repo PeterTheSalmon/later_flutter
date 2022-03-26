@@ -24,10 +24,11 @@ class _GlobalLinkSearchViewState extends State<GlobalLinkSearchView> {
   late Future<bool> resultsLoaded;
 
   Future<bool> getLinks() async {
-    QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance
-        .collection("links")
-        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-        .orderBy("title")
+    final QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore
+        .instance
+        .collection('links')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .orderBy('title')
         .get();
     setState(() {
       _allResults = data.docs;
@@ -39,12 +40,13 @@ class _GlobalLinkSearchViewState extends State<GlobalLinkSearchView> {
   void searchResultsList() {
     List<QueryDocumentSnapshot<Map<String, dynamic>>> showResults = [];
 
-    if (_searchController.text != "") {
+    if (_searchController.text != '') {
       // we have a search parameter
-      for (var linkSnapshot in _allResults) {
-        String title =
+      for (final linkSnapshot in _allResults) {
+        final String title =
             Link.fromMap(map: linkSnapshot.data()).title.toLowerCase();
-        String url = Link.fromMap(map: linkSnapshot.data()).url.toLowerCase();
+        final String url =
+            Link.fromMap(map: linkSnapshot.data()).url.toLowerCase();
 
         if (title.contains(_searchController.text.toLowerCase()) ||
             url.contains(_searchController.text.toLowerCase())) {
@@ -128,7 +130,7 @@ class LinkSearchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Link link = Link.fromMap(map: linkSnapshot.data()!);
+    final Link link = Link.fromMap(map: linkSnapshot.data()!);
     return OpenContainer(
       tappable: false,
       openElevation: 0,
@@ -151,7 +153,7 @@ class LinkSearchTile extends StatelessWidget {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("Could not launch ${link.url}"),
+                      content: Text('Could not launch ${link.url}'),
                     ),
                   );
                 }

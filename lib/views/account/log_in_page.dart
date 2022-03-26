@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:later_flutter/services/authentication_service.dart';
 import 'package:flutter/material.dart';
+import 'package:later_flutter/services/authentication_service.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/account/sign_up_page.dart';
 import 'package:provider/provider.dart';
@@ -41,45 +41,49 @@ class _LogInPageState extends State<LogInPage> {
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                        // Add space above the textfields
-                        height: kIsWeb
-                            ? MediaQuery.of(context).size.height * 0.3
-                            : Platform.isIOS
-                                ? 50
-                                : Platform.isAndroid
-                                    ? 50
-                                    : MediaQuery.of(context).size.height * 0.3),
+                      // Add space above the textfields
+                      height: kIsWeb
+                          ? MediaQuery.of(context).size.height * 0.3
+                          : Platform.isIOS
+                              ? 50
+                              : Platform.isAndroid
+                                  ? 50
+                                  : MediaQuery.of(context).size.height * 0.3,
+                    ),
                     Text(
-                      "Sign in to Later",
+                      'Sign in to Later',
                       style: TextStyle(
-                          color: Globals.appColour,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w800),
+                        color: Globals.appColour,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                     TextFormField(
                       decoration: const InputDecoration(
-                          suffixIcon: Icon(Icons.email),
-                          labelText: "Email",
-                          enabledBorder: UnderlineInputBorder()),
+                        suffixIcon: Icon(Icons.email),
+                        labelText: 'Email',
+                        enabledBorder: UnderlineInputBorder(),
+                      ),
                       controller: emailController,
                     ),
                     TextFormField(
                       decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                              icon: passwordObscured
-                                  ? const Icon(Icons.visibility_off)
-                                  : const Icon(Icons.visibility),
-                              onPressed: () {
-                                setState(() {
-                                  passwordObscured = !passwordObscured;
-                                });
-                              }),
-                          labelText: "Password",
-                          enabledBorder: const UnderlineInputBorder()),
+                        suffixIcon: IconButton(
+                          icon: passwordObscured
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility),
+                          onPressed: () {
+                            setState(() {
+                              passwordObscured = !passwordObscured;
+                            });
+                          },
+                        ),
+                        labelText: 'Password',
+                        enabledBorder: const UnderlineInputBorder(),
+                      ),
                       controller: passwordController,
                       obscureText: passwordObscured,
                     ),
@@ -88,15 +92,17 @@ class _LogInPageState extends State<LogInPage> {
                       child: ElevatedButton.icon(
                         onPressed: _signIn,
                         icon: const Icon(Icons.arrow_forward),
-                        label: const Text("SIGN IN"),
+                        label: const Text('SIGN IN'),
                       ),
                     ),
                     Consumer<AuthenticationService>(
-                        builder: (context, authenticationService, _) =>
-                            SizedBox(
-                                height: 50,
-                                child: Text(
-                                    authenticationService.errorMessage ?? ""))),
+                      builder: (context, authenticationService, _) => SizedBox(
+                        height: 50,
+                        child: Text(
+                          authenticationService.errorMessage ?? '',
+                        ),
+                      ),
+                    ),
                     const Spacer(),
                     const Divider(
                       thickness: 2.0,
@@ -104,12 +110,14 @@ class _LogInPageState extends State<LogInPage> {
                     TextButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignUpPage()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpPage(),
+                          ),
+                        );
                       },
                       child: const Text(
-                        "NO ACCOUNT? SIGN UP INSTEAD",
+                        'NO ACCOUNT? SIGN UP INSTEAD',
                         style: TextStyle(),
                       ),
                     )

@@ -21,7 +21,6 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
         child: Container(
           constraints: const BoxConstraints(maxWidth: 500),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _titleText(),
@@ -41,10 +40,11 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                   Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: ElevatedButton(
-                        child: const Text('Delete Account'),
-                        onPressed: () {
-                          _deleteAccount(context);
-                        }),
+                      child: const Text('Delete Account'),
+                      onPressed: () {
+                        _deleteAccount(context);
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -61,56 +61,56 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
         );
     if (context.read<AuthenticationService>().errorMessage == null) {
       showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: const Text("Are you sure?"),
-                content: Container(
-                  constraints: const BoxConstraints(maxWidth: 300),
-                  child: const Text(
-                      "All account data will be lost. This action cannot be undone. Are you sure you want to delete your account?"),
-                ),
-                actions: [
-                  TextButton(
-                    child: const Text("Cancel"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Are you sure?'),
+          content: Container(
+            constraints: const BoxConstraints(maxWidth: 300),
+            child: const Text(
+              'All account data will be lost. This action cannot be undone. Are you sure you want to delete your account?',
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Delete'),
+              onPressed: () async {
+                await context.read<AuthenticationService>().deleteAccount();
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AuthenticationWrapper(),
                   ),
-                  ElevatedButton(
-                    child: const Text("Delete"),
-                    onPressed: () async {
-                      await context
-                          .read<AuthenticationService>()
-                          .deleteAccount();
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AuthenticationWrapper(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ));
+                );
+              },
+            ),
+          ],
+        ),
+      );
     } else {
       // show a snackbar
       showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: const Text("Error"),
-                content:
-                    Text(context.read<AuthenticationService>().errorMessage!),
-                actions: [
-                  TextButton(
-                    child: const Text("OK"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ));
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: Text(context.read<AuthenticationService>().errorMessage!),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
     }
   }
 

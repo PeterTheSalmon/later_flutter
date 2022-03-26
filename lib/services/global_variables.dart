@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
-
 /// Convenience class for values that rarely change and are used throughout the app
 class Globals {
   /// Whether the user has seen the intro already
@@ -13,20 +11,20 @@ class Globals {
   static String? sharedUrl;
 
   static const List<String> morningGreetings = [
-    "Good morning, ",
-    "Morning, ",
-    "Goodmorrow, ",
+    'Good morning, ',
+    'Morning, ',
+    'Goodmorrow, ',
   ];
 
   static const List<String> afternoonGreetings = [
-    "Good afternoon, ",
-    "Afternoon, ",
-    "Howdy, ",
+    'Good afternoon, ',
+    'Afternoon, ',
+    'Howdy, ',
   ];
 
   static const List<String> eveningGreetings = [
-    "Good evening, ",
-    "Evening, ",
+    'Good evening, ',
+    'Evening, ',
   ];
 
   Map<int, Color> customColour = {
@@ -50,71 +48,87 @@ class Globals {
 
   static List<Tip> tips = [
     Tip(
-        title: "Quick Actions",
-        content: "Click the menu in the bottom right for quick actions!"),
+      title: 'Quick Actions',
+      content: 'Click the menu in the bottom right for quick actions!',
+    ),
     Tip(
-        title: "Open Source",
-        content: "Later is completely open source and free to use!",
-        buttonTitle: "View Source",
-        buttonAction: () {
-          launch("https://github.com/PeterTheSalmon/later_flutter");
-        }),
+      title: 'Open Source',
+      content: 'Later is completely open source and free to use!',
+      buttonTitle: 'View Source',
+      buttonAction: () {
+        launch('https://github.com/PeterTheSalmon/later_flutter');
+      },
+    ),
     Tip(
-        title: "Love Later?",
-        content: "You can also share the app with your friends!",
-        buttonTitle: "Share",
-        buttonAction: () {
-          Share.share("https://www.petersalmon.dev/later",
-              subject: "Check out Later!");
-        }),
+      title: 'Love Later?',
+      content: 'You can also share the app with your friends!',
+      buttonTitle: 'Share',
+      buttonAction: () {
+        Share.share(
+          'https://www.petersalmon.dev/later',
+          subject: 'Check out Later!',
+        );
+      },
+    ),
     Tip(
-        title: "Mac App",
-        content: "Check out the Mac app for a Mac version!",
-        buttonTitle: "Download",
-        buttonAction: () {
-          launch("https://github.com/PeterTheSalmon/Later");
-        }),
+      title: 'Mac App',
+      content: 'Check out the Mac app for a Mac version!',
+      buttonTitle: 'Download',
+      buttonAction: () {
+        launch('https://github.com/PeterTheSalmon/Later');
+      },
+    ),
     Tip(
-        title: "Access Anywhere",
-        content: "You can use Later on the web, on desktop, or on mobile!"),
+      title: 'Access Anywhere',
+      content: 'You can use Later on the web, on desktop, or on mobile!',
+    ),
     Tip(
-        title: "Keyboard Shortcuts",
-        content:
-            "Later supports keyboard shortcuts! Try ctrl/cmd + n to save a link."),
+      title: 'Keyboard Shortcuts',
+      content:
+          'Later supports keyboard shortcuts! Try ctrl/cmd + n to save a link.',
+    ),
     Tip(
-        title: "Keyboard Shortcuts",
-        content: "Try ctrl/cmd + shift + n to create a folder."),
+      title: 'Keyboard Shortcuts',
+      content: 'Try ctrl/cmd + shift + n to create a folder.',
+    ),
     Tip(
-        title: "Keyboard Shortcuts",
-        content: "Try ctrl/cmd + alt + n to save a link from your clipboard."),
+      title: 'Keyboard Shortcuts',
+      content: 'Try ctrl/cmd + alt + n to save a link from your clipboard.',
+    ),
     Tip(
-        title: "Quick Add Links",
-        content:
-            "Later will automatically add the title of a  page from your clipboard!"),
+      title: 'Quick Add Links',
+      content:
+          'Later will automatically add the title of a  page from your clipboard!',
+    ),
     Tip(
-        title: "Swipe Links",
-        content: "Swipe links to access quick options on mobile!"),
+      title: 'Swipe Links',
+      content: 'Swipe links to access quick options on mobile!',
+    ),
     Tip(
-        title: "Random Link",
-        content: "Check out the random link, right below these tips!"),
+      title: 'Random Link',
+      content: 'Check out the random link, right below these tips!',
+    ),
     Tip(
-        title: "Access Anywhere",
-        content: "Access your links anytime at later.petersalmon.dev",
-        buttonTitle: "Open Now",
-        buttonAction: () {
-          launch("https://later.petersalmon.dev");
-        }),
+      title: 'Access Anywhere',
+      content: 'Access your links anytime at later.petersalmon.dev',
+      buttonTitle: 'Open Now',
+      buttonAction: () {
+        launch('https://later.petersalmon.dev');
+      },
+    ),
   ];
 }
 
 class Tip {
+  Tip({
+    required this.title,
+    required this.content,
+    this.buttonTitle,
+    this.buttonAction,
+  });
+
   final String title;
   final String content;
   final String? buttonTitle;
   final Function? buttonAction;
-  Tip(
-      {required this.title,
-      required this.content,
-      this.buttonTitle,
-      this.buttonAction});
 }

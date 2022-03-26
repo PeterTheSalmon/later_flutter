@@ -8,13 +8,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/services/share_service.dart';
+import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/home%20page/components/greeting.dart';
 import 'package:later_flutter/views/home%20page/components/keyboard_bindings.dart';
 import 'package:later_flutter/views/home%20page/components/random_link.dart';
 import 'package:later_flutter/views/home%20page/components/tips_box.dart';
 import 'package:later_flutter/views/home%20page/functions/show_web_warning.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_folder_sheet.dart';
-import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_sheet.dart';
 import 'package:later_flutter/views/settings/general_settings.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
@@ -48,30 +48,30 @@ class _HomePageState extends State<HomePage> {
   }
 
   void countFolders() async {
-    QuerySnapshot _myDocs = await FirebaseFirestore.instance
+    final QuerySnapshot folders = await FirebaseFirestore.instance
         .collection('folders')
-        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
-    List<DocumentSnapshot> _myDocCount = _myDocs.docs;
-    int folderCount = _myDocCount.length;
+    final List<DocumentSnapshot> folderList = folders.docs;
+    final int folderCount = folderList.length;
     if (folderCount == 0) {
-      FirebaseFirestore.instance.collection("folders").add({
-        "name": "Uncategorized",
-        "userId": FirebaseAuth.instance.currentUser!.uid,
-        "dateCreated": DateTime.now(),
-        "iconName": "folder",
+      FirebaseFirestore.instance.collection('folders').add({
+        'name': 'Uncategorized',
+        'userId': FirebaseAuth.instance.currentUser!.uid,
+        'dateCreated': DateTime.now(),
+        'iconName': 'folder',
       });
     }
   }
 
   void setRandomLink() async {
-    QuerySnapshot _myDocs = await FirebaseFirestore.instance
+    final QuerySnapshot linkDocs = await FirebaseFirestore.instance
         .collection('links')
-        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
-    List<DocumentSnapshot> _links = _myDocs.docs;
+    final List<DocumentSnapshot> links = linkDocs.docs;
     setState(() {
-      randomLink = _links[Random().nextInt(_links.length)];
+      randomLink = links[Random().nextInt(links.length)];
     });
   }
 
@@ -88,8 +88,12 @@ class _HomePageState extends State<HomePage> {
       });
       if (_sharedText != null && _sharedText?.isNotEmpty == true) {
         await Clipboard.setData(ClipboardData(text: _sharedText));
-        await showNewLinkSheet(context,
-            fromClipboard: true, useDialog: true, parentFolderId: "");
+        await showNewLinkSheet(
+          context,
+          fromClipboard: true,
+          useDialog: true,
+          parentFolderId: '',
+        );
         setState(() {
           _sharedText = null;
         });
@@ -107,120 +111,133 @@ class _HomePageState extends State<HomePage> {
           : homeBindings(context),
       child: Focus(
         autofocus: true,
-        child: Row(children: [
-          if (!displayMobileLayout) const DesktopDrawer(),
-            
-          Expanded(
-            child: Scaffold(
-              appBar: AppBar(
-                title: const Text("Later"),
-              ),
-              floatingActionButton: SpeedDial(
-                animatedIcon: AnimatedIcons.menu_close,
-                backgroundColor: Globals.appColour,
-                children: [
-                  SpeedDialChild(
+        child: Row(
+          children: [
+            if (!displayMobileLayout) const DesktopDrawer(),
+            Expanded(
+              child: Scaffold(
+                appBar: AppBar(
+                  title: const Text('Later'),
+                ),
+                floatingActionButton: SpeedDial(
+                  animatedIcon: AnimatedIcons.menu_close,
+                  backgroundColor: Globals.appColour,
+                  children: [
+                    SpeedDialChild(
                       child: const Icon(Icons.copy),
-                      label: "Add from Clipboard",
+                      label: 'Add from Clipboard',
                       onTap: () async {
-                        showNewLinkSheet(context,
-                            parentFolderId: "",
-                            fromClipboard: true,
-                            useDialog: true);
-                      }),
-                  SpeedDialChild(
-                    child: const Icon(Icons.add_link),
-                    label: "Save Link",
-                    onTap: () {
-                      showNewLinkSheet(context,
-                          useDialog: true, parentFolderId: "");
-                    },
-                  ),
-                  SpeedDialChild(
-                    child: const Icon(Icons.folder),
-                    label: "Create Folder",
-                    onTap: () {
-                      showNewFolderSheet(context, useDialog: true);
-                    },
-                  ),
-                ],
-              ),
-              drawer: displayMobileLayout
-                  ? const Drawer(child: StandardDrawer())
-                  : null,
-              body: SingleChildScrollView(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 500),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          GreetingMessage(
-                            afternoonIndex: afternoonIndex,
-                            eveningIndex: eveningIndex,
-                            morningIndex: morningIndex,
-                            currentTime: currentTime,
-                          ),
-                          const TipsBox(),
-                          if (kIsWeb)
-                            Card(
-                              clipBehavior: Clip.antiAlias,
-                              child: Column(children: [
-                                const ListTile(
-                                  leading: SizedBox(
-                                    height: 48,
-                                    child: Icon(Icons.announcement),
-                                  ),
-                                  title: Text("Web App Limitations"),
-                                  subtitle: Text(
-                                    "Some features aren't available on the web",
-                                  ),
-                                ),
-                                const Divider(
-                                  thickness: 2,
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Some features, including editing and sharing links, aren't available on the web. You can still use the desktop or mobile app to access these features.",
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ),
-                                ButtonBar(
+                        showNewLinkSheet(
+                          context,
+                          parentFolderId: '',
+                          fromClipboard: true,
+                          useDialog: true,
+                        );
+                      },
+                    ),
+                    SpeedDialChild(
+                      child: const Icon(Icons.add_link),
+                      label: 'Save Link',
+                      onTap: () {
+                        showNewLinkSheet(
+                          context,
+                          useDialog: true,
+                          parentFolderId: '',
+                        );
+                      },
+                    ),
+                    SpeedDialChild(
+                      child: const Icon(Icons.folder),
+                      label: 'Create Folder',
+                      onTap: () {
+                        showNewFolderSheet(context, useDialog: true);
+                      },
+                    ),
+                  ],
+                ),
+                drawer: displayMobileLayout
+                    ? const Drawer(child: StandardDrawer())
+                    : null,
+                body: SingleChildScrollView(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        child: Column(
+                          children: <Widget>[
+                            GreetingMessage(
+                              afternoonIndex: afternoonIndex,
+                              eveningIndex: eveningIndex,
+                              morningIndex: morningIndex,
+                              currentTime: currentTime,
+                            ),
+                            const TipsBox(),
+                            if (kIsWeb)
+                              Card(
+                                clipBehavior: Clip.antiAlias,
+                                child: Column(
                                   children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        showWebWarning(context);
-                                      },
-                                      child: const Text("Learn more"),
+                                    const ListTile(
+                                      leading: SizedBox(
+                                        height: 48,
+                                        child: Icon(Icons.announcement),
+                                      ),
+                                      title: Text('Web App Limitations'),
+                                      subtitle: Text(
+                                        "Some features aren't available on the web",
+                                      ),
                                     ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          FadeRoute(
-                                            page: const GeneralSettings(),
+                                    const Divider(
+                                      thickness: 2,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Some features, including editing and sharing links, aren't available on the web. You can still use the desktop or mobile app to access these features.",
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ),
+                                    ButtonBar(
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            showWebWarning(context);
+                                          },
+                                          child: const Text('Learn more'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              FadeRoute(
+                                                page: const GeneralSettings(),
+                                              ),
+                                            );
+                                          },
+                                          child: const Text(
+                                            'Download native apps',
                                           ),
-                                        );
-                                      },
-                                      child: const Text("Download native apps"),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ]),
+                              ),
+                            RandomLink(
+                              randomLink: randomLink,
+                              context: context,
                             ),
-                          RandomLink(randomLink: randomLink, context: context),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }

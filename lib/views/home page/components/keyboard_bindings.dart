@@ -7,24 +7,32 @@ import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_s
 
 Map<ShortcutActivator, VoidCallback> homeBindings(BuildContext context) {
   return {
-    SingleActivator(LogicalKeyboardKey.keyN,
-        meta: Platform.isMacOS ? true : false,
-        control: Platform.isMacOS ? false : true,
-        alt: true): () {
-      showNewLinkSheet(context,
-          parentFolderId: "", fromClipboard: true, useDialog: true);
+    SingleActivator(
+      LogicalKeyboardKey.keyN,
+      meta: Platform.isMacOS,
+      control: !Platform.isMacOS,
+      alt: true,
+    ): () {
+      showNewLinkSheet(
+        context,
+        parentFolderId: '',
+        fromClipboard: true,
+        useDialog: true,
+      );
     },
     SingleActivator(
       LogicalKeyboardKey.keyN,
-      meta: Platform.isMacOS ? true : false,
-      control: Platform.isMacOS ? false : true,
+      meta: Platform.isMacOS,
+      control: !Platform.isMacOS,
     ): () {
-      showNewLinkSheet(context, parentFolderId: "", useDialog: true);
+      showNewLinkSheet(context, parentFolderId: '', useDialog: true);
     },
-    SingleActivator(LogicalKeyboardKey.keyN,
-        meta: Platform.isMacOS ? true : false,
-        control: Platform.isMacOS ? false : true,
-        shift: true): () {
+    SingleActivator(
+      LogicalKeyboardKey.keyN,
+      meta: Platform.isMacOS,
+      control: !Platform.isMacOS,
+      shift: true,
+    ): () {
       showNewFolderSheet(context, useDialog: true);
     },
   };
