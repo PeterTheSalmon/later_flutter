@@ -14,7 +14,6 @@ import 'package:later_flutter/views/folders/search/link_search_view.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_sheet.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
-import 'package:later_flutter/views/styles/fade_through_route.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -73,9 +72,8 @@ class _FolderViewState extends State<FolderView> {
                     Navigator.push(
                       context,
                       displayMobileLayout
-                          ? fadeThrough(
-                              (context, animation, secondaryAnimation) =>
-                                  LinkSearchView(
+                          ? MaterialPageRoute(
+                              builder: (context) => LinkSearchView(
                                 parentFolderId: widget.parentFolderId,
                               ),
                             )

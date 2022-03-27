@@ -8,7 +8,6 @@ import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/folders/search/global_link_search_view.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
-import 'package:later_flutter/views/styles/fade_through_route.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LinkSearchView extends StatefulWidget {
@@ -122,8 +121,8 @@ class _LinkSearchViewState extends State<LinkSearchView> {
                       Navigator.push(
                         context,
                         displayMobileLayout
-                            ? fadeThrough(
-                                (context, animation, secondaryAnimation) =>
+                            ? MaterialPageRoute(
+                                builder: (context) =>
                                     const GlobalLinkSearchView(),
                               )
                             : FadeRoute(

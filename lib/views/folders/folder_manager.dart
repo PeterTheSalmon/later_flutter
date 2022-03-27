@@ -9,7 +9,6 @@ import 'package:later_flutter/views/folders/folder_list_tile.dart';
 import 'package:later_flutter/views/folders/search/folder_search.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_folder_sheet.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
-import 'package:later_flutter/views/styles/fade_through_route.dart';
 
 class FolderManager extends StatefulWidget {
   const FolderManager({Key? key}) : super(key: key);
@@ -37,9 +36,8 @@ class _FolderManagerState extends State<FolderManager> {
                     Navigator.push(
                       context,
                       displayMobileLayout
-                          ? fadeThrough(
-                              (context, animation, secondaryAnimation) =>
-                                  const FolderSearch(),
+                          ? MaterialPageRoute(
+                              builder: (context) => const FolderSearch(),
                             )
                           : FadeRoute(
                               page: const FolderSearch(),
