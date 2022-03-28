@@ -192,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                                       thickness: 2,
                                     ),
                                     const Padding(
-                                      padding: EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(18.0),
                                       child: Text(
                                         "Some features, including editing and sharing links, aren't available on the web. You can still use the desktop or mobile app to access these features.",
                                         textAlign: TextAlign.start,

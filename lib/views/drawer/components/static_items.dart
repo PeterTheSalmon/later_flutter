@@ -18,6 +18,17 @@ class StaticListItems extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // ! Used to test new pages
+        // ListTile(
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => const (),
+        //       ),
+        //     );
+        //   },
+        // ),
         ListTile(
           title: const Text('Home'),
           leading: const Icon(Icons.home),
