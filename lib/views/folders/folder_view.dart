@@ -525,7 +525,10 @@ class _FolderViewState extends State<FolderView> {
                         const WidgetSpan(
                           child: Padding(
                             padding: EdgeInsets.only(left: 2, right: 2),
-                            child: Icon(Icons.menu),
+                            child: Icon(
+                              Icons.menu,
+                              size: 20,
+                            ),
                           ),
                         ),
                         TextSpan(
