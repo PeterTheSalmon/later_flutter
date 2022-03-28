@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:later_flutter/services/check_url_conventions.dart';
@@ -39,9 +41,24 @@ Future<void> showNewLinkSheet(
         : null,
   );
 
-  final data = await MetadataFetch.extract(urlController.text);
+  String? title;
+
+  if (kIsWeb) {
+    title = null;
+  } else {
+    final connectionStatus = await Connectivity().checkConnectivity();
+    if (connectionStatus == ConnectivityResult.none) {
+      title = null;
+    } else {
+      final data = await MetadataFetch.extract(urlController.text);
+      title = data?.title;
+    }
+  }
+
+  // final data = await MetadataFetch.extract(urlController.text);
+
   final TextEditingController titleController =
-      TextEditingController(text: data?.title ?? '');
+      TextEditingController(text: title);
 
   /// Remove the loading overlay
   if (fromClipboard) {

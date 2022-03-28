@@ -29,7 +29,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? _sharedText;
-  DocumentSnapshot? randomLink;
 
   final int currentTime = DateTime.now().hour;
 
@@ -44,7 +43,6 @@ class _HomePageState extends State<HomePage> {
       ..onDataReceived = _handleSharedData
       ..getSharedData().then(_handleSharedData);
     countFolders();
-    setRandomLink();
   }
 
   void countFolders() async {
@@ -62,17 +60,6 @@ class _HomePageState extends State<HomePage> {
         'iconName': 'folder',
       });
     }
-  }
-
-  void setRandomLink() async {
-    final QuerySnapshot linkDocs = await FirebaseFirestore.instance
-        .collection('links')
-        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    final List<DocumentSnapshot> links = linkDocs.docs;
-    setState(() {
-      randomLink = links[Random().nextInt(links.length)];
-    });
   }
 
   void _handleSharedData(String sharedData) async {
@@ -224,10 +211,7 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                            RandomLink(
-                              randomLink: randomLink,
-                              context: context,
-                            ),
+                            const RandomLink(),
                           ],
                         ),
                       ),

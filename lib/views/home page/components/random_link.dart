@@ -1,24 +1,59 @@
+import 'dart:math';
+
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class RandomLink extends StatelessWidget {
+class RandomLink extends StatefulWidget {
   const RandomLink({
     Key? key,
-    required this.randomLink,
-    required this.context,
   }) : super(key: key);
 
-  final DocumentSnapshot<Object?>? randomLink;
-  final BuildContext context;
+  @override
+  State<RandomLink> createState() => _RandomLinkState();
+}
+
+class _RandomLinkState extends State<RandomLink> {
+  DocumentSnapshot? _randomLink;
+
+  /// Fetches a random link from firebase
+  /// The list of folders is fetched first for efficiency
+  /// Instead of reading every link a user has, a random folder is chosen and, from there,
+  /// a link is selected at random. This reduces the number of reads to firebase.
+  void setRandomLink() async {
+    final QuerySnapshot folderDocs = await FirebaseFirestore.instance
+        .collection('folders')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    final List<DocumentSnapshot> folderList = folderDocs.docs;
+    final DocumentSnapshot folder =
+        folderList[Random().nextInt(folderList.length)];
+
+    final QuerySnapshot linkDocs = await FirebaseFirestore.instance
+        .collection('links')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('parentFolderId', isEqualTo: folder.id)
+        .get();
+    final List<DocumentSnapshot> links = linkDocs.docs;
+    setState(() {
+      _randomLink = links[Random().nextInt(links.length)];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setRandomLink();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
-      child: randomLink == null
+      child: _randomLink == null
           ? const SizedBox(
               height: kIsWeb ? 72 : 260,
               child: Center(child: CircularProgressIndicator()),
@@ -31,7 +66,7 @@ class RandomLink extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ListTile(
-                      onTap: _launchURL,
+                      onTap: () => _launchURL(_randomLink!),
                       leading: SizedBox(
                         height: 48,
                         child: IconButton(
@@ -39,16 +74,16 @@ class RandomLink extends StatelessWidget {
                           constraints: const BoxConstraints(),
                           tooltip: 'Open in browser',
                           icon: const Icon(Icons.open_in_new),
-                          onPressed: _launchURL,
+                          onPressed: () => _launchURL(_randomLink!),
                         ),
                       ),
                       title: Text(
-                        randomLink!['title'] as String,
+                        _randomLink!['title'] as String,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Text(
-                        randomLink!['url'] as String,
+                        _randomLink!['url'] as String,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -57,7 +92,7 @@ class RandomLink extends StatelessWidget {
                       SizedBox(
                         height: 180,
                         child: AnyLinkPreview(
-                          link: randomLink!['url'] as String,
+                          link: _randomLink!['url'] as String,
                           borderRadius: 0,
                           boxShadow: const [],
                           bodyMaxLines: 2,
@@ -103,95 +138,17 @@ class RandomLink extends StatelessWidget {
               ),
             ),
     );
-    return AnimatedOpacity(
-      opacity: randomLink == null ? 0 : 1,
-      duration: const Duration(milliseconds: 3000),
-      child: randomLink == null
-          ? const CircularProgressIndicator()
-          : Card(
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                children: [
-                  ListTile(
-                    onTap: _launchURL,
-                    leading: SizedBox(
-                      height: 48,
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        tooltip: 'Open in browser',
-                        icon: const Icon(Icons.open_in_new),
-                        onPressed: _launchURL,
-                      ),
-                    ),
-                    title: Text(
-                      randomLink!['title'] as String,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitle: Text(
-                      randomLink!['url'] as String,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  if (!kIsWeb)
-                    SizedBox(
-                      height: 180,
-                      child: AnyLinkPreview(
-                        link: randomLink!['url'] as String,
-                        borderRadius: 0,
-                        boxShadow: const [],
-                        backgroundColor:
-                            MediaQuery.of(context).platformBrightness ==
-                                    Brightness.dark
-                                ? const Color.fromARGB(255, 66, 66, 66)
-                                : const Color.fromARGB(255, 243, 243, 243),
-                        titleStyle: TextStyle(
-                          color: MediaQuery.of(context).platformBrightness ==
-                                  Brightness.dark
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                        placeholderWidget: Container(
-                          decoration: BoxDecoration(
-                            color: MediaQuery.of(context).platformBrightness ==
-                                    Brightness.dark
-                                ? const Color.fromARGB(255, 66, 66, 66)
-                                : const Color.fromARGB(255, 243, 243, 243),
-                          ),
-                          child: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
-                        errorWidget: Container(
-                          decoration: BoxDecoration(
-                            color: MediaQuery.of(context).platformBrightness ==
-                                    Brightness.dark
-                                ? const Color.fromARGB(255, 66, 66, 66)
-                                : const Color.fromARGB(255, 243, 243, 243),
-                          ),
-                          child: const Center(
-                            child: Text('No Preview Available :('),
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-    );
   }
 
-  void _launchURL() async {
-    if (await canLaunch(randomLink!['url'] as String)) {
+  void _launchURL(DocumentSnapshot randomLink) async {
+    if (await canLaunch(randomLink['url'] as String)) {
       launch(
-        randomLink!['url'] as String,
+        randomLink['url'] as String,
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Could not launch ${randomLink!["url"]}"),
+          content: Text("Could not launch ${randomLink["url"]}"),
           action: SnackBarAction(
             label: 'Close',
             onPressed: () {},
