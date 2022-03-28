@@ -201,7 +201,7 @@ class _FolderViewState extends State<FolderView> {
                 }
                 if (snapshot.data!.docs.isEmpty) {
                   return const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.symmetric(vertical: 18.0),
                     child: Center(child: Text('No Links Archived')),
                   );
                 }
@@ -280,12 +280,19 @@ class _FolderViewState extends State<FolderView> {
                     label: isArchiveTile ? 'Restore' : 'Archive',
                     backgroundColor: isArchiveTile ? Colors.green : Colors.grey,
                     onPressed: (_) {
-                      FirebaseFirestore.instance
-                          .collection('links')
-                          .doc(document.id)
-                          .update({
-                        'archived': true,
-                      });
+                      isArchiveTile
+                          ? FirebaseFirestore.instance
+                              .collection('links')
+                              .doc(document.id)
+                              .update({
+                              'archived': false,
+                            })
+                          : FirebaseFirestore.instance
+                              .collection('links')
+                              .doc(document.id)
+                              .update({
+                              'archived': true,
+                            });
                     },
                   ),
                 ],
@@ -470,9 +477,8 @@ class _FolderViewState extends State<FolderView> {
     );
   }
 
-  Column _emptyDataView(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+  Widget _emptyDataView(BuildContext context) {
+    return ListView(
       children: [
         Row(
           children: [
@@ -489,58 +495,55 @@ class _FolderViewState extends State<FolderView> {
             const Spacer()
           ],
         ),
-        Expanded(
+        Center(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: _showFavouritesOnly
-                  ? Text(
-                      "You don't have any favourites!",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: MediaQuery.of(context).platformBrightness ==
-                                Brightness.dark
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    )
-                  : RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Click the ',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color:
-                                  MediaQuery.of(context).platformBrightness ==
-                                          Brightness.dark
-                                      ? Colors.white
-                                      : Colors.black,
-                            ),
-                          ),
-                          const WidgetSpan(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 2, right: 2),
-                              child: Icon(Icons.menu),
-                            ),
-                          ),
-                          TextSpan(
-                            text: ' to add a link',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color:
-                                  MediaQuery.of(context).platformBrightness ==
-                                          Brightness.dark
-                                      ? Colors.white
-                                      : Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
+            padding: const EdgeInsets.symmetric(vertical: 18.0),
+            child: _showFavouritesOnly
+                ? Text(
+                    "You don't have any favourites!",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: MediaQuery.of(context).platformBrightness ==
+                              Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
                     ),
-            ),
+                  )
+                : RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Click the ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        ),
+                        const WidgetSpan(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 2, right: 2),
+                            child: Icon(Icons.menu),
+                          ),
+                        ),
+                        TextSpan(
+                          text: ' to add a link',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
           ),
         ),
+        _archivedLinks(),
       ],
     );
   }
