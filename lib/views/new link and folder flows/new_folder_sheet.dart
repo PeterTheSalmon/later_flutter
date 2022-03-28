@@ -88,7 +88,8 @@ Future<void> showNewFolderSheet(
                               'parentFolderId': id,
                               'title': prefillLinkName,
                               'url': prefillLinkUrl,
-                              'userId': FirebaseAuth.instance.currentUser!.uid
+                              'userId': FirebaseAuth.instance.currentUser!.uid,
+                              'archived': false,
                             });
                             Navigator.pop(context);
                             showAddedLinkSnackbar(context, id);

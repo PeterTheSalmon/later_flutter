@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:later_flutter/intro_screen/intro_screen.dart';
@@ -157,6 +159,59 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                                 builder: (context) => AppIntroScreen(
                                   isAReplay: true,
                                 ),
+                              ),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.update),
+                          title: const Text('Update link format'),
+                          onTap: () async {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Update link format?'),
+                                content: const Text(
+                                  "You should only do this once! All archived statuses will be deleted. If you don't know what this will do, do not proceed!",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                      final linkQuerySnapshot =
+                                          await FirebaseFirestore.instance
+                                              .collection('links')
+                                              .where(
+                                                'userId',
+                                                isEqualTo: FirebaseAuth
+                                                    .instance.currentUser!.uid,
+                                              )
+                                              .get();
+                                      for (final doc
+                                          in linkQuerySnapshot.docs) {
+                                        FirebaseFirestore.instance
+                                            .collection('links')
+                                            .doc(doc.id)
+                                            .update({
+                                          'archived': false,
+                                        });
+                                      }
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Updated link format'),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('Continue'),
+                                  )
+                                ],
                               ),
                             );
                           },

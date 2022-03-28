@@ -179,7 +179,8 @@ Future<void> showNewLinkSheet(
                             'url': checkUrlConventions(
                               url: urlController.text,
                             ),
-                            'userId': FirebaseAuth.instance.currentUser!.uid
+                            'userId': FirebaseAuth.instance.currentUser!.uid,
+                            'archived': false,
                           });
                           Navigator.pop(context);
                         },

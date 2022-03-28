@@ -8,7 +8,7 @@ class Link {
     required this.isFavourite,
     required this.userId,
     required this.parentFolderId,
-    this.archived,
+    required this.archived,
   });
 
   /// Create a link from a firebase snapshot
@@ -27,7 +27,7 @@ class Link {
   bool isFavourite;
   String userId;
   String parentFolderId;
-  bool? archived;
+  bool archived;
 
   /// Used to convert the link to a json object for Firestore
   Map<String, dynamic> toMap() {

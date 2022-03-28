@@ -41,7 +41,7 @@ class _FolderViewState extends State<FolderView> {
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
         .where('parentFolderId', isEqualTo: widget.parentFolderId)
         .where('isFavourite', isEqualTo: true)
-        .where('archived', isEqualTo: null)
+        .where('archived', isEqualTo: false)
         .orderBy('title')
         .snapshots();
   }
@@ -51,6 +51,17 @@ class _FolderViewState extends State<FolderView> {
         .collection('links')
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
         .where('parentFolderId', isEqualTo: widget.parentFolderId)
+        .where('archived', isEqualTo: false)
+        .orderBy('title')
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Object?>>? _archivedStream() {
+    return FirebaseFirestore.instance
+        .collection('links')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        .where('parentFolderId', isEqualTo: widget.parentFolderId)
+        .where('archived', isEqualTo: true)
         .orderBy('title')
         .snapshots();
   }
@@ -137,44 +148,7 @@ class _FolderViewState extends State<FolderView> {
                               },
                             ).toList(),
                           ),
-                          ExpansionTile(
-                            onExpansionChanged: (value) {
-                              if (value) {
-                                // code to scroll down a bit
-                              }
-                            },
-                            title: const Text('Archived'),
-                            children: [
-                              ListView(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                children: const [
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('1'),
-                                  Text('2'),
-                                ],
-                              ),
-                            ],
-                          ),
+                          _archivedLinks(),
                           const SizedBox(
                             height: 100,
                           ),
@@ -191,11 +165,81 @@ class _FolderViewState extends State<FolderView> {
     );
   }
 
+  ExpansionTile _archivedLinks() {
+    return ExpansionTile(
+      onExpansionChanged: (value) {
+        if (value) {
+          // TODO: code to scroll down a bit
+        }
+      },
+      title: const Text('Archived'),
+      children: [
+        ListView(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          children: [
+            StreamBuilder<QuerySnapshot>(
+              stream: _archivedStream(),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<QuerySnapshot> snapshot,
+              ) {
+                if (snapshot.hasError) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: SelectableText(
+                        'Error: ${snapshot.error}',
+                      ),
+                    ),
+                  );
+                }
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(child: Text('No Links Archived')),
+                  );
+                }
+
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: snapshot.data!.docs.map(
+                    (DocumentSnapshot document) {
+                      return Column(
+                        children: [
+                          _linkListTile(
+                            context,
+                            Link.fromMap(
+                              map: document.data()! as Map<String, dynamic>,
+                            ),
+                            document,
+                            isArchiveTile: true,
+                          ),
+                          const Divider()
+                        ],
+                      );
+                    },
+                  ).toList(),
+                );
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget _linkListTile(
     BuildContext context,
     Link link,
-    DocumentSnapshot document,
-  ) {
+    DocumentSnapshot document, {
+    bool isArchiveTile = false,
+  }) {
     return OpenContainer(
       tappable: false,
       openElevation: 0,
@@ -207,56 +251,98 @@ class _FolderViewState extends State<FolderView> {
           LinkDetailView(document: document),
       closedBuilder: (BuildContext context, VoidCallback openContainer) =>
           Slidable(
+        key: UniqueKey(),
         endActionPane: kIsWeb
             ? null
             : ActionPane(
+                dismissible: DismissiblePane(
+                  onDismissed: () {
+                    // If the link is already archived, restore it
+                    isArchiveTile
+                        ? FirebaseFirestore.instance
+                            .collection('links')
+                            .doc(document.id)
+                            .update({
+                            'archived': false,
+                          })
+                        : FirebaseFirestore.instance
+                            .collection('links')
+                            .doc(document.id)
+                            .update({
+                            'archived': true,
+                          });
+                  },
+                ),
                 motion: const DrawerMotion(),
                 children: [
                   SlidableAction(
-                    icon: Icons.open_in_new,
-                    label: 'Open',
-                    backgroundColor: Colors.blue,
-                    onPressed: (context) async => {
-                      if (await canLaunch(link.url))
-                        {launch(link.url, enableJavaScript: true)}
-                      else
-                        {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Could not launch ${link.url}'),
-                              action: SnackBarAction(
-                                label: 'Close',
-                                onPressed: () {},
-                              ),
-                            ),
-                          )
-                        }
+                    icon: Icons.archive,
+                    label: isArchiveTile ? 'Restore' : 'Archive',
+                    backgroundColor: isArchiveTile ? Colors.green : Colors.grey,
+                    onPressed: (_) {
+                      FirebaseFirestore.instance
+                          .collection('links')
+                          .doc(document.id)
+                          .update({
+                        'archived': true,
+                      });
                     },
                   ),
-                  SlidableAction(
-                    icon: Icons.share,
-                    label: 'Share',
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                    onPressed: (context) async => {
-                      if (kIsWeb)
-                        {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: const Text('Share not supported on web'),
-                              action: SnackBarAction(
-                                label: 'Close',
-                                onPressed: () {},
-                              ),
-                            ),
-                          )
-                        }
-                      else
-                        {await Share.share(link.url, subject: link.title)}
-                    },
-                  )
                 ],
               ),
+        startActionPane: kIsWeb
+            ? null
+            : isArchiveTile
+                ? null
+                : ActionPane(
+                    motion: const DrawerMotion(),
+                    children: [
+                      SlidableAction(
+                        icon: Icons.open_in_new,
+                        label: 'Open',
+                        backgroundColor: Colors.blue,
+                        onPressed: (context) async => {
+                          if (await canLaunch(link.url))
+                            {launch(link.url, enableJavaScript: true)}
+                          else
+                            {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Could not launch ${link.url}'),
+                                  action: SnackBarAction(
+                                    label: 'Close',
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              )
+                            }
+                        },
+                      ),
+                      SlidableAction(
+                        icon: Icons.share,
+                        label: 'Share',
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white,
+                        onPressed: (context) async => {
+                          if (kIsWeb)
+                            {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                      const Text('Share not supported on web'),
+                                  action: SnackBarAction(
+                                    label: 'Close',
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              )
+                            }
+                          else
+                            {await Share.share(link.url, subject: link.title)}
+                        },
+                      ),
+                    ],
+                  ),
         child: ListTile(
           /// The detail view is disabled on the web
           /// because it doesn't work properly
@@ -386,6 +472,7 @@ class _FolderViewState extends State<FolderView> {
 
   Column _emptyDataView(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           children: [

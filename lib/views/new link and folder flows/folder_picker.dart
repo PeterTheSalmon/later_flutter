@@ -95,7 +95,8 @@ class FolderPickerList extends StatelessWidget {
                             'parentFolderId': document.id,
                             'title': title,
                             'url': url,
-                            'userId': FirebaseAuth.instance.currentUser!.uid
+                            'userId': FirebaseAuth.instance.currentUser!.uid,
+                            'archived': false,
                           });
                           Navigator.pop(context);
                           showAddedLinkSnackbar(context, document.id);
