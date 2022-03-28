@@ -8,7 +8,6 @@ import 'package:later_flutter/views/folders/edit_folder_dialog.dart';
 import 'package:later_flutter/views/folders/folder_icon_chooser.dart';
 import 'package:later_flutter/views/folders/folder_view.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
-import 'package:later_flutter/views/styles/fade_through_route.dart';
 
 class FolderListTile extends StatefulWidget {
   const FolderListTile({
@@ -42,8 +41,8 @@ class _FolderListTileState extends State<FolderListTile> {
         Navigator.push(
           context,
           displayMobileLayout
-              ? fadeThrough(
-                  (context, animation, secondaryAnimation) => FolderView(
+              ? MaterialPageRoute(
+                  builder: (context) => FolderView(
                     parentFolderId: widget.document.id,
                     parentFolderName: widget.document['name'] as String,
                   ),

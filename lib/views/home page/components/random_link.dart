@@ -20,14 +20,15 @@ class RandomLink extends StatelessWidget {
       duration: const Duration(milliseconds: 300),
       child: randomLink == null
           ? const SizedBox(
-              height: kIsWeb ? 72 : 252,
+              height: kIsWeb ? 72 : 260,
               child: Center(child: CircularProgressIndicator()),
             )
           : SizedBox(
-              height: kIsWeb ? 72 : 252,
+              height: kIsWeb ? 72 : 260,
               child: Card(
                 clipBehavior: Clip.antiAlias,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     ListTile(
                       onTap: _launchURL,
@@ -59,6 +60,7 @@ class RandomLink extends StatelessWidget {
                           link: randomLink!['url'] as String,
                           borderRadius: 0,
                           boxShadow: const [],
+                          bodyMaxLines: 2,
                           backgroundColor:
                               MediaQuery.of(context).platformBrightness ==
                                       Brightness.dark
