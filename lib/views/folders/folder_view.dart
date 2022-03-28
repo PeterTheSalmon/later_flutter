@@ -132,18 +132,25 @@ class _FolderViewState extends State<FolderView> {
                             mainAxisSize: MainAxisSize.min,
                             children: snapshot.data!.docs.map(
                               (DocumentSnapshot document) {
-                                return Column(
-                                  children: [
-                                    _linkListTile(
-                                      context,
-                                      Link.fromMap(
-                                        map: document.data()!
-                                            as Map<String, dynamic>,
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      _linkListTile(
+                                        context,
+                                        Link.fromMap(
+                                          map: document.data()!
+                                              as Map<String, dynamic>,
+                                        ),
+                                        document,
                                       ),
-                                      document,
-                                    ),
-                                    const Divider()
-                                  ],
+                                      const Divider(
+                                        height: 1,
+                                      )
+                                    ],
+                                  ),
                                 );
                               },
                             ).toList(),
@@ -210,18 +217,23 @@ class _FolderViewState extends State<FolderView> {
                   mainAxisSize: MainAxisSize.min,
                   children: snapshot.data!.docs.map(
                     (DocumentSnapshot document) {
-                      return Column(
-                        children: [
-                          _linkListTile(
-                            context,
-                            Link.fromMap(
-                              map: document.data()! as Map<String, dynamic>,
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          children: [
+                            _linkListTile(
+                              context,
+                              Link.fromMap(
+                                map: document.data()! as Map<String, dynamic>,
+                              ),
+                              document,
+                              isArchiveTile: true,
                             ),
-                            document,
-                            isArchiveTile: true,
-                          ),
-                          const Divider()
-                        ],
+                            const Divider(
+                              height: 1,
+                            )
+                          ],
+                        ),
                       );
                     },
                   ).toList(),
@@ -351,9 +363,9 @@ class _FolderViewState extends State<FolderView> {
                     ],
                   ),
         child: ListTile(
-          /// The detail view is disabled on the web
-          /// because it doesn't work properly
-          /// and serves little purpose.
+          //The detail view is disabled on the web
+          // because it doesn't work properly
+          // and serves little purpose.
           onTap: !kIsWeb
               ? () {
                   openContainer();
@@ -386,6 +398,26 @@ class _FolderViewState extends State<FolderView> {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (kIsWeb)
+                IconButton(
+                  icon: Icon(isArchiveTile ? Icons.restore : Icons.archive),
+                  tooltip: isArchiveTile ? 'Restore' : 'Archive',
+                  onPressed: () {
+                    isArchiveTile
+                        ? FirebaseFirestore.instance
+                            .collection('links')
+                            .doc(document.id)
+                            .update({
+                            'archived': false,
+                          })
+                        : FirebaseFirestore.instance
+                            .collection('links')
+                            .doc(document.id)
+                            .update({
+                            'archived': true,
+                          });
+                  },
+                ),
               if (kIsWeb || !(Platform.isAndroid || Platform.isIOS))
                 IconButton(
                   tooltip: 'Open in browser',
@@ -406,19 +438,20 @@ class _FolderViewState extends State<FolderView> {
                     }
                   },
                 ),
-              IconButton(
-                tooltip: 'Mark as Favourite',
-                onPressed: () async {
-                  FirebaseFirestore.instance
-                      .collection('links')
-                      .doc(document.id)
-                      .update(
-                    {'isFavourite': !(document['isFavourite'] as bool)},
-                  );
-                },
-                icon: const Icon(Icons.star),
-                color: document['isFavourite'] == true ? Colors.orange : null,
-              ),
+              if (!isArchiveTile)
+                IconButton(
+                  tooltip: 'Mark as Favourite',
+                  onPressed: () async {
+                    FirebaseFirestore.instance
+                        .collection('links')
+                        .doc(document.id)
+                        .update(
+                      {'isFavourite': !(document['isFavourite'] as bool)},
+                    );
+                  },
+                  icon: const Icon(Icons.star),
+                  color: document['isFavourite'] == true ? Colors.orange : null,
+                ),
               IconButton(
                 tooltip: 'Delete',
                 onPressed: () {
