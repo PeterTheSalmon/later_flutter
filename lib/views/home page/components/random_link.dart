@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'dart:math';
 
 import 'package:any_link_preview/any_link_preview.dart';
@@ -29,17 +30,35 @@ class _RandomLinkState extends State<RandomLink> {
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
     final List<DocumentSnapshot> folderList = folderDocs.docs;
-    final DocumentSnapshot folder =
-        folderList[Random().nextInt(folderList.length)];
 
-    final QuerySnapshot linkDocs = await FirebaseFirestore.instance
-        .collection('links')
-        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .where('parentFolderId', isEqualTo: folder.id)
-        .get();
-    final List<DocumentSnapshot> links = linkDocs.docs;
+    int attempts = 0;
+    Future<DocumentSnapshot?> _selectLink() async {
+      developer.log('STARTING');
+      // Choose a random folder
+      final DocumentSnapshot folder =
+          folderList[Random().nextInt(folderList.length)];
+
+      // Get the list of links in the folder
+      final QuerySnapshot linkDocs = await FirebaseFirestore.instance
+          .collection('links')
+          .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where('parentFolderId', isEqualTo: folder.id)
+          .get();
+      final List<DocumentSnapshot> links = linkDocs.docs;
+
+      if (links.isEmpty && attempts > 10) {
+        attempts++;
+        _selectLink();
+      } else {
+        return links[Random().nextInt(links.length)];
+      }
+      return null;
+    }
+
+    final finalLink = await _selectLink();
+
     setState(() {
-      _randomLink = links[Random().nextInt(links.length)];
+      _randomLink = finalLink;
     });
   }
 
@@ -54,10 +73,7 @@ class _RandomLinkState extends State<RandomLink> {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
       child: _randomLink == null
-          ? const SizedBox(
-              height: kIsWeb ? 72 : 260,
-              child: Center(child: CircularProgressIndicator()),
-            )
+          ? const Card()
           : SizedBox(
               height: kIsWeb ? 72 : 260,
               child: Card(
