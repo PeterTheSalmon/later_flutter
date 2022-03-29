@@ -31,6 +31,7 @@ class _GeneralSettingsState extends State<GeneralSettings> {
     _initPackageInfo();
     fToast = FToast();
     fToast.init(context);
+    _handleOverlays();
   }
 
   Future<void> _initPackageInfo() async {
@@ -42,6 +43,27 @@ class _GeneralSettingsState extends State<GeneralSettings> {
 
   int _tapCount = 0;
   late FToast fToast;
+  double opacity = 0.0;
+
+  Future<void> _handleOverlays() async {
+    if (widget.highlightPlatforms == false) return;
+    await Future.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity = 0.3;
+    });
+    await Future.delayed(const Duration(milliseconds: 500));
+    setState(() {
+      opacity = 0.1;
+    });
+    await Future.delayed(const Duration(milliseconds: 500));
+    setState(() {
+      opacity = 0.3;
+    });
+    await Future.delayed(const Duration(milliseconds: 1000));
+    setState(() {
+      opacity = 0.0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,23 +146,45 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                             );
                           },
                         ),
-                        ListTile(
-                          leading: const Icon(Icons.computer),
-                          title: const Text('Download the macOS app'),
-                          onTap: () {
-                            launch(
-                              'https://github.com/peterthesalmon/later/releases',
-                            );
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.android),
-                          title: const Text('Download the Android app'),
-                          onTap: () {
-                            launch(
-                              'https://github.com/PeterTheSalmon/later_flutter/releases',
-                            );
-                          },
+                        Stack(
+                          children: [
+                            Column(
+                              children: [
+                                ListTile(
+                                  leading: const Icon(Icons.computer),
+                                  title: const Text('Download the macOS app'),
+                                  onTap: () {
+                                    launch(
+                                      'https://github.com/peterthesalmon/later/releases',
+                                    );
+                                  },
+                                ),
+                                ListTile(
+                                  leading: const Icon(Icons.android),
+                                  title: const Text('Download the Android app'),
+                                  onTap: () {
+                                    launch(
+                                      'https://github.com/PeterTheSalmon/later_flutter/releases',
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            Positioned.fill(
+                              child: IgnorePointer(
+                                child: AnimatedOpacity(
+                                  duration: const Duration(milliseconds: 500),
+                                  opacity: opacity,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(2.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         ListTile(
                           leading: const Icon(Icons.web),

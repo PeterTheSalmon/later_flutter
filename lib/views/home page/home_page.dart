@@ -160,57 +160,7 @@ class _HomePageState extends State<HomePage> {
                               currentTime: currentTime,
                             ),
                             const TipsBox(),
-                            if (kIsWeb)
-                              Card(
-                                clipBehavior: Clip.antiAlias,
-                                child: Column(
-                                  children: [
-                                    const ListTile(
-                                      leading: SizedBox(
-                                        height: 48,
-                                        child: Icon(Icons.announcement),
-                                      ),
-                                      title: Text('Web App Limitations'),
-                                      subtitle: Text(
-                                        "Some features aren't available on the web",
-                                      ),
-                                    ),
-                                    const Divider(
-                                      thickness: 2,
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.all(18.0),
-                                      child: Text(
-                                        "Some features, including editing and sharing links, aren't available on the web. You can still use the desktop or mobile app to access these features.",
-                                        textAlign: TextAlign.start,
-                                      ),
-                                    ),
-                                    ButtonBar(
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            showWebWarning(context);
-                                          },
-                                          child: const Text('Learn more'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              FadeRoute(
-                                                page: const GeneralSettings(),
-                                              ),
-                                            );
-                                          },
-                                          child: const Text(
-                                            'Download native apps',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            if (kIsWeb) const WebWarning(),
                             const RandomLink(),
                           ],
                         ),
@@ -222,6 +172,66 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class WebWarning extends StatelessWidget {
+  const WebWarning({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          const ListTile(
+            leading: SizedBox(
+              height: 48,
+              child: Icon(Icons.announcement),
+            ),
+            title: Text('Web App Limitations'),
+            subtitle: Text(
+              "Some features aren't available on the web",
+            ),
+          ),
+          const Divider(
+            thickness: 2,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(18.0),
+            child: Text(
+              "Some features, including editing and sharing links, aren't available on the web. You can still use the desktop or mobile app to access these features.",
+              textAlign: TextAlign.start,
+            ),
+          ),
+          ButtonBar(
+            children: [
+              TextButton(
+                onPressed: () {
+                  showWebWarning(context);
+                },
+                child: const Text('Learn more'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    FadeRoute(
+                      page: const GeneralSettings(highlightPlatforms: true),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Download native apps',
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

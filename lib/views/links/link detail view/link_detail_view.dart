@@ -19,8 +19,6 @@ class LinkDetailView extends StatefulWidget {
 }
 
 class _LinkDetailViewState extends State<LinkDetailView> {
-  late DocumentSnapshot? _backupDocument;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
