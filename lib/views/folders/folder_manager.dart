@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/folders/folder_list_tile.dart';
-import 'package:later_flutter/views/folders/search/folder_search.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_folder_sheet.dart';
+import 'package:later_flutter/views/search/folder_search.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 
 class FolderManager extends StatefulWidget {

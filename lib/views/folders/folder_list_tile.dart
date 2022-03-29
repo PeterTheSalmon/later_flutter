@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:later_flutter/services/folder_icon_getter.dart';
 import 'package:later_flutter/views/folders/edit_folder_dialog.dart';
 import 'package:later_flutter/views/folders/folder_icon_chooser.dart';
-import 'package:later_flutter/views/folders/folder_view.dart';
+import 'package:later_flutter/views/folders/folder%20view/folder_view.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 
 class FolderListTile extends StatefulWidget {

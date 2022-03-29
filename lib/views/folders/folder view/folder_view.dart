@@ -10,9 +10,10 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:later_flutter/models/link.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
-import 'package:later_flutter/views/folders/search/link_search_view.dart';
+import 'package:later_flutter/views/folders/folder%20view/functions/archive_link.dart';
 import 'package:later_flutter/views/links/link_detail_view.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_sheet.dart';
+import 'package:later_flutter/views/search/link_search_view.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -134,7 +135,7 @@ class _FolderViewState extends State<FolderView> {
                               (DocumentSnapshot document) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0,
+                                    horizontal: 2.0,
                                   ),
                                   child: Column(
                                     children: [
@@ -147,7 +148,7 @@ class _FolderViewState extends State<FolderView> {
                                         document,
                                       ),
                                       const Divider(
-                                        height: 1,
+                                        height: 8,
                                       )
                                     ],
                                   ),
@@ -218,7 +219,7 @@ class _FolderViewState extends State<FolderView> {
                   children: snapshot.data!.docs.map(
                     (DocumentSnapshot document) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
                         child: Column(
                           children: [
                             _linkListTile(
@@ -230,7 +231,7 @@ class _FolderViewState extends State<FolderView> {
                               isArchiveTile: true,
                             ),
                             const Divider(
-                              height: 1,
+                              height: 8,
                             )
                           ],
                         ),
@@ -270,19 +271,11 @@ class _FolderViewState extends State<FolderView> {
                 dismissible: DismissiblePane(
                   onDismissed: () {
                     // If the link is already archived, restore it
-                    isArchiveTile
-                        ? FirebaseFirestore.instance
-                            .collection('links')
-                            .doc(document.id)
-                            .update({
-                            'archived': false,
-                          })
-                        : FirebaseFirestore.instance
-                            .collection('links')
-                            .doc(document.id)
-                            .update({
-                            'archived': true,
-                          });
+                    archiveLink(
+                      isArchiveTile: isArchiveTile,
+                      linkDocument: document,
+                      context: context,
+                    );
                   },
                 ),
                 motion: const DrawerMotion(),
@@ -292,19 +285,11 @@ class _FolderViewState extends State<FolderView> {
                     label: isArchiveTile ? 'Restore' : 'Archive',
                     backgroundColor: isArchiveTile ? Colors.green : Colors.grey,
                     onPressed: (_) {
-                      isArchiveTile
-                          ? FirebaseFirestore.instance
-                              .collection('links')
-                              .doc(document.id)
-                              .update({
-                              'archived': false,
-                            })
-                          : FirebaseFirestore.instance
-                              .collection('links')
-                              .doc(document.id)
-                              .update({
-                              'archived': true,
-                            });
+                      archiveLink(
+                        isArchiveTile: isArchiveTile,
+                        linkDocument: document,
+                        context: context,
+                      );
                     },
                   ),
                 ],
@@ -377,10 +362,6 @@ class _FolderViewState extends State<FolderView> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text("Could not launch ${document["url"]}"),
-                        action: SnackBarAction(
-                          label: 'Close',
-                          onPressed: () {},
-                        ),
                       ),
                     );
                   }
@@ -403,19 +384,11 @@ class _FolderViewState extends State<FolderView> {
                   icon: Icon(isArchiveTile ? Icons.restore : Icons.archive),
                   tooltip: isArchiveTile ? 'Restore' : 'Archive',
                   onPressed: () {
-                    isArchiveTile
-                        ? FirebaseFirestore.instance
-                            .collection('links')
-                            .doc(document.id)
-                            .update({
-                            'archived': false,
-                          })
-                        : FirebaseFirestore.instance
-                            .collection('links')
-                            .doc(document.id)
-                            .update({
-                            'archived': true,
-                          });
+                    archiveLink(
+                      isArchiveTile: isArchiveTile,
+                      linkDocument: document,
+                      context: context,
+                    );
                   },
                 ),
               if (kIsWeb || !(Platform.isAndroid || Platform.isIOS))
@@ -528,6 +501,9 @@ class _FolderViewState extends State<FolderView> {
             const Spacer()
           ],
         ),
+        const SizedBox(
+          height: 150,
+        ),
         Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18.0),
@@ -578,6 +554,9 @@ class _FolderViewState extends State<FolderView> {
                     ),
                   ),
           ),
+        ),
+        const SizedBox(
+          height: 150,
         ),
         _archivedLinks(),
       ],

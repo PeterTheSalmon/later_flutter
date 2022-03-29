@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/services/folder_icon_getter.dart';
-import 'package:later_flutter/views/folders/folder_view.dart';
+import 'package:later_flutter/views/folders/folder%20view/folder_view.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
 import 'package:later_flutter/views/styles/fade_through_route.dart';
 

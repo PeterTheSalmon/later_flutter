@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:later_flutter/views/folders/folder_view.dart';
+import 'package:later_flutter/views/folders/folder%20view/folder_view.dart';
 import 'package:later_flutter/views/links/edit_link_dialog.dart';
 import 'package:later_flutter/views/links/notes_dialog.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';
