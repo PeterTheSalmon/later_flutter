@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:later_flutter/models/link.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
-import 'package:later_flutter/views/links/link_detail_view.dart';
+import 'package:later_flutter/views/links/link%20detail%20view/link_detail_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GlobalLinkSearchView extends StatefulWidget {

@@ -11,7 +11,7 @@ import 'package:later_flutter/models/link.dart';
 import 'package:later_flutter/services/global_variables.dart';
 import 'package:later_flutter/views/drawer/standard_drawer.dart';
 import 'package:later_flutter/views/folders/folder%20view/functions/archive_link.dart';
-import 'package:later_flutter/views/links/link_detail_view.dart';
+import 'package:later_flutter/views/links/link%20detail%20view/link_detail_view.dart';
 import 'package:later_flutter/views/new%20link%20and%20folder%20flows/new_link_sheet.dart';
 import 'package:later_flutter/views/search/link_search_view.dart';
 import 'package:later_flutter/views/styles/fade_route.dart';

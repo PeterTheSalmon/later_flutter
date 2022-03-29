@@ -1,4 +1,3 @@
-import 'dart:developer' as developer;
 import 'dart:math';
 
 import 'package:any_link_preview/any_link_preview.dart';
@@ -33,7 +32,6 @@ class _RandomLinkState extends State<RandomLink> {
 
     int attempts = 0;
     Future<DocumentSnapshot?> _selectLink() async {
-      developer.log('STARTING');
       // Choose a random folder
       final DocumentSnapshot folder =
           folderList[Random().nextInt(folderList.length)];
