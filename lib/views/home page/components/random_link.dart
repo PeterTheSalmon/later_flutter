@@ -24,39 +24,16 @@ class _RandomLinkState extends State<RandomLink> {
   /// Instead of reading every link a user has, a random folder is chosen and, from there,
   /// a link is selected at random. This reduces the number of reads to firebase.
   void setRandomLink() async {
-    final QuerySnapshot folderDocs = await FirebaseFirestore.instance
-        .collection('folders')
+    final QuerySnapshot linkDocs = await FirebaseFirestore.instance
+        .collection('links')
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
-    final List<DocumentSnapshot> folderList = folderDocs.docs;
+    final List<DocumentSnapshot> linkList = linkDocs.docs;
 
-    int attempts = 0;
-    Future<DocumentSnapshot?> _selectLink() async {
-      // Choose a random folder
-      final DocumentSnapshot folder =
-          folderList[Random().nextInt(folderList.length)];
-
-      // Get the list of links in the folder
-      final QuerySnapshot linkDocs = await FirebaseFirestore.instance
-          .collection('links')
-          .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .where('parentFolderId', isEqualTo: folder.id)
-          .get();
-      final List<DocumentSnapshot> links = linkDocs.docs;
-
-      if (links.isEmpty && attempts > 10) {
-        attempts++;
-        _selectLink();
-      } else {
-        return links[Random().nextInt(links.length)];
-      }
-      return null;
-    }
-
-    final finalLink = await _selectLink();
+    final DocumentSnapshot link = linkList[Random().nextInt(linkList.length)];
 
     setState(() {
-      _randomLink = finalLink;
+      _randomLink = link;
     });
   }
 

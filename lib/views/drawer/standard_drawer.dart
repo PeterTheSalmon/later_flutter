@@ -41,6 +41,7 @@ class _StandardDrawerState extends State<StandardDrawer> {
 
         // Scrollable List Section
         Expanded(
+
           child: ListView(
             padding: EdgeInsets.zero,
             children: const [StaticListItems(), FolderList()],
